@@ -32,4 +32,5 @@ module base_plate_bottom_2D()
 }
 
 $fn=360;
-base_plate_bottom_2D();
+translate([(DOME_DIA+30)/2, -(DOME_DIA+30)/2, 0])
+    base_plate_bottom_2D();

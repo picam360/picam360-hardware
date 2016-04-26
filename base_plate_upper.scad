@@ -79,5 +79,6 @@ module base_plate_upper_2D()
 }
 
 $fn=360;
-base_plate_upper_2D();
+translate([(DOME_DIA+30)/2, -(DOME_DIA+30)/2, 0])
+    base_plate_upper_2D();
 

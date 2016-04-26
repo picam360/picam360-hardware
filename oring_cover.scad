@@ -35,5 +35,6 @@ module oring_holder_2D()
 }
 
 $fn=360;
-oring_holder_2D();
+translate([(DOME_DIA+30)/2, -(DOME_DIA+30)/2, 0])
+    oring_holder_2D();
 

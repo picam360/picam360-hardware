@@ -104,5 +104,6 @@ module base_plate_inner_2D(margin=0)
 }
 
 $fn=360;
-//base_plate_inner_2D();
-base_plate_middle_2D();
+translate([(DOME_DIA+16)/2, -(DOME_DIA+16)/2, 0])
+    //base_plate_inner_2D();
+    base_plate_middle_2D();
