@@ -68,9 +68,15 @@ module camera_holder_2D()
             square([4.5-r_rad*2,4.5-r_rad*2], center=true);
             circle(r=r_rad);
         }
+        translate([0, 65/2])
+        minkowski()
+        {
+            square([12,50], center=true);
+            circle(r=r_rad);
+        }
     }
 }
 $fn=360;
 
-translate([20, -80, 0])
+translate([0, -65, 0])
 camera_holder_2D();
