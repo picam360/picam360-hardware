@@ -1,5 +1,7 @@
+use<extlens_holder2.scad>
+use<extlens_holder3.scad>
 
-module spacer(r1, r2){
+module extlens_holder1(r1, r2){
     difference()
     {
         circle(r=r1);
@@ -11,4 +13,8 @@ module spacer(r1, r2){
 
 $fn=1000;
 translate([21.0/2,-21.0/2])
-    spacer(21.0/2, 15.0/2);
+    extlens_holder1(21.0/2, 15.0/2);
+translate([21.0/2 + 22.0,-21.0/2])
+    extlens_holder2(21.0/2, 15.0/2);
+translate([21.0/2 + 22.0*2,-21.0/2])
+    extlens_holder3(21.0/2, 15.0/2);
