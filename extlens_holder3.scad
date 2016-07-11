@@ -8,5 +8,5 @@ module extlens_holder3(r1, r2){
 }
 
 $fn=1000;
-translate([21.0/2,-21.0/2])
-    extlens_holder3(21.0/2, 14.1/2);
+translate([23.0/2,-23.0/2])
+    extlens_holder3(23.0/2, 14.1/2);
