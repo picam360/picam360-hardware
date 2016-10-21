@@ -28,7 +28,7 @@ module camera_holder_2D()
             $fn=100;
             r_rad2=r_rad*2;
             translate([r_rad, r_rad])
-                square([width-r_rad*2,height+2-r_rad*2]);
+                square([width-r_rad*2,height+5-r_rad*2]);
             circle(r=r_rad);
         }
         //raspi attachemnt holes
@@ -41,18 +41,18 @@ module camera_holder_2D()
         circle(r=raspi_bolt_r);
         translate([width - hole_pos, height - hole_pos])
         circle(r=raspi_bolt_r);
-        translate([65/2, 39/2])
+        translate([65/2, 41.5/2])
         rotate([0,0,-90])
         camera_hole_2D();
         translate([65/2, 0])
         minkowski()
         {
-            square([50,12], center=true);
+            square([50,11], center=true);
             circle(r=r_rad);
         }
     }
 }
 $fn=360;
 
-translate([0, -32, 0])
+translate([0, -35, 0])
 camera_holder_2D();

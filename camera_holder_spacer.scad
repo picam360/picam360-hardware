@@ -44,7 +44,7 @@ module camera_holder_spacer_2D()
         translate([0, 3.5])
         minkowski()
         {
-            square([12.5-r_rad*2,19-r_rad*2], center=true);
+            square([11.5-r_rad*2,19-r_rad*2], center=true);
             circle(r=r_rad);
         }
     }
@@ -52,5 +52,5 @@ module camera_holder_spacer_2D()
 $fn=360;
 
 //translate([8, -56/2])
-translate([65/2, -56/2])
+translate([65/2-25, -56/2+13])
 camera_holder_spacer_2D();

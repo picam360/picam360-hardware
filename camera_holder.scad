@@ -43,7 +43,7 @@ module camera_holder_2D()
         translate([65/2, 0])
         minkowski()
         {
-            square([50,12], center=true);
+            square([50,11], center=true);
             circle(r=r_rad);
         }
     }

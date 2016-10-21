@@ -6,11 +6,8 @@ module camera_hole()
         camera_hole_2D();
     }
 }
-module camera_hole_2D()
+module camera_attachment_hole_2D(neji1=1.9,neji2=2.4)
 { 
-    r_rad=1; 
-    //for official camera
-    camera_bolt_r=2.3/2;
     union(){
         //camera attachemnt holes
         translate([0, 5.5])
@@ -20,39 +17,39 @@ module camera_hole_2D()
                 for(j=[0,1])
                 {
                     mirror([j,0])
-                    translate([20.85/2, 12.7/2])
-                        minkowski()
-                        {
-                            square([camera_bolt_r*2-1*2,camera_bolt_r*3-1], center=true);
-                            circle(r=1);
-                        }
+                    translate([21.5/2, 12.5/2])
+                        circle(r=neji1/2);
                 }
             }
+        translate([0, 0])
+            for(i=[0,1])
+            {
+                mirror([0,i])
+                for(j=[0,1])
+                {
+                    mirror([j,0])
+                    translate([14/2, 30/2])
+                        circle(r=neji2/2);
+                }
+            }
+    }
+}
+module camera_hole_2D()
+{ 
+    r_rad=1; 
+    //for official camera
+    camera_bolt_r=2.3/2;
+    union(){
+        camera_attachment_hole_2D();
         //camera hole
         union()
         {
+            translate([0, 2.5])
             minkowski()
             {
-                square([14.5-r_rad*2,14.5-r_rad*2], center=true);
+                square([12.5-r_rad*2,18-r_rad*2], center=true);
                 circle(r=r_rad);
             }
-            //circle(r=13.8/2);
-        }
-        //camera connector
-        translate([0, 18.2/2])
-        minkowski()
-        {
-            square([14.5-r_rad*2,10.0-r_rad*2], center=true);
-            circle(r=r_rad);
-        }
-        translate([0, 20.0/2])
-            square([5.5,5.5], center=true);
-        //camera hole
-        translate([0, 0])
-        minkowski()
-        {
-            square([4.0-r_rad*2,22.0-r_rad*2], center=true);
-            circle(r=r_rad);
         }
     }
 }
