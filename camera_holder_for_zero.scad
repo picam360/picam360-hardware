@@ -54,5 +54,9 @@ module camera_holder_2D()
 }
 $fn=360;
 
-translate([0, -35, 0])
-camera_holder_2D();
+
+for(i=[0:5])
+{
+    translate([0, -35 - 36 * i, 0])
+        camera_holder_2D();
+}
