@@ -49,11 +49,12 @@ module base_plate_middle_2D()
         {
             mirror([i,0])
             translate([-hole_pos, 0, 0])
-                union()
+                minkowski()
                 {
-                    circle(r = r_from_dia(8), center=true);
+                    m_r = 4;
                     translate([-20, 0])
-                        square([40,8], center=true);
+                        square([40,20-m_r*2], center=true);
+                    circle(r = m_r, center=true);
                 }
         }
         //bolt hole for raspi
@@ -79,11 +80,12 @@ module base_plate_inner_2D(margin=0)
     {
         mirror([i,0])
         translate([-hole_pos, 0, 0])
-            union()
+            minkowski()
             {
+                $fn=100;
+                translate([-5, 0])
+                    square([10,(r_from_dia(8)+margin)*2], center=true);
                 circle(r = r_from_dia(8)+4+margin, center=true);
-                translate([-10, 0])
-                    square([18,(r_from_dia(8)+5+margin)*2], center=true);
             }
      }
     //bolt hole for raspi
@@ -105,5 +107,5 @@ module base_plate_inner_2D(margin=0)
 
 $fn=360;
 translate([(DOME_DIA+16)/2, -(DOME_DIA+16)/2, 0])
-    //base_plate_inner_2D();
+    //base_plate_inner_2D(margin=3);
     base_plate_middle_2D();

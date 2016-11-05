@@ -13,10 +13,10 @@ module camera_holder()
 {
     linear_extrude(height = 2, twist = 0, slices = 0)
     {
-        camera_holder_2D();
+        camera_holder_for_zero_2D();
     }
 }
-module camera_holder_2D()
+module camera_holder_for_zero_2D()
 {
     width = 65;
     height = 30;
@@ -58,5 +58,5 @@ $fn=360;
 for(i=[0:5])
 {
     translate([0, -35 - 36 * i, 0])
-        camera_holder_2D();
+        camera_holder_for_zero_2D();
 }
