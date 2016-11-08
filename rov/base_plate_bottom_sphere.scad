@@ -1,7 +1,7 @@
-include<params.scad>
-use<tools.scad>
-use<dome.scad>
-use<base_plate_middle.scad>
+include<../params.scad>
+use<../tools.scad>
+use<../dome.scad>
+use<../domepod/base_plate_middle.scad>
 
 module base_plate_upper()
 {

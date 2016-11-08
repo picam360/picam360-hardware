@@ -1,4 +1,4 @@
-include<params.scad>
+include<../params.scad>
 
 module base_plate_middle()
 {
@@ -53,7 +53,7 @@ module base_plate_middle_2D()
                 {
                     m_r = 4;
                     translate([-20, 0])
-                        square([40,20-m_r*2], center=true);
+                        square([40,15-m_r*2], center=true);
                     circle(r = m_r, center=true);
                 }
         }
@@ -84,7 +84,7 @@ module base_plate_inner_2D(margin=0)
             {
                 $fn=100;
                 translate([-5, 0])
-                    square([10,(r_from_dia(8)+margin)*2], center=true);
+                    square([10,-5+(r_from_dia(8)+margin)*2], center=true);
                 circle(r = r_from_dia(8)+4+margin, center=true);
             }
      }

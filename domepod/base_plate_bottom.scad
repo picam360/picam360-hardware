@@ -1,4 +1,4 @@
-include<params.scad>
+include<../params.scad>
 
 module base_plate_bottom()
 {

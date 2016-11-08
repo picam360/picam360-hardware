@@ -1,6 +1,6 @@
-include<params.scad>
-use<tools.scad>
-use<dome.scad>
+include<../params.scad>
+use<../tools.scad>
+use<../dome.scad>
 use<base_plate_middle.scad>
 
 module base_plate_upper()
@@ -48,11 +48,20 @@ module base_plate_upper_2D()
                     }
                 }
         }
-        for(i=[0])
+        for(i=[0,1])
         {
             mirror([i,0])
-            translate([-hole_pos, 0, 0])
-	            circle(r = r_from_dia(8), center=true);
+                minkowski()
+                {
+                    m_r = 4;
+                    intersection()
+                    {
+                    translate([-hole_pos, 0, 0])
+                        square([1,15-m_r*2], center=true);
+                        circle(r = r_from_dia(DOME_DIA)-DOME_THICK-m_r, center=true);
+                    }
+                        circle(r = m_r, center=true);
+                }
         }
         //bolt hole for raspi
         for(i=[0,1])
@@ -81,4 +90,3 @@ module base_plate_upper_2D()
 $fn=360;
 translate([(DOME_DIA+30)/2, -(DOME_DIA+30)/2, 0])
     base_plate_upper_2D();
-
