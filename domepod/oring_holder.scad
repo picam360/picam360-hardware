@@ -1,4 +1,4 @@
-include<params.scad>
+include<../params.scad>
 
 module oring_holder()
 {
@@ -14,7 +14,7 @@ module oring_holder_2D()
         translate([0, 0, 0])
 	        circle(r = r_from_dia(DOME_DIA+30));
         translate([0, 0, 0])
-	        circle(r = r_from_dia(DOME_DIA)+ORING_DIA);
+	        circle(r = r_from_dia(DOME_DIA)+ORING_DIA-0.2);
 		bolt_size = 3.5;
 	    for(i=[0:11])
 	    {
