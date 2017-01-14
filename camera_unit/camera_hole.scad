@@ -6,6 +6,21 @@ module camera_hole()
         camera_hole_2D();
     }
 }
+module camera_mount_hole_2D()
+{ 
+    r_rad=1;
+    minkowski()
+    {
+        square([13.4-r_rad*2,13.4-r_rad*2], center=true);
+        circle(r=r_rad);
+    }
+    circle(r=13.8/2);
+    minkowski()
+    {
+        square([4.2-r_rad*2,23.0-r_rad*2], center=true);
+        circle(r=r_rad);
+    }
+}
 module camera_hole_2D()
 { 
     //for official camera
@@ -60,4 +75,4 @@ module aruducam_hole_2D()
 $fn=360;
 
 //translate([0, -56, 0])
-camera_hole_2D();
+camera_mount_hole_2D();
