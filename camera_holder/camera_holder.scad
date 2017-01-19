@@ -39,8 +39,7 @@ module camera_holder_2D()
         translate([61.5, 52.5])
         circle(r=raspi_bolt_r);
         translate([65/2, 56/2])
-            rotate([0,0,90])
-                camera_mount_hole_2D();
+        camera_mount_hole_2D();
         translate([65/2, 56])
         minkowski()
         {
