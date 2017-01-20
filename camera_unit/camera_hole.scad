@@ -21,6 +21,21 @@ module camera_mount_hole_2D()
         circle(r=r_rad);
     }
 }
+module camera_atachment_hole_2D()
+{ 
+    for(i=[0,1])
+    {
+        mirror([i,0])
+        translate([21/2, (24.0-9.5-2)])
+            circle(r=1.6/2);
+    }
+    for(i=[0,1])
+    {
+        mirror([i,0])
+        translate([21/2, -9.5+2])
+            circle(r=1.6/2);
+    }
+}
 module camera_hole_2D()
 { 
     //for official camera
@@ -39,11 +54,11 @@ module camera_hole_2D()
                     }
             }
         //camera connector
-        translate([0, 10/2])
+        translate([0, 12/2+0.25])
         minkowski()
         {
             r_rad=0.5;
-            square([7.2-r_rad*2,2-r_rad*2], center=true);
+            square([8-r_rad*2,3.5-r_rad*2], center=true);
             circle(r=r_rad);
         }
     }
@@ -75,4 +90,6 @@ module aruducam_hole_2D()
 $fn=360;
 
 translate([0, 0, 0])
-    camera_mount_hole_2D();
+    camera_hole_2D();
+    //rotate([0,0,180])
+    //camera_atachment_hole_2D();
