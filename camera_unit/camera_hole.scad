@@ -36,7 +36,7 @@ module camera_atachment_hole_2D()
             circle(r=1.6/2);
     }
 }
-module camera_hole_2D()
+module camera_hole_2D(margin=0)
 { 
     //for official camera
     camera_bolt_r=2.3/2;
@@ -54,11 +54,11 @@ module camera_hole_2D()
                     }
             }
         //camera connector
-        translate([0, 12/2+0.25])
+        translate([0, (11+margin)/2+0.25])
         minkowski()
         {
             r_rad=0.5;
-            square([8-r_rad*2,3.5-r_rad*2], center=true);
+            square([8+0.5*2-r_rad*2,2.5+margin-r_rad*2], center=true);
             circle(r=r_rad);
         }
     }
