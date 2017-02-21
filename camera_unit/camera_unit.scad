@@ -33,13 +33,13 @@ module camera_unit_1_2D(margin=0)
         for(i=[0,1])
         {
             mirror([i,0])
-            translate([21/2, (24.0+margin-9.5-2)])
+            translate([25/2-2, (24.0+margin-center_y-2)])
                 circle(r=2.5/2);
         }
         for(i=[0,1])
         {
             mirror([i,0])
-            translate([21/2, -9.5+2])
+            translate([25/2-2, -center_y+2])
                 circle(r=2.5/2);
         }
     }
@@ -82,47 +82,22 @@ module camera_unit_2_2D()
         for(i=[0,1])
         {
             mirror([i,0])
-            translate([25/2, -9.5])
+            translate([25/2, -center_y])
                 minkowski()
                 {
-                    square([6,6], center=true);
+                    square([8-1*2,8-1*2], center=true);
                     circle(r=1);
                 }
         }
         for(i=[0,1])
         {
             mirror([i,0])
-            translate([25/2, 12+12-9.5])
+            translate([25/2, 24-center_y])
                 minkowski()
                 {
-                    square([7-1*2,7-1*2], center=true);
+                    square([8-1*2,8-1*2], center=true);
                     circle(r=1);
                 }
-        }
-    }
-}
-module camera_unit_3_2D()
-{
-    difference(){
-        r_rad=1;        
-        minkowski()
-        {
-            $fn=100;
-            translate([0, (24.0)/2-center_y])
-                square([25-r_rad*2,24.0-r_rad*2], center=true);
-            circle(r=r_rad);
-        }
-        for(i=[0,1])
-        {
-            mirror([i,0])
-            translate([21/2, (24.0-9.5-6)])
-                circle(r=1.6/2);
-        }
-        for(i=[0,1])
-        {
-            mirror([i,0])
-            translate([21/2, -9.5+6])
-                circle(r=1.6/2);
         }
     }
 }
@@ -133,14 +108,9 @@ module camera_unit_2D()
         r_rad=1;
         con_margin=0;
         margin=1;
-        side=10;
+        side=0;
         height=24+con_margin;
         union(){
-            translate([(side+.01)/2, -height/2])
-                square([side+.01,height], center=true);
-            translate([-(margin+.01)/2+side, -height/2])
-                square([margin+.01,height], center=true);
-            
             translate([25/2+side, -((24.0+con_margin)-center_y)])
                 camera_unit_1_2D(con_margin);
             translate([-(margin+.01)/2+25+margin+side+0.01, -height/2])
@@ -148,22 +118,12 @@ module camera_unit_2D()
             
             translate([25+25/2+side+margin, -((24.0+con_margin)-center_y)])
                 camera_unit_2_2D();
-            translate([-(margin+.01)/2+25*2+margin*2+side, -height/2])
-                square([margin+.01,height], center=true);
-            
-            translate([25*2+25/2+side+margin*2, -((24.0+con_margin)-center_y)])
-                camera_unit_3_2D();
-            translate([-(margin+.01)/2+25*3+margin*3+side, -height/2])
-                square([margin+.01,height], center=true);
-            
-            translate([(side+.01)/2+25*3+side+margin*3, -height/2])
-                square([side+.01,height], center=true);
         }
         r_rad=0.49;
-        space=7;
+        space=6;
         for(k=[0:10])
         {
-            translate([-margin/2+side, k*-(space+0.5)-0.5])
+            translate([-margin/2+side, k*-(space+0.5)-2])
             minkowski()
             {
                 square([1.03-r_rad*2,space-r_rad*2], center=true);
@@ -172,7 +132,7 @@ module camera_unit_2D()
         }
         for(k=[0:10])
         {
-            translate([-margin/2+25+margin+side, k*-(space+0.5)-0.5])
+            translate([-margin/2+25+margin+side, k*-(space+0.5)-2])
             minkowski()
             {
                 square([1.03-r_rad*2,space-r_rad*2], center=true);
@@ -181,7 +141,7 @@ module camera_unit_2D()
         }
         for(k=[0:10])
         {
-            translate([-margin/2+25*2+margin*2+side, k*-(space+0.5)-0.5])
+            translate([-margin/2+25*2+margin*2+side, k*-(space+0.5)-2])
             minkowski()
             {
                 square([1.03-r_rad*2,space-r_rad*2], center=true);
@@ -190,7 +150,7 @@ module camera_unit_2D()
         }
         for(k=[0:10])
         {
-            translate([-margin/2+25*3+margin*3+side, k*-(space+0.5)-0.5])
+            translate([-margin/2+25*3+margin*3+side, k*-(space+0.5)-2])
             minkowski()
             {
                 square([1.03-r_rad*2,space-r_rad*2], center=true);

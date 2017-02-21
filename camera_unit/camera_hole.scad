@@ -54,11 +54,12 @@ module camera_hole_2D(margin=0)
                     }
             }
         //camera connector
-        translate([0, (11+margin)/2+0.25])
+        slit=1.5;
+        translate([0, (9+slit+margin)/2])
         minkowski()
         {
             r_rad=0.5;
-            square([8+0.5*2-r_rad*2,2.5+margin-r_rad*2], center=true);
+            square([8.5+r_rad*2-r_rad*2,slit+margin-r_rad*2], center=true);
             circle(r=r_rad);
         }
     }

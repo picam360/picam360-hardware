@@ -84,6 +84,10 @@ module base_plate_upper_2D()
 	        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 0])
 		        circle(r = r_from_dia(bolt_size), center=true);
 	    }
+        
+        //rpcm board
+		translate([0, 15]) 
+        square([51,30], center=true);
     }
 }
 

@@ -63,6 +63,10 @@ module base_plate_middle_2D()
             mirror([0,i]) for(j=[0,1])
                 mirror([j,0]) translate([-58/2, -49/2, 0])
                     circle(r = r_from_dia(3.5), center=true);
+        
+        //rpcm board
+		translate([0, 15]) 
+        square([51,30], center=true);
     }
 }
 module base_plate_inner_2D(margin=0)
