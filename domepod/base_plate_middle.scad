@@ -65,8 +65,7 @@ module base_plate_middle_2D()
                     circle(r = r_from_dia(3.5), center=true);
         
         //rpcm board
-		translate([0, 15]) 
-        square([51,30], center=true);
+        square([51,60], center=true);
     }
 }
 module base_plate_inner_2D(margin=0)

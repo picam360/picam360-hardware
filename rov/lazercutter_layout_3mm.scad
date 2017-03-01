@@ -4,7 +4,7 @@ use<arm_upper.scad>
 
 
 $fn = 360;
-translate([51, -51])
+translate([51, -PROP_SHROUD_DIA/2 - 1])
 arm_2D();
 
 
@@ -23,5 +23,5 @@ for(j=[0,1])
     }
 }
 }
-translate([51,-80])
+translate([51,-PROP_SHROUD_DIA/2-20])
     arm_upper_2D();

@@ -86,8 +86,7 @@ module base_plate_upper_2D()
 	    }
         
         //rpcm board
-		translate([0, 15]) 
-        square([51,30], center=true);
+        square([51,60], center=true);
     }
 }
 
