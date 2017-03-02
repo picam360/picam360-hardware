@@ -21,7 +21,7 @@ module arm_2D(margin=1)
             difference()
             {
                 translate([0,-PROP_SHROUD_DIA/2])
-                    square([PROP_SHROUD_DIA-40,30],center=true);
+                    square([PROP_SHROUD_DIA,20],center=true);
                 minkowski()
                 {
                     $fn=100;
@@ -29,7 +29,7 @@ module arm_2D(margin=1)
                     difference()
                     {
                         translate([0,-PROP_SHROUD_DIA/2])
-                            square([PROP_SHROUD_DIA-20,100],center=true);
+                            square([1000,1000],center=true);
                         union()
                         {
                             circle(r=r_from_dia(PROP_SHROUD_DIA)+margin+roundess);
@@ -66,19 +66,19 @@ module arm_2D(margin=1)
 	    for(i=[1,2,3,4])
 	    {
 	        translate([(DOME_DIA+20)/2*cos(i*30+15), (DOME_DIA+20)/2*sin(i*30+15), 0])
-		        circle(r = r_from_dia(bolt_size+0.1), center=true, $fn = 100);
+		        circle(r = r_from_dia(bolt_size+0.2), center=true, $fn = 100);
 	    }
 	   	translate([0,-(DOME_DIA+30)/2+5])
 	    for(i=[2,3])
 	    {
 	        translate([(DOME_DIA+20)/2*cos(i*30+15), (DOME_DIA+20)/2*sin(i*30+15)-5, 0])
-		        circle(r = r_from_dia(bolt_size+0.1), center=true, $fn = 100);
+		        circle(r = r_from_dia(bolt_size+0.2), center=true, $fn = 100);
 	        translate([(DOME_DIA+20)/2*cos(i*30+15), (DOME_DIA+20)/2*sin(i*30+15)-3, 0])
-		        circle(r = r_from_dia(bolt_size+0.1), center=true, $fn = 100);
+		        circle(r = r_from_dia(bolt_size+0.2), center=true, $fn = 100);
 	        translate([(DOME_DIA+20)/2*cos(i*30+15), (DOME_DIA+20)/2*sin(i*30+15)-1.5, 0])
-		        square([bolt_size+0.1,3], center=true);
+		        square([bolt_size+0.2,3], center=true);
 	        translate([(DOME_DIA+20)/2*cos(i*30+15), (DOME_DIA+20)/2*sin(i*30+15)-4, 0])
-		        square([bolt_size-0.1,2], center=true);
+		        square([bolt_size+0.2,2], center=true);
 	    }
 	}
 }
