@@ -8,7 +8,7 @@ translate([51, -PROP_SHROUD_DIA/2 - 1])
 arm_2D();
 
 
-for(i=[0,1])
+for(i=[0:2])
 {
 for(j=[0,1])
 {

@@ -4,5 +4,8 @@ DOME_THICK = 2.0;
 ORING_DIA = 5.0;
 PROP_SHROUD_DIA = 50;
 PROP_SHROUD_THICK = 2.5;
+//BASE_PLATE_BOLT = 3.5;
+//BASE_PLATE_BOLT = 2.2;
+BASE_PLATE_BOLT = 0;
 
 function r_from_dia(d) = d / 2;

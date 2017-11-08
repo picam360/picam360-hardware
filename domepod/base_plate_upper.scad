@@ -2,10 +2,11 @@ include<../params.scad>
 use<../tools.scad>
 use<../dome.scad>
 use<base_plate_middle.scad>
+use<base_plate_bottom_sphere.scad>
 
 module base_plate_upper()
 {
-    linear_extrude(height = 2, twist = 0, slices = 0)
+    linear_extrude(height = 3, twist = 0, slices = 0)
     {
         base_plate_upper_2D();
     }
@@ -49,25 +50,8 @@ module base_plate_upper_2D()
                 }
         }
         for(i=[0,1])
-        {
             mirror([i,0])
-                minkowski()
-                {
-                    m_r = 4;
-                    intersection()
-                    {
-                    translate([-hole_pos, 0, 0])
-                        square([1,15-m_r*2], center=true);
-                        circle(r = r_from_dia(DOME_DIA)-DOME_THICK-m_r, center=true);
-                    }
-                        circle(r = m_r, center=true);
-                }
-        }
-        //bolt hole for raspi
-        for(i=[0,1])
-            mirror([0,i]) for(j=[0,1])
-                mirror([j,0]) translate([-58/2, -49/2, 0])
-                    circle(r = r_from_dia(3.5), center=true);
+                round_corner(r1=0,r2=r_from_dia(DOME_DIA)-DOME_THICK,t1=-20,t2=20);
 		//arm
 		arm_pos = (DOME_DIA+30)/2-5+PROP_SHROUD_DIA/2;
 	    for(i=[0:3])
@@ -78,12 +62,20 @@ module base_plate_upper_2D()
 	        		circle(r = r_from_dia(PROP_SHROUD_DIA));
 			}
 		}
-		bolt_size = 3.5;
-	    for(i=[0:11])
-	    {
-	        translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 0])
-		        circle(r = r_from_dia(bolt_size), center=true);
-	    }
+        if(BASE_PLATE_BOLT > 0)
+        {
+            //bolt hole for raspi
+            for(i=[0,1])
+                mirror([0,i]) for(j=[0,1])
+                    mirror([j,0]) translate([-58/2, -49/2, 0])
+                        circle(r = r_from_dia(BASE_PLATE_BOLT), center=true);
+            //bolt hole for arm
+            for(i=[0:11])
+            {
+                translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 0])
+                    circle(r = r_from_dia(BASE_PLATE_BOLT), center=true);
+            }            
+        }
         
         //rpcm board
         square([51,60], center=true);
@@ -92,4 +84,4 @@ module base_plate_upper_2D()
 
 $fn=360;
 translate([(DOME_DIA+30)/2, -(DOME_DIA+30)/2, 0])
-    base_plate_upper_2D();
+    base_plate_upper(height=3);

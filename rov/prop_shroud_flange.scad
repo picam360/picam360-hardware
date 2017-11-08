@@ -7,7 +7,7 @@ module prop_shroud_flange()
         prop_shroud_flange_2D();
     }
 }
-module prop_shroud_flange_2D(margin=1)
+module prop_shroud_flange_2D(margin=1, minkowski_fn=100)
 {
     roundess=3;
     difference()
@@ -16,7 +16,7 @@ module prop_shroud_flange_2D(margin=1)
    		circle(r=r_from_dia(5));
         minkowski()
         {
-    	    $fn=100;
+    	    $fn=minkowski_fn;
             prop_shroud_flange_inner_2D(margin=roundess);
             circle(r = roundess, center=true);
         }
@@ -55,5 +55,5 @@ module prop_shroud_flange_inner_2D(margin=0)
 }
 
 $fn=360;
-prop_shroud_flange_2D();
+prop_shroud_flange_2D(margin=0);
 

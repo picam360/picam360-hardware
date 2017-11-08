@@ -1,0 +1,10 @@
+$fn=360;
+difference(){
+    union(){
+        translate([0,0,0])
+        cylinder(r1=30,r2=30,h=1);
+        translate([0,0,-4])
+        cylinder(r1=15,r2=30,h=4);
+    }
+    cylinder(r=6,h=100,center=true);
+}
