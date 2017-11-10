@@ -1,4 +1,4 @@
-include<params.scad>
+include<../params.scad>
 
 module oring_holder()
 {
