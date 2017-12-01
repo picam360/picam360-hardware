@@ -7,14 +7,14 @@ module pcb(){
             translate([-10, 0])
             square([105,56]);
             translate([85/2, 56/2])
-            circle(r=85/2+10);
+            circle(r=85/2+15/2);
         }
         
         translate([85/2, 56/2])
         circle(r=12/2+0.1);
         
-        translate([85/2-30, 56/2])
-        rotate([0,0,55])
+        translate([85/2-33, 56/2])
+        rotate([0,0,0])
         union(){
             circle(r=10.5/2);
             translate([0,attach_hole_dimention/2])
@@ -27,8 +27,8 @@ module pcb(){
 //            circle(r=2.2/2);
         }
         
-        translate([85/2+30, 56/2])
-        rotate([0,0,-55])
+        translate([85/2+33, 56/2])
+        rotate([0,0,10])
         union(){
             circle(r=10.5/2);
             translate([0,attach_hole_dimention/2])
@@ -77,5 +77,5 @@ module raspi(){
     }
 }
 
-translate([0, -56])
+translate([15/2, -56])
 pcb();

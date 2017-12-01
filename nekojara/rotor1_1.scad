@@ -1,4 +1,3 @@
-include <../lib/MCAD/involute_gears.scad>;
 include <../lib/Getriebe.scad>;
 
 $fn=100;
@@ -16,7 +15,7 @@ module rotor1_1() {
             translate([0, 0, 4/2])
             cylinder(r=thread_diameter/2,h=4,center=true, $fn=8);
             
-            translate([10/2+5-3.70809, 0, 23])
+            translate([10/2+5-3.71409, 0, 23])
             rotate([0, 90, 0])
             cylinder(r=8/2+2,h=10,center=true);
         }

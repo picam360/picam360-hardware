@@ -1,9 +1,8 @@
-include <../lib/MCAD/involute_gears.scad>;
 include <../lib/Getriebe.scad>;
 
 module motor_gear(gear_height=3) {
     difference() {
-        stirnrad (modul=1.5, zahnzahl=8, hoehe=gear_height, bohrung=0, eingriffswinkel=20, schraegungswinkel=0);
+        stirnrad (modul=1.5, zahnzahl=10, hoehe=gear_height, bohrung=0, eingriffswinkel=20, schraegungswinkel=0);
         cylinder(r=6/2,h=100,center=true);
     }
   translate([-5/2,2.1,0])

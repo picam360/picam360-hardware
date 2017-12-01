@@ -111,7 +111,8 @@ module stirnrad(modul, zahnzahl, hoehe, bohrung, eingriffswinkel = 20, schraegun
 	gamma = rad*hoehe/(r*tan(90-schraegungswinkel));	// Torsionswinkel für Extrusion
 	schritt = rho_ra/16;								// Evolvente wird in 16 Stücke geteilt
 	tau = 360/zahnzahl;									// Teilungswinkel
-
+    echo("radius:",r);
+    
 	// Zeichnung
 	rotate([0,0,-phi_r-90*(1-spiel)/zahnzahl]){				// Zahn auf x-Achse zentrieren;
 															// macht Ausrichtung mit anderen Rädern einfacher
