@@ -1,9 +1,9 @@
 use <../lib/ISOThread.scad>;
 
 $fn=100;
-module nut()
+module nut(m=12)
 {
-    iso_nut(m=16,t=0.2);
+    iso_nut(m=m,t=0.2);
 }
 
 nut();
