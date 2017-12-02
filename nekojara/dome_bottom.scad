@@ -24,6 +24,8 @@ module dome_bottom() {
         cylinder(r = camera/2, h = 10, center=true);
         
         cylinder(r = hole_radius/2, h = 100, center=true);
+        translate([0,0,100/2+2])
+        cylinder(r = thread_diameter/2-2, h = 100, center=true);
         
         translate([0,0,100/2+rod_height-8+2])
         rotate([0,0,-45])

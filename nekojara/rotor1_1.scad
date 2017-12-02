@@ -12,10 +12,12 @@ module rotor1_1() {
         union() {
             translate([0, 0, (thread_height-4)/2+4])
             cylinder(r=thread_diameter/2,h=thread_height-4,center=true);
+            translate([0, 0, (thread_height-12-4)/2+12+4])
+            cylinder(r=thread_diameter/2+2,h=thread_height-12-4,center=true);
             translate([0, 0, 4/2])
             cylinder(r=thread_diameter/2,h=4,center=true, $fn=8);
             
-            translate([10/2+5-3.71409, 0, 23])
+            translate([10/2+5-3.73215, 0, 23])
             rotate([0, 90, 0])
             cylinder(r=8/2+2,h=10,center=true);
         }

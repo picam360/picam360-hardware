@@ -13,10 +13,10 @@ module rotor3_1() {
             cylinder(r=thread_diameter/2,h=35,center=true);
             translate([10+5, 0, 0])
             rotate([0, -90, 0])
-            kegelrad(modul=1, zahnzahl=28,  teilkegelwinkel=45, zahnbreite=5, bohrung=4, eingriffswinkel=20, schraegungswinkel=0);
+            kegelrad(modul=1.1, zahnzahl=25,  teilkegelwinkel=45, zahnbreite=5, bohrung=4, eingriffswinkel=20, schraegungswinkel=0);
             
             difference() {
-                sphere(r=20);
+                sphere(r=19.75);
                 translate([-100/2+15, 0, 0])
                 cube([100,100,100], center=true);
             }
@@ -30,7 +30,7 @@ module rotor3_1() {
         scale([1.5,1])
         cylinder(r=3/2,h=1000,center=true);
         
-                translate([-100/2+15-3.71409, 0, 0])
+                translate([-100/2+15-3.7, 0, 0])
                 cube([100,100,100], center=true);
     }
 }
