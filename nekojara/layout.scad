@@ -1,6 +1,5 @@
 use <dome_bottom.scad>;
 use <dome_upper.scad>;
-use <center_gear.scad>;
 use <motor_gear.scad>;
 use <motor_mount.scad>;
 use <motor.scad>;
