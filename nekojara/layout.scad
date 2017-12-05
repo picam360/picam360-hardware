@@ -21,7 +21,7 @@ gear2_color=[0,0.8,0.8];
 $fn=100;
 gear1_angle = $t;
 gear2_angle = -$t*2;
-translate([0,0,38])
+translate([0,0,32])
 //difference(){
     dome_upper();
 //    translate([0,0,-50])
@@ -31,11 +31,12 @@ translate([0,0,38])
 translate([0,0,0])
 dome_bottom();
 
-translate([0,0,0])
+translate([0,0,20])
 rotate([0,0,gear1_angle*360])
 color(gear1_color)
 union(){
 rotor1_1();
+translate([0,0,-19])
 rotor1_2();
 rotor1_3();
 }
@@ -43,11 +44,11 @@ rotor1_3();
 //difference(){
     union(){
 rotate([0,0,(gear2_angle+gear1_angle)*360])
-translate([0,0,23])
+translate([0,0,20])
 color(gear2_color)
 rotor2();
 
-translate([0,0,23])
+translate([0,0,20])
 color(gear2_color)
 rotate([gear2_angle*360,0,gear1_angle*360])
 union(){
@@ -85,11 +86,11 @@ translate([30,0,-2])
 rotate([180,0,0])
 motor_mount();
 //
-//translate([0,0,-8-2])
+translate([0,0,-6-2])
 //color(metal_color)
 //difference(){
 //    rotate([0,0,-180])
-//    nut();
+    nut();
 //    translate([0,0,-50])
 //    cube([100,100,100]);
 //}

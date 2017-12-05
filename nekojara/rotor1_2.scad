@@ -3,10 +3,10 @@ include <../lib/Getriebe.scad>;
 $fn=100;
 
 module rotor1_2() {
-    margin = 0.2;
-    thread_diameter = 17 + margin;
+    margin = 0.3;
+    thread_diameter = 15 + margin;
     gear_height = 3;
-    height = 5;
+    height = 3;
     difference() {
         union(){
             translate([0, 0, height/2])
