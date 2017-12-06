@@ -2,7 +2,8 @@ use <../lib/ISOThread.scad>;
 
 $fn=100;
 module dome_upper(){
-    dome = 35;
+    margin = 0.5;
+    dome = 32 + margin;
     camera = 55;
     height = 28;
     height1 = 18;

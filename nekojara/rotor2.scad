@@ -16,7 +16,7 @@ module rotor2() {
             kegelrad(modul=1, zahnzahl=22,  teilkegelwinkel=45, zahnbreite=3, bohrung=4, eingriffswinkel=20, schraegungswinkel=0);
             
             translate([0, 0, -12-gear_height])
-            stirnrad (modul=1.5, zahnzahl=34, hoehe=gear_height, bohrung=0, eingriffswinkel=20, schraegungswinkel=0);
+            stirnrad (modul=1, zahnzahl=46, hoehe=gear_height, bohrung=0, eingriffswinkel=20, schraegungswinkel=0);
 
             difference() {
                 radius=15.75;

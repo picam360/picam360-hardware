@@ -59,29 +59,29 @@ rotor3_2();
 //    cube([100,100,100]);
 //}
     
-translate([-30,0,5])
+translate([-28,0,5])
 rotate([0,0,20-$t*360*4])
 color(gear2_color)
 motor_gear();
 
-translate([-30,0,1])
+translate([-28,0,1])
 color(metal_color)
 motor();
 
-translate([-30,0,-2])
+translate([-28,0,-2])
 rotate([180,0,0])
 motor_mount();
 
-translate([30,0,1])
+translate([28,0,1])
 rotate([0,0,20-$t*360*4])
 color(gear2_color)
 motor_gear();
 
-translate([30,0,1])
+translate([28,0,1])
 color(metal_color)
 motor();
 
-translate([30,0,-2])
+translate([28,0,-2])
 rotate([180,0,0])
 motor_mount();
 //

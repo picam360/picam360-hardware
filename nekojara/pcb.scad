@@ -13,10 +13,10 @@ module pcb(){
         translate([85/2, 56/2])
         circle(r=12/2+0.1);
         
-        translate([85/2-33, 56/2])
+        translate([85/2-28, 56/2])
         rotate([0,0,0])
         union(){
-            circle(r=10.5/2);
+            circle(r=10.4/2);
             translate([0,attach_hole_dimention/2])
             circle(r=2.2/2);
             translate([0,-attach_hole_dimention/2])
@@ -27,10 +27,10 @@ module pcb(){
 //            circle(r=2.2/2);
         }
         
-        translate([85/2+33, 56/2])
+        translate([85/2+28, 56/2])
         rotate([0,0,10])
         union(){
-            circle(r=10.5/2);
+            circle(r=10.4/2);
             translate([0,attach_hole_dimention/2])
             circle(r=2.2/2);
             translate([0,-attach_hole_dimention/2])
