@@ -1,8 +1,6 @@
 include<../params.scad>
 use<../tools.scad>
-use<../dome.scad>
 use<base_plate_middle.scad>
-use<base_plate_bottom_sphere.scad>
 
 module base_plate_upper()
 {

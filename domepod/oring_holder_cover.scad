@@ -1,13 +1,13 @@
 include<../params.scad>
 
-module oring_holder()
+module oring_holder_cover()
 {
-    linear_extrude(height = 5, twist = 0, slices = 0)
+    linear_extrude(height = 2, twist = 0, slices = 0)
     {
-        oring_holder_2D();
+        oring_holder_cover_2D();
     }
 }
-module oring_holder_2D()
+module oring_holder_cover_2D()
 {
     difference()
     {
@@ -36,5 +36,5 @@ module oring_holder_2D()
 
 $fn=360;
 translate([(DOME_DIA+30)/2, -(DOME_DIA+30)/2, 0])
-    oring_holder_2D();
+    oring_holder_cover_2D();
 

@@ -2,7 +2,7 @@ include<../params.scad>
 
 module oring_holder_inner()
 {
-    linear_extrude(height = 0.5, twist = 0, slices = 0)
+    linear_extrude(height = 5, twist = 0, slices = 0)
     {
         oring_holder_inner_2D();
     }
