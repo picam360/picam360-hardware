@@ -11,7 +11,14 @@ module oring_holder_inner_2D()
 {
     difference(){
         circle(r = r_from_dia(DOME_DIA));
-        circle(r = r_from_dia(DOME_DIA) - 10);
+        circle(r = r_from_dia(DOME_DIA) - 7);
+        minkowski()
+        {
+            $fn=100;
+            r_rad=2;
+            square([72+1-r_rad*2,56+1-r_rad*2], center=true);
+            circle(r=r_rad);
+        }
     }
 }
 
