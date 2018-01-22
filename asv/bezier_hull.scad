@@ -103,9 +103,7 @@ module block(grid_size=100,t=0.4){
         cylinder(r=grid_size/4+t,h=1001,$fn=3,center=true);
     }
 }
-ratio = 7;
-
-module bezier_hull(){
+module bezier_hull_mold(ratio=14, grid_size=100){
     width=ceil((ratio*50+1)/grid_size)*grid_size;
     height=ceil((ratio*100+1)/grid_size)*grid_size;
     depth=ratio*10;
@@ -121,4 +119,4 @@ translate([0,-160,140])
 color([0.2,0.2,0.2])
 cube([540,1060,3],center=true);
 }
-bezier_hull();
+bezier_hull_mold();
