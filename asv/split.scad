@@ -22,10 +22,12 @@ module block(grid_size=100,t=0.4){
     }
 }
 module grid(w=800,h=1500,x=0,y=0,grid_size=100){
-    translate([w/2-grid_size/2-x*grid_size,-h/2+grid_size/2-y*grid_size,0])
+    offset_x = -w/2+grid_size/2+x*grid_size;
+    offset_y = h/2-grid_size/2-y*grid_size;
+    translate([-offset_x,-offset_y,0])
     intersection(){
         import(target);
-        translate([-w/2+grid_size/2-x*grid_size,h/2-grid_size/2-y*grid_size,0])
+        translate([offset_x,offset_y,0])
         block(grid_size=grid_size);
     }
 }
