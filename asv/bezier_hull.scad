@@ -16,40 +16,7 @@ function get_refpoints_bezierz(points, step)=[
     for (t =[0:len(points)-1]) bezier(points[t], step)
     ];
     
-resolution = 100;    
-$fn = resolution;
-    
-stepz = 17;
-step = 30;
-w1 = 0.9;
-w2 = 0.7;
-    
-view_refpoints = false;
-    
-refpoints = [
-    [
-        [0,50,10],
-        [0,50*w1,2],
-        [0,50*w2,0]
-    ],
-    [
-        [-35,30,10],
-        [-35*w1,30*w1,2],
-        [-35*w2,30*w2,0]
-    ],
-    [
-        [-25,-25,10],
-        [-25*w1,-25*0.95,2],
-        [-25*w2,-25*0.90,0]
-    ],
-    [
-        [-20,-50,10],
-        [-20*w1,-50*0.95,2],
-        [-20*w2,-50*0.90,0]
-    ],
-];
-
-module bezier_hull(refpoints){
+module bezier_hull(refpoints,stepz=17,step=30){
     refpoints_mirror = reverse(scale_points(refpoints,[-1,1,1]));
 
     if(view_refpoints){
@@ -86,37 +53,45 @@ module bezier_hull(refpoints){
      
     polyhedron(points, faces);
 }
-module block(grid_size=100,t=0.4){
-    difference(){
-        union(){
-            cube([grid_size,grid_size,1000],center=true);
-            translate([-grid_size/2,0,0])
-            cylinder(r=grid_size/4,h=1000,$fn=3,center=true);
-            translate([0,-grid_size/2,0])
-            rotate([0,0,90])
-            cylinder(r=grid_size/4,h=1000,$fn=3,center=true);
-        }
-        translate([grid_size/2,0,0])
-        cylinder(r=grid_size/4+t,h=1001,$fn=3,center=true);
-        translate([0,grid_size/2,0])
-        rotate([0,0,90])
-        cylinder(r=grid_size/4+t,h=1001,$fn=3,center=true);
-    }
-}
-module bezier_hull_mold(ratio=14, grid_size=100){
-    width=ceil((ratio*50+1)/grid_size)*grid_size;
-    height=ceil((ratio*100+1)/grid_size)*grid_size;
-    depth=ratio*10;
-    difference(){
-        translate([0,0,(depth-0.2)/2])
-        cube([width,height,depth-0.2],center=true);
-        translate([0,0,-0.1])
-        bezier_hull(scale_points(refpoints,ratio*[1,1,1]));
-    }
-}
+
+resolution = 100;    
+$fn = resolution;
+    
+ratio=14;
+stepz = 17;
+step = 30;
+w1 = 0.9;
+w2 = 0.7;
+    
+view_refpoints = false;
+    
+refpoints = [
+    [
+        [0,50,10],
+        [0,50*w1,2],
+        [0,50*w2,0]
+    ],
+    [
+        [-35,30,10],
+        [-35*w1,30*w1,2],
+        [-35*w2,30*w2,0]
+    ],
+    [
+        [-25,-25,10],
+        [-25*w1,-25*0.95,2],
+        [-25*w2,-25*0.90,0]
+    ],
+    [
+        [-20,-50,10],
+        [-20*w1,-50*0.95,2],
+        [-20*w2,-50*0.90,0]
+    ],
+];
+
+bezier_hull(scale_points(refpoints,ratio*[1,1,1]),stepz=stepz,step=step);
+
 if(false){
-translate([0,-160,140])
-color([0.2,0.2,0.2])
-cube([540,1060,3],center=true);
+    translate([0,-160,140])
+    color([0.2,0.2,0.2])
+    cube([540,1060,3],center=true);
 }
-bezier_hull_mold();
