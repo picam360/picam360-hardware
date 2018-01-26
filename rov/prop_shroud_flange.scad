@@ -1,13 +1,13 @@
 include<../params.scad>
 
-module prop_shroud_flange()
+module prop_shroud_flange(margin=1, atachement=[2,3,4,6])
 {
     linear_extrude(height = 3, twist = 0, slices = 0)
     {
-        prop_shroud_flange_2D();
+        prop_shroud_flange_2D(margin=margin, atachement=atachement);
     }
 }
-module prop_shroud_flange_2D(margin=1, minkowski_fn=100)
+module prop_shroud_flange_2D(margin=1, atachement=[2,3,4,6], minkowski_fn=100)
 {
     roundess=3;
     difference()
@@ -17,7 +17,7 @@ module prop_shroud_flange_2D(margin=1, minkowski_fn=100)
         minkowski()
         {
     	    $fn=minkowski_fn;
-            prop_shroud_flange_inner_2D(margin=roundess);
+            prop_shroud_flange_inner_2D(margin=roundess, atachement=atachement);
             circle(r = roundess, center=true);
         }
         for(i=[0,1,2,3])
@@ -34,7 +34,7 @@ module prop_shroud_flange_2D(margin=1, minkowski_fn=100)
         }
     }
 }
-module prop_shroud_flange_inner_2D(margin=0)
+module prop_shroud_flange_inner_2D(margin=0, atachement=[2,3,4,6])
 {
     difference()
     {
@@ -43,7 +43,7 @@ module prop_shroud_flange_inner_2D(margin=0)
         circle(r=r_from_dia(24)+margin);
         //support
         support_width = 5+margin*2;
-        for(i=[2,3,4,6])
+        for(i=atachement)
         {
             rotate(60*i)
             {

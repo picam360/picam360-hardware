@@ -1,4 +1,4 @@
-armpos=105;
+armpos=120;
 //armpos=82.5;
 import("../svg/base_plate_assembly_r6.stl");
 for(i=[0:3])
@@ -8,14 +8,18 @@ for(i=[0:3])
     rotate([90,0,0])
     cylinder(r=1,h=32,$fn=360);
     
-    translate([0,130,0])
+    rotate([0,0,45])
+    translate([0,78,3])
     rotate([90,0,0])
-    cylinder(r=1,h=13,$fn=360);
+    cylinder(r=1,h=14,$fn=360);
     
     translate([0,armpos,-18])
-    import("../svg/arm_assembly_r3.stl");
-    
-    translate([0,armpos,0])
+    rotate([0,0,-45+(i%2)*90])
     mirror([i%2,0,0])
-    import("../svg/ROVPropAdapter_r1.stl");
+    import("arm_assemble.stl");
+    
+    rotate([0,0,45])
+    translate([0,90,0])
+    mirror([i%2,0,0])
+    import("ROVPropAdapter.stl");
 }

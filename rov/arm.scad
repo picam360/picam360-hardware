@@ -10,7 +10,7 @@ module arm(height = 3, margin = 1, minkowski_fn=100)
 }
 module arm_2D(margin=1, minkowski_fn=100)
 {
-	prop_shroud_flange_2D(margin=margin, minkowski_fn=minkowski_fn);
+	//prop_shroud_flange_2D(margin=margin, minkowski_fn=minkowski_fn);
 	translate([0,-PROP_SHROUD_DIA/2])
 	difference()
 	{
@@ -32,7 +32,7 @@ module arm_2D(margin=1, minkowski_fn=100)
                             square([100,100],center=true);
                         union()
                         {
-                            circle(r=r_from_dia(PROP_SHROUD_DIA)+margin+roundess);
+                            circle(r=r_from_dia(PROP_SHROUD_DIA)+margin+roundess-10);
                             translate([0,-PROP_SHROUD_DIA/2])
                             translate([0,-(DOME_DIA+30)/2+7.5])
                                 circle(r=r_from_dia(DOME_DIA+30)+roundess);
@@ -40,7 +40,7 @@ module arm_2D(margin=1, minkowski_fn=100)
                     }
                     circle(r = roundess, center=true);
                 }
-		    	circle(r=r_from_dia(PROP_SHROUD_DIA)+margin-.01);
+		    	//circle(r=r_from_dia(PROP_SHROUD_DIA)+margin-.01);
                 translate([0,-PROP_SHROUD_DIA/2])
 	            translate([0,-(DOME_DIA+30)/2+7.5])
 	        	translate([0,-ORING_DIA])
