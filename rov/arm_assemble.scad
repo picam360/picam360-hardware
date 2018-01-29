@@ -7,14 +7,15 @@ is_sphere = true;
 
 $fn=360;
 
-shift=17;
-radius=26;
+shift=4;
+radius=26.2;
 height=27;
+angle=90;
 
-module arm_assemble(rotate=[45,0,0]){
+module arm_assemble(rotate=[0,0,0]){
     difference(){
         union(){
-            rotate([0,0,45])
+            rotate([0,0,0])
             translate([0,-shift,0])
             difference(){
                 arm(height=height, margin=0, minkowski_fn=360);
@@ -37,7 +38,7 @@ module arm_assemble(rotate=[45,0,0]){
         translate([0,0,height/2])
             rotate(rotate)
                 intersection(){
-                    cylinder(r=23,h=100,center=true);
+                    cylinder(r=22.48,h=100,center=true);
                     //scale([1,1,3])
                     //sphere(r=radius/1.135,center=true);
                 }
@@ -45,7 +46,7 @@ module arm_assemble(rotate=[45,0,0]){
     translate([0,0,height/2])
         rotate(rotate)
             translate([0,0,-13])
-            prop_shroud_flange(margin=-2.51, atachement=[2,4,6]);
+            prop_shroud_flange(margin=-2.3, atachement=[2,4,6]);
 }
 
-arm_assemble(rotate=[0,45,0]);
+arm_assemble(rotate=[0,angle,0]);

@@ -32,23 +32,25 @@ oring_holder();
 //for(i=[45,135])
 //for(m1=[0,1])
 shift=64;
-    rotate([0,0,0])
     translate([-shift,shift,-8])
-        arm_assemble(rotate=[-45,0,0]);
+    rotate([0,0,45])
+        arm_assemble(rotate=[-0,0,0]);
 
-    rotate([0,0,0])
     translate([shift,shift,-8])
         mirror([1,0,0])
-        arm_assemble(rotate=[-45,0,0]);
+        rotate([0,0,45])
+        arm_assemble(rotate=[0,90,0]);
         
     translate([-shift,-shift,-8])
         mirror([0,1,0])
-        arm_assemble(rotate=[45,0,0]);
+        rotate([0,0,45])
+        arm_assemble(rotate=[0,-90,0]);
 
     translate([shift,-shift,-8])
         mirror([1,0,0])
         mirror([0,1,0])
-        arm_assemble(rotate=[45,0,0]);
+        rotate([0,0,45])
+        arm_assemble(rotate=[0,0,0]);
 
 //lens
 translate([0,0,40])
