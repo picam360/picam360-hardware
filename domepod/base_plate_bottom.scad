@@ -2,14 +2,14 @@ include<../params.scad>
 use<../tools.scad>
 use<base_plate_middle.scad>
 
-module base_plate_bottom()
+module base_plate_bottom(height = 3, raspi_base=false)
 {
-    linear_extrude(height = 3, twist = 0, slices = 0)
+    linear_extrude(height = height, twist = 0, slices = 0)
     {
-        base_plate_bottom_2D();
+        base_plate_bottom_2D(raspi_base=raspi_base);
     }
 }
-module base_plate_bottom_2D()
+module base_plate_bottom_2D(raspi_base=false)
 {
     roundess=3;
     hole_pos = r_from_dia(DOME_DIA)-DOME_THICK-r_from_dia(8)-0;
@@ -27,11 +27,12 @@ module base_plate_bottom_2D()
                     difference()
                     {
                         circle(r = r_from_dia(DOME_DIA+16-1));
-                        base_plate_inner_2D(margin=roundess);
+                        base_plate_inner_2D(margin=roundess,raspi_base=raspi_base);
                     }
                     circle(r = roundess, center=true);
                 }
             }
+            if(raspi_base){
             //bolt hole for raspi
             translate([0, 0, 0])
                 union()
@@ -46,6 +47,7 @@ module base_plate_bottom_2D()
                         circle(r = 5, center=true);
                     }
                 }
+            }
         }
 //        for(i=[0,1])
 //        {

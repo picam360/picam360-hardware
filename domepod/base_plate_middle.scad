@@ -1,13 +1,13 @@
 include<../params.scad>
 
-module base_plate_middle()
+module base_plate_middle(raspi_base=false)
 {
     linear_extrude(height = 5, twist = 0, slices = 0)
     {
-        base_plate_middle_2D();
+        base_plate_middle_2D(raspi_base=raspi_base);
     }
 }
-module base_plate_middle_2D()
+module base_plate_middle_2D(raspi_base=false)
 {
     roundess=3;
     hole_pos = r_from_dia(DOME_DIA)-DOME_THICK-r_from_dia(8)-0;
@@ -26,11 +26,12 @@ module base_plate_middle_2D()
                     difference()
                     {
                         circle(r = r_from_dia(DOME_DIA+16-1));
-                        base_plate_inner_2D(margin=roundess, $fn=_fn);
+                        base_plate_inner_2D(margin=roundess, raspi_base=raspi_base, $fn=_fn);
                     }
                     circle(r = roundess, center=true);
                 }
             }
+            if(raspi_base){
             //bolt hole for raspi
             translate([0, 0, 0])
                 union()
@@ -45,6 +46,7 @@ module base_plate_middle_2D()
                         circle(r = 5, center=true);
                     }
                 }
+            }
         }
         for(i=[0,1])
         {
@@ -86,7 +88,7 @@ module base_plate_middle_2D()
         square([51,60], center=true);
     }
 }
-module base_plate_inner_2D(margin=0)
+module base_plate_inner_2D(margin=0, raspi_base=false)
 {
     hole_pos = r_from_dia(DOME_DIA)-DOME_THICK-r_from_dia(8)-0;
     difference()
@@ -109,19 +111,21 @@ module base_plate_inner_2D(margin=0)
                 circle(r = r_from_dia(8)+4+margin, center=true);
             }
      }
-    //bolt hole for raspi
-    translate([0, 0, 0])
-        union()
-        {
-            for(i=[0,1])
-            for(j=[0,1])
-            rotate([j*180,i*180,0])
-            translate([-58/2, -49/2, 0])
+     if(raspi_base){
+        //bolt hole for raspi
+        translate([0, 0, 0])
+            union()
             {
-                //circle(r = r_from_dia(17)+margin, center=true);
-                rotate([0,0,45])
-                translate([-5, 0, 0])
-                    square([16,10+margin*2],center=true);
+                for(i=[0,1])
+                for(j=[0,1])
+                rotate([j*180,i*180,0])
+                translate([-58/2, -49/2, 0])
+                {
+                    //circle(r = r_from_dia(17)+margin, center=true);
+                    rotate([0,0,45])
+                    translate([-5, 0, 0])
+                        square([16,10+margin*2],center=true);
+                }
             }
         }
 }
