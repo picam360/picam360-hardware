@@ -28,29 +28,32 @@ base_plate_bottom();
 translate([0,0,-5])
 oring_holder();
 
+//arm
 //for(m=[0,1])
 //for(i=[45,135])
 //for(m1=[0,1])
-shift=64;
-    translate([-shift,shift,-8])
+angle=90;
+union(){
+    translate([0,0,-8])
     rotate([0,0,45])
-        arm_assemble(rotate=[-0,0,0]);
+        arm_assemble(rotate=[-0,-90+angle,0]);
 
-    translate([shift,shift,-8])
+    translate([0,0,-8])
         mirror([1,0,0])
         rotate([0,0,45])
-        arm_assemble(rotate=[0,90,0]);
+        arm_assemble(rotate=[0,angle,0]);
         
-    translate([-shift,-shift,-8])
+    translate([0,0,-8])
         mirror([0,1,0])
         rotate([0,0,45])
-        arm_assemble(rotate=[0,-90,0]);
+        arm_assemble(rotate=[0,-angle,0]);
 
-    translate([shift,-shift,-8])
+    translate([0,0,-8])
         mirror([1,0,0])
         mirror([0,1,0])
         rotate([0,0,45])
-        arm_assemble(rotate=[0,0,0]);
+        arm_assemble(rotate=[0,90-angle,0]);
+}
 
 //lens
 translate([0,0,40])
