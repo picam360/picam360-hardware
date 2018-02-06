@@ -1,13 +1,13 @@
 include<../params.scad>
 
-module base_plate_middle(raspi_base=false)
+module base_plate_middle(height = BASE_PLATE_BOLT, raspi_base=false, raspi_hole=BASE_PLATE_BOLT)
 {
-    linear_extrude(height = 5, twist = 0, slices = 0)
+    linear_extrude(height = height, twist = 0, slices = 0)
     {
-        base_plate_middle_2D(raspi_base=raspi_base);
+        base_plate_middle_2D(raspi_base=raspi_base, raspi_hole=raspi_hole);
     }
 }
-module base_plate_middle_2D(raspi_base=false)
+module base_plate_middle_2D(raspi_base=false, raspi_hole=BASE_PLATE_BOLT, aisle=false)
 {
     roundess=3;
     hole_pos = r_from_dia(DOME_DIA)-DOME_THICK-r_from_dia(8)-0;
@@ -26,7 +26,7 @@ module base_plate_middle_2D(raspi_base=false)
                     difference()
                     {
                         circle(r = r_from_dia(DOME_DIA+16-1));
-                        base_plate_inner_2D(margin=roundess, raspi_base=raspi_base, $fn=_fn);
+                        base_plate_inner_2D(margin=roundess, raspi_base=raspi_base, aisle=aisle, $fn=_fn);
                     }
                     circle(r = roundess, center=true);
                 }
@@ -48,6 +48,7 @@ module base_plate_middle_2D(raspi_base=false)
                 }
             }
         }
+        if(aisle)
         for(i=[0,1])
         {
             mirror([i,0])
@@ -70,13 +71,14 @@ module base_plate_middle_2D(raspi_base=false)
 	        		circle(r = r_from_dia(PROP_SHROUD_DIA));
 			}
 		}
+        //bolt hole for raspi
+        for(i=[0,1])
+            mirror([0,i]) for(j=[0,1])
+                mirror([j,0]) translate([-58/2, -49/2, 0])
+                    rotate([0,0,30])
+                    circle(r = r_from_dia(raspi_hole), center=true, $fn=raspi_hole>4?6:100);
         if(BASE_PLATE_BOLT > 0)
         {
-            //bolt hole for raspi
-            for(i=[0,1])
-                mirror([0,i]) for(j=[0,1])
-                    mirror([j,0]) translate([-58/2, -49/2, 0])
-                        circle(r = r_from_dia(BASE_PLATE_BOLT), center=true);
             //bolt hole for arm
             for(i=[0:11])
             {
@@ -88,7 +90,7 @@ module base_plate_middle_2D(raspi_base=false)
         square([51,60], center=true);
     }
 }
-module base_plate_inner_2D(margin=0, raspi_base=false)
+module base_plate_inner_2D(margin=0, raspi_base=false, aisle=false)
 {
     hole_pos = r_from_dia(DOME_DIA)-DOME_THICK-r_from_dia(8)-0;
     difference()
@@ -99,6 +101,7 @@ module base_plate_inner_2D(margin=0, raspi_base=false)
             circle(r = r_from_dia(DOME_DIA)-DOME_THICK-margin);
     }
     //hole
+    if(aisle)
     for(i=[0,1])
     {
         mirror([i,0])
@@ -132,4 +135,4 @@ module base_plate_inner_2D(margin=0, raspi_base=false)
 
 $fn=360;
 translate([(DOME_DIA+30)/2, -(DOME_DIA+30)/2, 0])
-    base_plate_middle_2D();
+    base_plate_middle_2D(raspi_base=true, raspi_hole=6, aisle=false);
