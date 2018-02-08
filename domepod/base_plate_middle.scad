@@ -1,13 +1,13 @@
 include<../params.scad>
 
-module base_plate_middle(height = BASE_PLATE_BOLT, raspi_base=false, raspi_hole=BASE_PLATE_BOLT)
+module base_plate_middle(height = BASE_PLATE_BOLT, raspi_base=false, raspi_hole=BASE_PLATE_BOLT, hole=BASE_PLATE_BOLT)
 {
     linear_extrude(height = height, twist = 0, slices = 0)
     {
-        base_plate_middle_2D(raspi_base=raspi_base, raspi_hole=raspi_hole);
+        base_plate_middle_2D(raspi_base=raspi_base, raspi_hole=raspi_hole, hole=hole);
     }
 }
-module base_plate_middle_2D(raspi_base=false, raspi_hole=BASE_PLATE_BOLT, aisle=false)
+module base_plate_middle_2D(raspi_base=false, raspi_hole=BASE_PLATE_BOLT, aisle=false, hole=BASE_PLATE_BOLT)
 {
     roundess=3;
     hole_pos = r_from_dia(DOME_DIA)-DOME_THICK-r_from_dia(8)-0;
@@ -77,13 +77,14 @@ module base_plate_middle_2D(raspi_base=false, raspi_hole=BASE_PLATE_BOLT, aisle=
                 mirror([j,0]) translate([-58/2, -49/2, 0])
                     rotate([0,0,30])
                     circle(r = r_from_dia(raspi_hole), center=true, $fn=raspi_hole>4?6:100);
-        if(BASE_PLATE_BOLT > 0)
+        if(hole > 0)
         {
             //bolt hole for arm
             for(i=[0:11])
             {
                 translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 0])
-                    circle(r = r_from_dia(BASE_PLATE_BOLT), center=true);
+                rotate([0,0,i*30+30])
+                    circle(r = r_from_dia(hole), center=true, $fn=hole>4?6:100);
             }            
         }
         //rpcm board
@@ -135,4 +136,4 @@ module base_plate_inner_2D(margin=0, raspi_base=false, aisle=false)
 
 $fn=360;
 translate([(DOME_DIA+30)/2, -(DOME_DIA+30)/2, 0])
-    base_plate_middle_2D(raspi_base=true, raspi_hole=6, aisle=false);
+    base_plate_middle_2D(raspi_base=true, raspi_hole=6, aisle=false, hole=6);

@@ -1,13 +1,13 @@
 include<../params.scad>
 
-module oring_holder()
+module oring_holder(hole=BASE_PLATE_BOLT)
 {
     linear_extrude(height = 5, twist = 0, slices = 0)
     {
-        oring_holder_2D();
+        oring_holder_2D(hole=hole);
     }
 }
-module oring_holder_2D()
+module oring_holder_2D(hole=BASE_PLATE_BOLT)
 {
     difference()
     {
@@ -25,13 +25,14 @@ module oring_holder_2D()
 	        		circle(r = r_from_dia(PROP_SHROUD_DIA));
 			}
 		}
-        if(BASE_PLATE_BOLT > 0)
+        if(hole > 0)
         {
             //bolt hole for arm
             for(i=[0:11])
             {
                 translate([(DOME_DIA+20)/2*cos(i*30), (DOME_DIA+20)/2*sin(i*30), 0])
-                    circle(r = r_from_dia(BASE_PLATE_BOLT), center=true);
+                rotate([0,0,i*30+30])
+                    circle(r = r_from_dia(hole), center=true, $fn=hole>4?6:100);
             }            
         }
     }
