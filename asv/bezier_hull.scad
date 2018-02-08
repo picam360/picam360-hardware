@@ -1,4 +1,5 @@
 use <../lib/bezier.scad>;
+use <prop.scad>;
 
 function reverse(array)=[for(i=[0:len(array)-1]) array[len(array)-1-i]];
 function join(points)=[
@@ -87,10 +88,20 @@ refpoints = [
         [-20*w2,-50*0.90,0]
     ],
 ];
-
-bezier_hull(scale_points(refpoints,ratio*[1,1,1]),stepz=stepz,step=step);
-
-if(false){
+solar_panel_view=false;
+difference(){
+    bezier_hull(scale_points(refpoints,ratio*[1,1,1]),stepz=stepz,step=step);
+    translate([0,-160-(1060-600)/6-150,140/2])
+    cube([300,300,140.2],center=true);
+    translate([0,-160+(1060-600)/6+150,140/2])
+    cube([300,300,140.2],center=true);
+}
+    translate([0,-1000,140/2])
+    cube([140,140,140.2],center=true);
+translate([0,-670,20])
+rotate([-75,0,0])
+prop();
+if(solar_panel_view){
     translate([0,-160,140])
     color([0.2,0.2,0.2])
     cube([540,1060,3],center=true);
