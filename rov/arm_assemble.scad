@@ -3,17 +3,18 @@ use<arm.scad>
 use<arm_upper.scad>
 use<prop_shroud_flange.scad>
 
-is_sphere = true;
+is_sphere = false;
 
 $fn=360;
 
 radius=26.2;
 height=21+3*2;
+angle=0;
 
 module arm_assemble(rotate=[0,0,0]){
     arm_pos = (DOME_DIA+30)/2-5+PROP_SHROUD_DIA/2;
     angle2=(abs(rotate.y) == 45)?45:0;
-    shift=(abs(rotate.y) == 45)?17:4;
+    shift=(abs(rotate.y) == 45)?17:(abs(rotate.y) == 180)?4:0;
     translate([0,shift+arm_pos,0]){
         difference(){
             union(){

@@ -1,14 +1,7 @@
 include<../params.scad>
 use<../domepod/acrylic_dome.scad>
 
-use<../domepod/base_plate_upper.scad>
-use<../domepod/base_plate_middle.scad>
-use<../domepod/base_plate_bottom.scad>
-
-use<../domepod/oring_holder_cover.scad>
-use<../domepod/oring_holder.scad>
-use<../domepod/oring_holder_inner.scad>
-use<../domepod/oring_holder_bottom.scad>
+use<../domepod/base_plate_assembly.scad>
 
 use<arm_assemble.scad>
 
@@ -17,26 +10,18 @@ $fn=100;
 metal_color=[0.8,0.8,0.8];
 pcb_color=[0,0.8,0];
 
-translate([0,0,11])
-oring_holder();
-translate([0,0,8])
-base_plate_upper();
-translate([0,0,3])
-base_plate_middle();
-translate([0,0,0])
-base_plate_bottom();
-translate([0,0,-5])
-oring_holder();
+translate([0,0,6])
+base_plate_assembly();
 
 //arm
 //for(m=[0,1])
 //for(i=[45,135])
 //for(m1=[0,1])
-angle=90;
+angle=0;
 union(){
     translate([0,0,-8])
     rotate([0,0,45])
-        arm_assemble(rotate=[-0,-90+angle,0]);
+        arm_assemble(rotate=[-0,angle==0?0:-90+angle,0]);
 
     translate([0,0,-8])
         mirror([1,0,0])
@@ -52,7 +37,7 @@ union(){
         mirror([1,0,0])
         mirror([0,1,0])
         rotate([0,0,45])
-        arm_assemble(rotate=[0,90-angle,0]);
+        arm_assemble(rotate=[0,angle==0?0:90-angle,0]);
 }
 
 //lens
