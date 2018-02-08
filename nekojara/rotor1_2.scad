@@ -15,6 +15,12 @@ module rotor1_2() {
             stirnrad (modul=1, zahnzahl=46, hoehe=gear_height, bohrung=0, eingriffswinkel=20, schraegungswinkel=0);
         }
         cylinder(r=thread_diameter/2,h=100,center=true, $fn=8);
+        
+        translate([0, 0, 1.5])
+        difference(){
+            cylinder(r=20,h=100);
+            cylinder(r=thread_diameter/2+2,h=100, $fn=8);
+        }
     }
 }
 rotor1_2();

@@ -1,3 +1,5 @@
 /svg
 /stl
 *.svg
+*.stl
+*.gcode
