@@ -15,9 +15,7 @@ module camera_mount_hole_2D(size1,size2)
 module camera_holder()
 {
     linear_extrude(height = 2, twist = 0, slices = 0)
-    {
         camera_holder_2D();
-    }
 }
 module camera_holder_2D()
 {
@@ -62,7 +60,7 @@ $fn=360;
 
 for(i=[0:0])
 {
-    //translate([0, -56 - 57 * i, 0])
+    translate([0, -56 - 57 * i, 0])
     camera_holder_2D();
  }
  
