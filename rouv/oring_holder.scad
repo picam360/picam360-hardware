@@ -28,10 +28,10 @@ module oring_holder()
 }
        
 $fn=360; 
-intersection(){
+//intersection(){
 ////    rotate([0,0,20])
     oring_holder();
 //    translate([0,0,200/2])
-    translate([0,200/2,0])
-    cube([200,200,200], center=true);
-}
+//    translate([0,200/2,0])
+//    cube([200,200,200], center=true);
+//}

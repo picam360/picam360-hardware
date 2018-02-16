@@ -35,7 +35,7 @@ module inner_thread()
             translate([0, 0, 10/2])
             cylinder(r=2.7/2,h=10,center=true);
             translate([0, 0, -10/2])
-            cylinder(r=5/2,h=10,center=true);
+            cylinder(r=4.6/2,h=10,center=true);
         }
     }
 }
