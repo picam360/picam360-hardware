@@ -1,5 +1,7 @@
-include<../params.scad>
+include<params.scad>
 use<inner_thread.scad>
+
+angle=0;
 
 module prop_shroud_flange(margin=0, atachement=[2,4,6])
 {
@@ -64,48 +66,56 @@ module prop_shroud_flange_inner_2D(margin=0, atachement=[2,4,6])
         }
     }
 }
-module skrew_mount()
+module skrew_mount(angle=0)
 {
-    dist=DOME_DIA/2+15+PROP_SHROUD_DIA/2+3;
+    dist=CHAMBER_DIA/2+PROP_SHROUD_DIA/2+3;
     difference()
     {
         radius=r_from_dia(PROP_SHROUD_DIA);
         translate([0,dist,0])
-        union(){
-            cylinder(r=radius,h=21,center=true);
-            //translate([0,-radius/2-5/2])
-            //cube([radius*2,radius+5,21],center=true);
-        }
+        cylinder(r=radius,h=21+3*2,center=true);
         radius2=r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK;
         translate([0,dist,0])
-        union(){
-            cylinder(r=radius2,h=21.02,center=true);
-            //translate([0,-radius2/2-15/2])
-            //cube([radius2*2,radius2+15,21.02],center=true);
-        }
-        cylinder(r=DOME_DIA/2+15+0.5,h=100,center=true);
+        cylinder(r=radius2,h=21.02+3*2,center=true);
+        cylinder(r=CHAMBER_DIA/2+0.5,h=100,center=true);
     }
-    translate([0,dist,-21/2])
+    translate([0,dist,-21/2-3])
     prop_shroud_flange();
     difference()
     {
+        union(){
+        rotate(45)
+        inner_thread(aisle=false,angle=angle);
         joint();
-        translate([0,dist,-100/2-7/2+5])
-        cube([PROP_SHROUD_DIA-PROP_SHROUD_THICK*2,100,100],center=true);
+        }
+        //translate([0,dist,-100/2-7/2+5])
+        //cube([PROP_SHROUD_DIA-PROP_SHROUD_THICK*2,100,100],center=true);
         for(i=[26,30])
         rotate([0,0,i*360/32+45])
-        translate([0, DOME_DIA/2+5+5+5/2, 0.01])
+        translate([0, DOME_DIA/2+ORING_DIA+CHAMBER_THICK+7/2, 0.01])
         rotate([90,0,0])
-        cylinder(r=4.6/2,h=100,center=true);
+        union(){
+            translate([0, 0, 10/2])
+            cylinder(r=2.7/2,h=10,center=true);
+            translate([0, 0, -10/2])
+            cylinder(r=4.6/2,h=10,center=true);
+        }
+        
+            for(i=[-1:1])
+            rotate([0,0,i*360/32])
+translate([0,60,-7])
+rotate([0,-90,0])
+rotate_extrude(angle=90)
+translate([7,0])
+circle(r=5/2);
     }
-    rotate(45)
-    inner_thread();
 }
+
 module joint(h=7){
     translate([0,0,-h/2])
     linear_extrude(height=h)
     {
-        dist=DOME_DIA/2+15+PROP_SHROUD_DIA/2+3;
+        dist=CHAMBER_DIA/2+PROP_SHROUD_DIA/2+3;
         difference()
         {
             translate([0,dist])
@@ -120,19 +130,29 @@ module joint(h=7){
                 {
                     square([100,100],center=true);
                     translate([0,-dist])
-                    circle(r=DOME_DIA/2+15+roundess,center=true);
+                    circle(r=CHAMBER_DIA/2+roundess,center=true);
                     translate([0,-PROP_SHROUD_DIA/2])
                     square([radius*2+roundess*2,radius*2+roundess*2],center=true);
                 }
                 circle(r = roundess, center=true);
             }
-            circle(r=DOME_DIA/2+15,center=true);
+            circle(r=CHAMBER_DIA/2,center=true);
             translate([0,dist])
             circle(r=PROP_SHROUD_DIA/2,center=true);
 //            square([radius*2-PROP_SHROUD_THICK*2+0.01,radius+10],center=true);
         }
     }
 }
-$fn=100;
-//joint();
-skrew_mount();
+$fn=360;
+if(false)
+{
+    intersection(){
+    //    rotate([0,0,20])
+        skrew_mount(angle=angle);
+        translate([0,0,200/2])
+    //    translate([0,200/2,0])
+        cube([200,200,200], center=true);
+    }
+}else{
+    skrew_mount(angle=angle);
+}

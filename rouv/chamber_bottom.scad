@@ -31,4 +31,4 @@ module chamber_bottom()
 
 $fn=180;
 //projection(cut=true)
-//chamber_bottom();
+chamber_bottom();

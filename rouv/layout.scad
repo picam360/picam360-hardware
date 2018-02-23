@@ -6,6 +6,7 @@ use<oring_holder.scad>
 use<chamber_bottom.scad>
 use<inner_thread.scad>
 use<skrew_mount.scad>
+use<raspi_mount.scad>
 
 $fn=100;
 half=false;
@@ -21,6 +22,12 @@ main_chamber();
 rotate([180,0,0])
 translate([0,0,21/2])
 oring_holder();
+
+for(i=[0,1])
+mirror([i,0])
+for(j=[0,1])
+mirror([0,j])
+raspi_mount(height=11, raspi_hole=2.7);
 
 //lens
 translate([0,0,40])
