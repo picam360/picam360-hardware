@@ -13,6 +13,7 @@ module main_chamber()
             cylinder(r=DOME_DIA/2+ORING_DIA-0.2,h=10,center=true);
         }
         
+        nut_len=7;
         for(a=[0:3])
         {
             for(i=[0,1,3,4,5,7])
@@ -21,8 +22,8 @@ module main_chamber()
             aisle(enter_r=3.5/2, exit_r=5/2, enter_h=5.5, exit_h=6.5, joint=2);
             for(i=[2,6])
             rotate([0,0,i*360/32+a*90])
-            translate([0, DOME_DIA/2-4, 0.01])
-            insert_nut(m=6/2, enter_h=5, exit_h=5, joint=5);
+            translate([0, DOME_DIA/2-nut_len+1, 0.01])
+            insert_nut(m=6/2, enter_h=nut_len, exit_h=nut_len, joint=5);
         }
     }
 }

@@ -88,9 +88,9 @@ module relay_box_bottom()
             cylinder(r=6/2,h=100,center=true);
         }
         
-        translate([0,0,shell-1/2+0.01])
-        linear_extrude(height=1,center=true)
-        text("Picam360", size=10, halign="center", valign="center", font = "Liberation Sans");
+        translate([0,0,shell-0.5/2+0.01])
+        linear_extrude(height=0.5,center=true)
+        text("Picam360", size=15, halign="center", valign="center", font = "Liberation Sans");
     }
 }
 

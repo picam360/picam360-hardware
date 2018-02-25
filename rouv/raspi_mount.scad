@@ -22,12 +22,14 @@ module raspi_mount()
             }
         }
         
-        rotate([0,0,2*360/32+90])
-        translate([0, DOME_DIA/2-5, 0.01])
-        insert_nut(m=6/2, enter_h=6, exit_h=5, joint=5);
+        nut_len=7;
         
         rotate([0,0,2*360/32+90])
-        translate([0, DOME_DIA/2-6.5, 0.01])
+        translate([0, DOME_DIA/2-nut_len+1, 0.01])
+        insert_nut(m=6/2, enter_h=nut_len, exit_h=nut_len, joint=5);
+        
+        rotate([0,0,2*360/32+90])
+        translate([0, DOME_DIA/2-nut_len-0.5, 0.01])
         rotate([90,0,0])
         union(){
             translate([0, 0, -10/2+0.01])
@@ -136,6 +138,7 @@ $fn=360;
 //                    }
 //                    circle(r = 3.6, center=true);
 //                }
+
 raspi_mount(height=11, raspi_hole=2.7);
 //raspi_mount_2D(raspi_hole=0);
 //raspi_mount_inner_2D(margin=3);
