@@ -3,7 +3,15 @@
 OPENSCAD=/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
 
 for ((angle=0; angle < 360; angle+=90)); do
+	$OPENSCAD -o inner_thread_${angle}.stl -D angle=$angle inner_thread.scad
+done
+
+for ((angle=0; angle < 360; angle+=90)); do
 	$OPENSCAD -o skrew_mount_${angle}.stl -D angle=$angle skrew_mount.scad
+done
+
+for ((type=0; type < 2; angle++)); do
+	$OPENSCAD -o aisle_mold_${type}.stl -D type=$type aisle_mold.scad
 done
 
 $OPENSCAD -o main_chamber.stl main_chamber.scad

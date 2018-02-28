@@ -2,6 +2,8 @@ include<params.scad>
 use<../tools.scad>
 use <../lib/ISOThread.scad>;
 
+angle=0;
+
 module inner_thread(aisle=true, angle=0)
 {
     margin = 0.3;//gosa and sealing coting
@@ -35,7 +37,13 @@ module inner_thread(aisle=true, angle=0)
         for(i=[26,30])
         rotate([0,0,i*360/32])
         translate([0, DOME_DIA/2-nut_len+1, 0.01])
-        insert_nut(m=6/2, enter_h=nut_len, exit_h=nut_len, joint=5);
+        minkowski()
+        {
+            rotate([0,0,(28-i)*360/32])
+            translate([0,-10/2,0])
+            cube([0.01,10,0.01], center=true);
+            insert_nut(m=6/2, enter_h=nut_len, exit_h=nut_len, joint=5);
+        }
         
         for(i=[26,30])
         rotate([0,0,i*360/32])
@@ -74,7 +82,7 @@ module insert_nut(m=6/2, enter_h=9, exit_h=9, joint=2){
     cylinder(r=m,h=exit_h,center=true,$fn=6);
 }
 
-$fn=360;
+$fn=180;
 if(false)
 {
     intersection(){
@@ -85,5 +93,5 @@ if(false)
         cube([200,200,200], center=true);
     }
 }else{
-    inner_thread(angle=0);
+    inner_thread(angle=angle);
 }

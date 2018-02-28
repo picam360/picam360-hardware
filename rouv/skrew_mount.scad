@@ -143,7 +143,7 @@ module joint(h=7){
         }
     }
 }
-$fn=360;
+$fn=180;
 if(false)
 {
     intersection(){

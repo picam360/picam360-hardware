@@ -4,7 +4,10 @@ use <../lib/ISOThread.scad>;
 
 module oring_holder()
 {
-    margin = 0;
+    t=0.2;
+    inner_margin = 0;
+    outer_space = 1;
+    thread_margin = 0.5;
     difference(){
         union(){
             intersection()
@@ -15,15 +18,15 @@ module oring_holder()
                 scale([1,1,0.25])
                 sphere(r=DOME_DIA/1.45);
             }
-            translate([0, 0, -6])
+            translate([0, 0, -(7-thread_margin)])
             difference(){
-                translate([0, 0, 6/2])
-                cylinder(r=CHAMBER_DIA/2+1 ,h=6,center=true);
+                translate([0, 0, (7-thread_margin)/2])
+                cylinder(r=CHAMBER_DIA/2+outer_space ,h=(7-thread_margin),center=true);
                 translate([0,0,-0.005])
-                iso_thread(m=DOME_DIA+(ORING_DIA+CHAMBER_THICK+THREAD_MALE_THICK)*2, l=6.01, p=3, t=0.2);
+                iso_thread(m=DOME_DIA+(ORING_DIA+CHAMBER_THICK+THREAD_MALE_THICK)*2, l=(7-thread_margin)+0.01, p=3, t=t);
             }
         }
-        cylinder(r=DOME_DIA/2+margin,h=100,center=true);
+        cylinder(r=DOME_DIA/2+inner_margin,h=100,center=true);
         for(i=[0:31])
         rotate(i*360/32)
         translate([CHAMBER_DIA/2+5, 0, 0])
