@@ -1,7 +1,9 @@
 include<params.scad>
 use<inner_thread.scad>
+use<main_chamber.scad>
 
 angle=0;
+insert_thick=1;
 
 module prop_shroud_flange(margin=0, atachement=[2,4,6])
 {
@@ -85,29 +87,19 @@ module skrew_mount(angle=0)
     {
         union(){
         rotate(45)
-        inner_thread(aisle=false,angle=angle);
-        joint();
+            inner_thread(aisle=false,angle=angle);
+            joint();
         }
         //translate([0,dist,-100/2-7/2+5])
         //cube([PROP_SHROUD_DIA-PROP_SHROUD_THICK*2,100,100],center=true);
-        for(i=[26,30])
-        rotate([0,0,i*360/32+45])
-        translate([0, DOME_DIA/2+ORING_DIA+CHAMBER_THICK+7/2, 0.01])
-        rotate([90,0,0])
-        union(){
-            translate([0, 0, 10/2])
-            cylinder(r=2.7/2,h=10,center=true);
-            translate([0, 0, -10/2])
-            cylinder(r=4.6/2,h=10,center=true);
-        }
         
-            for(i=[-1:1])
-            rotate([0,0,i*360/32])
-translate([0,60,-7])
-rotate([0,-90,0])
-rotate_extrude(angle=90)
-translate([7,0])
-circle(r=5/2);
+        for(i=[-1:1])
+        rotate([0,0,i*360/32])
+        translate([0,60,-7])
+        rotate([0,-90,0])
+        rotate_extrude(angle=90)
+        translate([7,0])
+        circle(r=5/2);
     }
 }
 
@@ -119,7 +111,7 @@ module joint(h=7){
         difference()
         {
             translate([0,dist])
-            square([80,80],center=true);
+            square([70,80],center=true);
             radius=r_from_dia(PROP_SHROUD_DIA);
             translate([0,dist])
             minkowski()
@@ -148,7 +140,11 @@ if(false)
 {
     intersection(){
     //    rotate([0,0,20])
-        skrew_mount(angle=angle);
+        union()
+        {
+            skrew_mount(angle=angle);
+            main_chamber();
+        }
         translate([0,0,200/2])
     //    translate([0,200/2,0])
         cube([200,200,200], center=true);
