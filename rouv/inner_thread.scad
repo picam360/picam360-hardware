@@ -1,29 +1,33 @@
 include<params.scad>
 use<../tools.scad>
 use <../lib/ISOThread.scad>;
+use<../lib/arc.scad>
 use<main_chamber.scad>
 
-angle=45;
-angle2=30;
+angle=235;
+angle2=60;
 
 thread_h=7;
-margin=0.2;//gosa and sealing coting
-shell_thick=1.8-margin;
+shell_thick=1.8;
 aisle_enter=4;
 aisle_outer=6;
 module inner_thread(aisle=true, angle=0, angle2=60)
 {
-    difference(){
+    difference()
+    {
         intersection(){
             union(){
                 translate([0, 0, 7/2+thread_h/2])
-                _inner_thread([0,0,angle]);
-                difference(){
-                    cylinder(r=CHAMBER_DIA/2,h=7,center=true);
-                    cylinder(r=DOME_DIA/2+ORING_DIA+CHAMBER_THICK+margin,h=100,center=true);
-                }
+                rotate([0,0,angle])
+                translate([0, 0, -thread_h/2])
+                iso_thread(m=DOME_DIA+(ORING_DIA+CHAMBER_THICK+THREAD_MALE_THICK)*2, l=thread_h, p=3, t=0.0);
+                
+                cylinder(r=CHAMBER_DIA/2,h=7,center=true);
+                
                 translate([0, 0, -7/2-thread_h/2+0.01])
-                _inner_thread([180,0,angle]);
+                rotate([180,0,angle])
+                translate([0, 0, -thread_h/2])
+                iso_thread(m=DOME_DIA+(ORING_DIA+CHAMBER_THICK+THREAD_MALE_THICK)*2, l=thread_h, p=3, t=0.0);
             }
             rotate([0,0,(90-angle2)/2])
             rotate_extrude(angle=angle2){
@@ -31,16 +35,32 @@ module inner_thread(aisle=true, angle=0, angle2=60)
                 square([100,100]);
             }
         }
-        for(i=[27:29])
-        rotate([0,0,i*360/32])
-        translate([0, DOME_DIA/2-3-0.2, 0.01])
-        minkowski()
-        {
-            rotate([0,0,(28-i)*360/32])
-            translate([0,-10/2,0])
-            cube([0.01,10,0.01], center=true);
-            aisle(enter_r=aisle_enter/2, exit_r=aisle_outer/2, length=15.2);
+        union(){
+            for(i=[0:1])
+            {            
+                mirror([0,0,i])
+                translate([0, 0, 11/2+(5-shell_thick+0.4)/2])
+                cylinder(r1=DOME_DIA/2+10+SHELL_MARGIN, r2=DOME_DIA/2+ORING_DIA+shell_thick+1+SHELL_MARGIN-0.25,h=5-shell_thick+0.4,center=true);
+            }
+            cylinder(r=DOME_DIA/2+10+SHELL_MARGIN,h=11,center=true);
+            cylinder(r=DOME_DIA/2+5+shell_thick,h=100,center=true);
         }
+        for(i=[0:1])
+        {
+            rotate([0,0,i*360/8+22.5])
+            linear_extrude(height=21-shell_thick*2+SHELL_MARGIN*2,center=true)
+            arc(DOME_DIA/2+10-(5-shell_thick)+0.01,5-shell_thick+SHELL_MARGIN,15);
+        }
+//        for(i=[27:29])
+//        rotate([0,0,i*360/32])
+//        translate([0, DOME_DIA/2-3-0.2, 0.01])
+//        minkowski()
+//        {
+//            rotate([0,0,(28-i)*360/32])
+//            translate([0,-10/2,0])
+//            cube([0.01,10,0.01], center=true);
+//            aisle(enter_r=aisle_enter/2, exit_r=aisle_outer/2, length=15.2);
+//        }
         if(aisle){
             for(i=[27:29])
             rotate([0,0,i*360/32])
@@ -49,23 +69,11 @@ module inner_thread(aisle=true, angle=0, angle2=60)
             cylinder(r=aisle_enter/2,h=100,center=true);
         }
         
-        rotate(-45-22.5)
-        translate([0, DOME_DIA/2+ORING_DIA+CHAMBER_THICK+5/2-2, 0.01])
+        rotate(-45-5.5)
+        translate([0, DOME_DIA/2+ORING_DIA+CHAMBER_THICK+5/2-2, 0])
         rotate([90,0,0])
         linear_extrude(height=5)
         text(str(angle), size=4, halign="center", valign="center", font = "Liberation Sans");
-    }
-}
-module _inner_thread(rotation=[0,0,0])
-{
-    rotate(rotation)
-    difference()
-    {
-        translate([0, 0, -thread_h/2])
-        iso_thread(m=DOME_DIA+(ORING_DIA+CHAMBER_THICK+THREAD_MALE_THICK)*2, l=thread_h, p=3, t=0.0);
-        translate([0, 0, -100/2-thread_h/2+(thread_h-shell_thick)])
-        cylinder(r=DOME_DIA/2+ORING_DIA+CHAMBER_THICK+margin,h=100,center=true);
-        cylinder(r=DOME_DIA/2+ORING_DIA+shell_thick+margin,h=100,center=true);
     }
 }
 module aisle(enter_r=3/2, exit_r=5/2, length=11){
@@ -83,7 +91,7 @@ $fn=180;
 if(false)
 {
     intersection(){
-        rotate(135)
+        rotate(135+15)
         union(){
             inner_thread(angle=0);
             main_chamber();
