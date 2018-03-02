@@ -3,7 +3,6 @@ use<inner_thread.scad>
 use<main_chamber.scad>
 
 angle=0;
-insert_thick=1;
 
 module prop_shroud_flange(margin=0, atachement=[2,4,6])
 {

@@ -6,10 +6,11 @@ use<main_chamber.scad>
 angle=45;
 angle2=30;
 
-insert_thick=1;
 thread_h=7;
 margin=0.2;//gosa and sealing coting
 shell_thick=1.8-margin;
+aisle_enter=4;
+aisle_outer=6;
 module inner_thread(aisle=true, angle=0, angle2=60)
 {
     difference(){
@@ -38,14 +39,14 @@ module inner_thread(aisle=true, angle=0, angle2=60)
             rotate([0,0,(28-i)*360/32])
             translate([0,-10/2,0])
             cube([0.01,10,0.01], center=true);
-            aisle(enter_r=2/2+insert_thick, exit_r=4/2+insert_thick, length=15.2);
+            aisle(enter_r=aisle_enter/2, exit_r=aisle_outer/2, length=15.2);
         }
         if(aisle){
             for(i=[27:29])
             rotate([0,0,i*360/32])
             translate([0,100/2,0])
             rotate([90,0,0])
-            cylinder(r=(angle==45&&i==29)?4/2:2/2,h=100,center=true);
+            cylinder(r=aisle_enter/2,h=100,center=true);
         }
         
         rotate(-45-22.5)

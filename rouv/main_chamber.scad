@@ -1,8 +1,9 @@
 include<params.scad>
 use<../tools.scad>
 
-insert_thick=1;
 shell_thick=1.8;
+aisle_enter=4;
+aisle_outer=6;
 module main_chamber()
 {
     difference(){
@@ -21,13 +22,12 @@ module main_chamber()
             for(i=[0,1,3,4,5,7])
             rotate([0,0,i*360/32+a*90])
             translate([0, DOME_DIA/2-3-0.2, 0])
-            aisle(enter_r=2/2+insert_thick, exit_r=4/2+insert_thick, length=15.2);
+            aisle(enter_r=aisle_enter/2, exit_r=aisle_outer/2, length=15.2);
             
             for(i=[2,6])
             rotate([0,0,i*360/32+a*90])
             translate([0, DOME_DIA/2-nut_len+1, 0])
             insert_nut(m=6/2, enter_h=nut_len, exit_h=nut_len, joint=5);
-
         }
     }
 }
