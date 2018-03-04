@@ -2,9 +2,8 @@ include<params.scad>
 use<../tools.scad>
 use<../lib/arc.scad>
 
-shell_thick=1.8;
-aisle_enter=4;
-aisle_outer=6;
+aisle_enter=3.5;
+aisle_outer=aisle_enter*sqrt(3);
 module main_chamber()
 {
     difference(){
@@ -12,8 +11,8 @@ module main_chamber()
             for(i=[0:1])
             {            
                 mirror([0,0,i])
-            translate([0, 0, 11/2+(5-shell_thick)/2])
-                cylinder(r1=DOME_DIA/2+10, r2=DOME_DIA/2+ORING_DIA+shell_thick+1,h=5-shell_thick,center=true);
+            translate([0, 0, 11/2+(5-SHELL_THICK)/2])
+                cylinder(r1=DOME_DIA/2+10, r2=DOME_DIA/2+ORING_DIA+SHELL_THICK+1,h=5-SHELL_THICK,center=true);
             }
             cylinder(r=DOME_DIA/2+10,h=11,center=true);
         }
@@ -21,8 +20,8 @@ module main_chamber()
         for(i=[0:1])
         {            
             mirror([0,0,i])
-            translate([0, 0, 10/2+(11-shell_thick*2)/2])
-            cylinder(r=DOME_DIA/2+ORING_DIA+shell_thick,h=10,center=true);
+            translate([0, 0, 10/2+(11-SHELL_THICK*2)/2])
+            cylinder(r=DOME_DIA/2+ORING_DIA+SHELL_THICK,h=10,center=true);
         }
         
         nut_len=7;
@@ -31,7 +30,12 @@ module main_chamber()
             for(i=[0,1,3,4,5,7])
             rotate([0,0,i*360/32+a*90])
             translate([0, DOME_DIA/2-3-0.2, 0])
-            aisle(enter_r=aisle_enter/2, exit_r=aisle_outer/2, length=15.2);
+            aisle(enter_r=aisle_enter/2, exit_r=aisle_outer/2, length=13.4);
+            
+            for(i=[0,1,3,4,5,7])
+            rotate([0,0,i*360/32+a*90])
+            translate([0, DOME_DIA/2+ORING_DIA/2, 100/2])
+            cylinder(r=1/2,h=100,center=true);
             
             for(i=[2,6])
             rotate([0,0,i*360/32+a*90])
@@ -42,8 +46,8 @@ module main_chamber()
         for(i=[0:7])
         {
             rotate([0,0,i*360/8+22.5])
-            linear_extrude(height=21-shell_thick*2,center=true)
-            arc(DOME_DIA/2+10-(5-shell_thick)+0.01,5-shell_thick,15-2*SHELL_MARGIN/((DOME_DIA/2+10)*3.14)*180);
+            linear_extrude(height=21-SHELL_THICK*2,center=true)
+            arc(DOME_DIA/2+10-(5-SHELL_THICK)+0.01,5-SHELL_THICK,15-2*SHELL_MARGIN/((DOME_DIA/2+10)*3.14)*180);
         }
 }
 module aisle(enter_r=3/2, exit_r=5/2, length=11){

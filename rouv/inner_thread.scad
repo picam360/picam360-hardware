@@ -4,13 +4,12 @@ use <../lib/ISOThread.scad>;
 use<../lib/arc.scad>
 use<main_chamber.scad>
 
-angle=235;
-angle2=60;
+angle=45;
+angle2=30;
 
 thread_h=7;
-shell_thick=1.8;
-aisle_enter=4;
-aisle_outer=6;
+aisle_enter=3.5;
+aisle_outer=aisle_enter*sqrt(3);
 module inner_thread(aisle=true, angle=0, angle2=60)
 {
     difference()
@@ -39,17 +38,17 @@ module inner_thread(aisle=true, angle=0, angle2=60)
             for(i=[0:1])
             {            
                 mirror([0,0,i])
-                translate([0, 0, 11/2+(5-shell_thick+0.4)/2])
-                cylinder(r1=DOME_DIA/2+10+SHELL_MARGIN, r2=DOME_DIA/2+ORING_DIA+shell_thick+1+SHELL_MARGIN-0.25,h=5-shell_thick+0.4,center=true);
+                translate([0, 0, 11/2+(5-SHELL_THICK+0.4)/2])
+                cylinder(r1=DOME_DIA/2+10+SHELL_MARGIN, r2=DOME_DIA/2+ORING_DIA+SHELL_THICK+1+SHELL_MARGIN-0.25,h=5-SHELL_THICK+0.4,center=true);
             }
             cylinder(r=DOME_DIA/2+10+SHELL_MARGIN,h=11,center=true);
-            cylinder(r=DOME_DIA/2+5+shell_thick,h=100,center=true);
+            cylinder(r=DOME_DIA/2+5+SHELL_THICK,h=100,center=true);
         }
         for(i=[0:1])
         {
             rotate([0,0,i*360/8+22.5])
-            linear_extrude(height=21-shell_thick*2+SHELL_MARGIN*2,center=true)
-            arc(DOME_DIA/2+10-(5-shell_thick)+0.01,5-shell_thick+SHELL_MARGIN,15);
+            linear_extrude(height=21-SHELL_THICK*2+SHELL_MARGIN*2,center=true)
+            arc(DOME_DIA/2+10-(5-SHELL_THICK)+0.01,5-SHELL_THICK+SHELL_MARGIN,15);
         }
 //        for(i=[27:29])
 //        rotate([0,0,i*360/32])
@@ -66,7 +65,7 @@ module inner_thread(aisle=true, angle=0, angle2=60)
             rotate([0,0,i*360/32])
             translate([0,100/2,0])
             rotate([90,0,0])
-            cylinder(r=aisle_enter/2,h=100,center=true);
+            cylinder(r=(angle==45&&i==27)?4/2:aisle_enter/2,h=100,center=true);
         }
         
         rotate(-45-5.5)
@@ -91,7 +90,7 @@ $fn=180;
 if(false)
 {
     intersection(){
-        rotate(135+15)
+        rotate(135)
         union(){
             inner_thread(angle=0);
             main_chamber();
