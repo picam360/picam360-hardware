@@ -30,9 +30,9 @@ module dome_bottom() {
         translate([0,0,-10/2+12+0.01])
         cylinder(r1 = hole_radius/2, r2 = thread_diameter/2-2, h = 10, center=true);
         
-        translate([0,0,100/2+rod_height-4+2])
+        translate([0,0,-5.5/2+rod_height+2.51])
         rotate([0,0,-45])
-        cylinder(r = 16/2, h = 100, center=true, $fn=6);
+        cylinder(r1=thread_diameter/2-2, r2 = 16/2, h = 5.5, center=true, $fn=6);
         
         for(i=[0:1])
         {
@@ -49,12 +49,10 @@ module dome_bottom() {
         }
         rotate([0,0,-45])
         translate([0,0,rod_height-0.01]){
-            translate([17-3/2,0,0])
-            cube([2,5,100], center=true);
-            slipring_electrode(r=17, attach_margin=0, h=1);
-            translate([23+3/2,0,0])
-            cube([2,5,100], center=true);
-            slipring_electrode(r=23, attach_margin=0, h=1);
+            translate([25.77,0,0])
+            cube([2.543,2.54*2,100], center=true);
+            linear_extrude(height=1)
+            slipring_electrode(r=24.5, width=9, margin=0.1);
         }
     }
     for(i=[0:3])
@@ -67,4 +65,5 @@ module dome_bottom() {
         }
     }
 }
+
 dome_bottom();
