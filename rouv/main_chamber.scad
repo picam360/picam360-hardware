@@ -32,23 +32,19 @@ module main_chamber()
             translate([0, DOME_DIA/2-3-0.2, 0])
             aisle(enter_r=aisle_enter/2, exit_r=aisle_outer/2, length=13.4);
             
-            for(i=[0,1,3,4,5,7])
-            rotate([0,0,i*360/32+a*90])
-            translate([0, DOME_DIA/2+ORING_DIA/2, 100/2])
-            cylinder(r=1/2,h=100,center=true);
-            
             for(i=[2,6])
             rotate([0,0,i*360/32+a*90])
-            translate([0, DOME_DIA/2-nut_len+1, 0])
-            insert_nut(m=6/2, enter_h=nut_len, exit_h=nut_len, joint=5);
+            translate([0, DOME_DIA/2-3-10/2+5, 0])
+            rotate([90,0])
+            cylinder(r=2.5/2,h=10,center=true);
         }
     }
-        for(i=[0:7])
-        {
-            rotate([0,0,i*360/8+22.5])
-            linear_extrude(height=21-SHELL_THICK*2,center=true)
-            arc(DOME_DIA/2+10-(5-SHELL_THICK)+0.01,5-SHELL_THICK,15-2*SHELL_MARGIN/((DOME_DIA/2+10)*3.14)*180);
-        }
+    for(i=[0:7])
+    {
+        rotate([0,0,i*360/8+22.5])
+        linear_extrude(height=21-SHELL_THICK*2,center=true)
+        arc(DOME_DIA/2+10-(5-SHELL_THICK)+0.01,5-SHELL_THICK,15-2*SHELL_MARGIN/((DOME_DIA/2+10)*3.14)*180);
+    }
 }
 module aisle(enter_r=3/2, exit_r=5/2, length=11){
     translate([0,length/2,0])

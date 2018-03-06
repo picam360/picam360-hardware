@@ -5,7 +5,7 @@ use<../lib/arc.scad>
 use<main_chamber.scad>
 
 angle=45;
-angle2=30;
+angle2=60;
 
 thread_h=7;
 aisle_enter=3.5;
@@ -65,7 +65,7 @@ module inner_thread(aisle=true, angle=0, angle2=60)
             rotate([0,0,i*360/32])
             translate([0,100/2,0])
             rotate([90,0,0])
-            cylinder(r=(angle==45&&i==27)?4/2:aisle_enter/2,h=100,center=true);
+            cylinder(r=(angle==45&&i==27)?4/2:4/2,h=100,center=true);
         }
         
         rotate(-45-5.5)
@@ -85,20 +85,74 @@ module insert_nut(m=6/2, enter_h=9, exit_h=9, joint=2){
     rotate([90,0])
     cylinder(r=m,h=enter_h,center=true,$fn=6);
 }
+module inner_thread_2(aisle=true, angle=0, angle2=60)
+{
+    difference()
+    {
+        union()
+        {
+            inner_thread(aisle=aisle,angle=angle,angle2=angle2);
+            for(i=[-1,1])
+            rotate(45+i*(15+12/2))
+            linear_extrude(height=6,center=true)
+            arc(CHAMBER_DIA/2-6+SHELL_MARGIN,3-SHELL_MARGIN,12);
+        }
+        for(i=[-1,1])
+        rotate(-45+i*(15+15/2))
+        translate([0,CHAMBER_DIA/2-6-10/2+2,0])
+        rotate([90,0])
+        cylinder(r=2.5/2,h=100,center=true);
+    }
+}
+module inner_thread_3(aisle=true, angle=0, angle2=60, bolt_base=true)
+{
+    difference()
+    {
+        union()
+        {
+            inner_thread(aisle=aisle,angle=angle,angle2=angle2);
+            if(bolt_base)
+            {
+                for(i=[-1,1])
+                rotate(-45+i*(15+15/2))
+                translate([0,CHAMBER_DIA/2-2/2+0.5,0])
+                rotate([90,0])
+                cylinder(r=5/2,h=2,center=true);
+            }
+        }
+        for(i=[-1,1])
+        rotate(45+i*(15+15-12.1/2+0.001))
+        linear_extrude(height=6.2,center=true)
+        arc(CHAMBER_DIA/2-6+SHELL_MARGIN,3-SHELL_MARGIN+0.1,12.1);
+            
+        for(i=[-1,1])
+        rotate(-45+i*(15+15/2))
+        translate([0,CHAMBER_DIA/2+10/2-1,0])
+        rotate([90,0])
+        cylinder(r=3.2/2,h=100,center=true);
+    }
+}
 
 $fn=180;
 if(false)
 {
-    intersection(){
-        rotate(135)
+    intersection()
+    {
+        rotate(152)
         union(){
-            inner_thread(angle=0);
+            rotate(-45)
+            inner_thread_2(angle=angle,angle2=30);
+            inner_thread_3(angle=angle,angle2=60);
             main_chamber();
         }
-    //    translate([0,0,200/2])
-        translate([0,200/2,0])
+        translate([0,0,200/2])
+        //translate([0,200/2,0])
         cube([200,200,200], center=true);
     }
 }else{
-    inner_thread(angle=angle,angle2=angle2);
+    if(angle2==30){
+        inner_thread_2(angle=angle,angle2=angle2);
+    }else{
+        inner_thread_3(angle=angle,angle2=angle2);
+    }
 }

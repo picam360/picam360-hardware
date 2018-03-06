@@ -86,9 +86,21 @@ module skrew_mount(angle=0)
     {
         union(){
         rotate(45)
-            inner_thread(aisle=false,angle=angle);
+            inner_thread_3(aisle=false,angle=angle,bolt_base=false);
             joint();
         }
+        for(i=[-1,1])
+        rotate(i*(15+15/2))
+        translate([0,CHAMBER_DIA/2,0])
+        rotate([90,0])
+        union()
+        {
+            translate([0,0,100/2-0.01])
+            cylinder(r=3.2/2,h=100,center=true);
+            translate([0,0,-100/2])
+            cylinder(r=6.2/2,h=100,center=true);
+        }
+        
         //translate([0,dist,-100/2-7/2+5])
         //cube([PROP_SHROUD_DIA-PROP_SHROUD_THICK*2,100,100],center=true);
         
