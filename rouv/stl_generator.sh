@@ -14,9 +14,13 @@ for ((angle=0; angle < 360; angle+=90)); do
 	$OPENSCAD -o skrew_mount_${angle}.stl -D angle=$angle -D angle2=60 skrew_mount.scad
 done
 
-#for ((type=0; type < 2; type++)); do
-#	$OPENSCAD -o aisle_mold_${type}.stl -D type=$type aisle_mold.scad
-#done
+$OPENSCAD -o fill_jig_${type}.stl -D aisle=0 fill_jig.scad
+$OPENSCAD -o fill_jig_${type}.stl -D aisle=2 fill_jig.scad
+$OPENSCAD -o fill_jig_${type}.stl -D aisle=2.5 fill_jig.scad
+
+$OPENSCAD -o filling_${type}.stl -D aisle=0.5 filling.scad
+$OPENSCAD -o filling_${type}.stl -D aisle=2 filling.scad
+$OPENSCAD -o filling_${type}.stl -D aisle=2.5 filling.scad
 
 $OPENSCAD -o main_chamber.stl main_chamber.scad
 $OPENSCAD -o oring_base.stl oring_base.scad

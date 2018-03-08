@@ -3,6 +3,7 @@ use<inner_thread.scad>
 use<main_chamber.scad>
 
 angle=0;
+h=9;
 
 module prop_shroud_flange(margin=0, atachement=[2,4,6])
 {
@@ -87,7 +88,7 @@ module skrew_mount(angle=0)
         union(){
         rotate(45)
             inner_thread_3(aisle=false,angle=angle,bolt_base=false);
-            joint();
+            joint(h=h);
         }
         for(i=[-1,1])
         rotate(i*(15+15/2))
@@ -96,9 +97,9 @@ module skrew_mount(angle=0)
         union()
         {
             translate([0,0,100/2-0.01])
-            cylinder(r=3.2/2,h=100,center=true);
+            cylinder(r=3.5/2,h=100,center=true);
             translate([0,0,-100/2])
-            cylinder(r=6.2/2,h=100,center=true);
+            cylinder(r=6.5/2,h=100,center=true);
         }
         
         //translate([0,dist,-100/2-7/2+5])
