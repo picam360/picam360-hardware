@@ -20,11 +20,11 @@ module rotor3_2() {
             
             translate([0, 52, 0])
             rotate([90, 0, 0])
-            cylinder(r=8/2,h=20,center=true);
+            cylinder(r=9/2,h=20,center=true);
         }
             
         rotate([90, 0, 0])
-        cylinder(r=5/2+0.4,h=1000,center=true);
+        cylinder(r=6/2,h=1000,center=true);
     }
 }
 rotor3_2();

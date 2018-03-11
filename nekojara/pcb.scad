@@ -11,7 +11,10 @@ module pcb(){
         }
         
         translate([85/2, 56/2])
-        circle(r=12/2+0.1);
+        union(){
+            circle(r=12/2+0.1);
+            square([2,16],center=true);
+        }
         
         translate([85/2-28, 56/2])
         rotate([0,0,55])

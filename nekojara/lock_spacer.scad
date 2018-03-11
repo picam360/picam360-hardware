@@ -13,7 +13,7 @@ module rotor1_4() {
     {
         mirror([i,0,0])
         translate([3.5/2+9/2,0,(height+1.6)/2])
-        cube([3.5-0.2,2-0.2,height+1.6], center=true);
+        cube([3.5-0.3,2-0.3,height+1.6], center=true);
     }
 }
 rotor1_4();
