@@ -1,13 +1,14 @@
 include<params.scad>
 use<inner_thread.scad>
 use<main_chamber.scad>
+use<skrew.scad>
 
 angle=0;
 h=9;
 
-module prop_shroud_flange(margin=0, atachement=[2,4,6])
+module prop_shroud_flange(margin=0, atachement=[1,3,5], h=PROP_SHROUD_THICK)
 {
-    linear_extrude(height = PROP_SHROUD_THICK, twist = 0, slices = 0)
+    linear_extrude(height = h, twist = 0, slices = 0)
     {
         prop_shroud_flange_2D(margin=margin, atachement=atachement);
     }
@@ -55,7 +56,7 @@ module prop_shroud_flange_inner_2D(margin=0, atachement=[2,4,6])
             //square([radius*2,radius+5],center=true);
         }
         //motor bed
-        circle(r=r_from_dia(24)+margin);
+        circle(r=r_from_dia(SKREW_OUTER_DIA)+margin);
         //support
         support_width = 5+margin*2;
         for(i=atachement)
@@ -70,19 +71,33 @@ module prop_shroud_flange_inner_2D(margin=0, atachement=[2,4,6])
 }
 module skrew_mount(angle=0)
 {
+    overlap=1.0;
     dist=CHAMBER_DIA/2+PROP_SHROUD_DIA/2+3;
+    translate([0,dist,0])
     difference()
     {
         radius=r_from_dia(PROP_SHROUD_DIA);
-        translate([0,dist,0])
         cylinder(r=radius,h=21+3*2,center=true);
         radius2=r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK;
-        translate([0,dist,0])
         cylinder(r=radius2,h=21.02+3*2,center=true);
-        cylinder(r=CHAMBER_DIA/2+0.5,h=100,center=true);
+        
+        for(i=[-1:1])
+        translate([0,0,-(21+3*2)/2+PROP_SHROUD_THICK+6/2])
+        rotate([90,0,i*12.25])
+        cylinder(r=3.5/2,h=100);
     }
-    translate([0,dist,-21/2-3])
-    prop_shroud_flange();
+    translate([0,dist,-(21+3*2)/2])
+    union()
+    {
+        prop_shroud_flange(h=PROP_SHROUD_THICK);
+        translate([0,0,4/2+PROP_SHROUD_THICK])
+        difference(){
+            cylinder(r=SKREW_OUTER_DIA/2,h=6-overlap+PROP_SHROUD_THICK,center=true);
+            cylinder(r=SKREW_INNER_DIA/2,h=100,center=true);
+            translate([0,-100/2,0])
+            cube([8,100,100],center=true);
+        }
+    }
     difference()
     {
         union(){
@@ -150,14 +165,17 @@ module joint(h=7){
 $fn=180;
 if(false)
 {
+    dist=CHAMBER_DIA/2+PROP_SHROUD_DIA/2+3;
     intersection(){
     //    rotate([0,0,20])
         union()
         {
             skrew_mount(angle=angle);
             main_chamber();
+            translate([0,dist,0.5])
+            skrew();
         }
-        translate([0,0,200/2])
+        translate([0,0,0])
     //    translate([0,200/2,0])
         cube([200,200,200], center=true);
     }

@@ -8,21 +8,22 @@ aisle=0.5;
 //aisle=2;//motor cable
 module filling(aisle=1)
 {
-    h=5;
     aisle_enter=4;
     aisle_outer=6;
     aisle_len=13.4;
+    h1=0;
+    h2=aisle_len-3;
     difference()
     {
-        cylinder(r1=(aisle_enter+(aisle_outer-aisle_enter)/aisle_len*h)/2,r2=aisle_enter/2,h=h);
+        cylinder(r1=(aisle_enter+(aisle_outer-aisle_enter)/aisle_len*h2)/2,r2=(aisle_enter+(aisle_outer-aisle_enter)/aisle_len*h1)/2,h=h2-h1);
         
-        translate([(aisle_enter-aisle)/2,0,0])
+        translate([((aisle_enter+(aisle_outer-aisle_enter)/aisle_len*h1)-aisle)/2,0,0])
         if(aisle>0)
         {
-            linear_extrude(height=10.01,center=true)
+            linear_extrude(height=100.01,center=true)
             minkowski(){
                 square([10,0.01]);
-                circle(r=aisle/2,h=10,center=true);
+                circle(r=aisle/2,center=true);
             }
         }
     }

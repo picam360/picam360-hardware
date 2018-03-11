@@ -9,6 +9,7 @@ angle2=30;
 
 h=9;
 margin=0.2;
+margin_deg=360*margin/(CHAMBER_DIA*3.14);
 thread_h=6;
 module inner_thread(aisle=true, angle=0, angle2=60)
 {
@@ -64,6 +65,19 @@ module inner_thread(aisle=true, angle=0, angle2=60)
         linear_extrude(height=5)
         text(str(angle), size=4, halign="center", valign="center", font = "Liberation Sans");
     }
+
+    if(aisle){
+        for(i=[-1,1])
+        rotate(45-i*0.5*360/32)
+        translate([CHAMBER_DIA/2-0.5,0])
+        rotate([0,0,-90])
+        rotate_extrude(angle=180)
+        translate([2.8,0])
+        minkowski(){
+            square([1,5-2],center=true);
+            circle(r=1/2);
+        }
+    }
 }
 module aisle(enter_r=3/2, exit_r=5/2, length=11){
     translate([0,length/2,0])
@@ -75,7 +89,7 @@ module insert_nut(m=6/2, enter_h=9, exit_h=9, joint=2){
     rotate([90,0])
     cylinder(r=m,h=enter_h,center=true,$fn=6);
 }
-module inner_thread_2(aisle=true, angle=0, angle2=60)
+module inner_thread_2(aisle=true, angle=0, angle2=60, tapping=false)
 {
     difference()
     {
@@ -83,15 +97,29 @@ module inner_thread_2(aisle=true, angle=0, angle2=60)
         {
             inner_thread(aisle=aisle,angle=angle,angle2=angle2);
             for(i=[-1,1])
-            rotate(45+i*(15+12/2))
-            linear_extrude(height=7,center=true)
-            arc(CHAMBER_DIA/2-6+SHELL_MARGIN,4-SHELL_MARGIN,12);
+            rotate(45+i*(15+10.5/2))
+            linear_extrude(height=6,center=true)
+            arc(CHAMBER_DIA/2-6+SHELL_MARGIN,4-SHELL_MARGIN,10.5);
         }
         for(i=[-1,1])
         rotate(-45+i*(15+15/2))
-        translate([0,CHAMBER_DIA/2-6-10/2+2,0])
+        translate([0,CHAMBER_DIA/2-6+SHELL_MARGIN,0])
         rotate([90,0])
-        cylinder(r=1.7/2,h=100,center=true);
+        if(tapping){
+            cylinder(r=1.7/2,h=100,center=true);
+        }else{
+            union(){
+            cylinder(r=2.4/2,h=100,center=true);
+            cylinder(r=4.6/2+0.1,h=2*2,center=true,$fn=6);
+            }
+        }
+        
+        if(LED_ENABLED)
+        {
+            rotate(-45)
+            translate([0, CHAMBER_DIA/2-2/2, 0])
+            cube([3.2,2,7],center=true);
+        }
     }
 }
 module inner_thread_3(aisle=true, angle=0, angle2=60, bolt_base=true)
@@ -111,15 +139,29 @@ module inner_thread_3(aisle=true, angle=0, angle2=60, bolt_base=true)
             }
         }
         for(i=[-1,1])
-        rotate(45+i*(15+15-12.1/2+0.001))
+        rotate(45+i*(15+15-(10.5+margin_deg)/2+0.001))
         linear_extrude(height=6+margin*2,center=true)
-        arc(CHAMBER_DIA/2-6+SHELL_MARGIN,4-SHELL_MARGIN+margin,12.25);
+        arc(CHAMBER_DIA/2-6+SHELL_MARGIN,4-SHELL_MARGIN+margin,10.5+margin_deg);
             
         for(i=[-1,1])
         rotate(-45+i*(15+15/2))
         translate([0,CHAMBER_DIA/2+10/2-1,0])
         rotate([90,0])
         cylinder(r=2.4/2,h=100,center=true);
+        
+        if(LED_ENABLED)
+        {
+            for(i=[-1,1])
+            rotate(-45)
+            translate([0, CHAMBER_DIA/2-6, i*(21/2-2/2)])
+            rotate([90,0,90])
+            cube([3.2,2.01,7],center=true);
+            
+            for(i=[0])
+            rotate(-45)
+            translate([i*1.75, CHAMBER_DIA/2-6, 0])
+            cylinder(r=3.2/2, h=100,center=true);
+        }
     }
 }
 
@@ -128,7 +170,7 @@ if(false)
 {
     intersection()
     {
-        rotate(152)
+        rotate(180-45)
         union(){
             rotate(-45)
             inner_thread_2(angle=angle,angle2=30);
@@ -136,7 +178,7 @@ if(false)
             main_chamber();
         }
         translate([0,0,200/2])
-        //translate([0,200/2,0])
+        translate([0,200/2,0])
         cube([200,200,200], center=true);
     }
 }else{

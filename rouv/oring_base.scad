@@ -4,9 +4,10 @@ use<main_chamber.scad>
 
 module oring_base()
 {
+    taper=0;
     difference(){
         translate([0, 0, -(ORING_DIA+SHELL_THICK-SHELL_MARGIN)/2+21/2])
-        cylinder(r1=DOME_DIA/2+ORING_DIA+SHELL_THICK-SHELL_MARGIN-0.8,r2=DOME_DIA/2+ORING_DIA+SHELL_THICK-SHELL_MARGIN,h=ORING_DIA+SHELL_THICK-SHELL_MARGIN,center=true);
+        cylinder(r1=DOME_DIA/2+ORING_DIA+SHELL_THICK-SHELL_MARGIN-taper,r2=DOME_DIA/2+ORING_DIA+SHELL_THICK-SHELL_MARGIN,h=ORING_DIA+SHELL_THICK-SHELL_MARGIN,center=true);
         cylinder(r=DOME_DIA/2-3,h=21.01,center=true);
         translate([0, 0, 10/2+21/2-ORING_DIA])
         cylinder(r=DOME_DIA/2+ORING_DIA,h=10,center=true);

@@ -8,7 +8,7 @@ sized to fit in Jim Hertel's rice nozzle
 his suggest prop diameter 63mm
 */
 
-module skrew_prop(res=100, nBlade=2, hubRad=26.5/2)
+module skrew_prop(res=100, nBlade=2, hubRad=26.5/2, hubHeight=12, shaftRad=2.5)
 {
 	//Parameters
 	
@@ -20,10 +20,7 @@ module skrew_prop(res=100, nBlade=2, hubRad=26.5/2)
 	nSlices=20; //20 has been good for printing
 	bladeScale=4; //amount of growth of blade moving out from the hub
 	bladeThick=2; //thickness of fin, 1mm had been strong enough
-	bladeWidth=2; // starting blade width at origin
-	//hubHeight=5;// use at least 6 for nose to have threads all the way
-	hubHeight=12;//2*(bladeScale)*(bladeWidth)*sin(avgAngle); //uses blades dimensions to find the best hub height. 
-	shaftRad=2.5;// 5m bolt on motor
+	bladeWidth=2; // starting blade width at originblades dimensions to find the best hub height. 
 	$fn=res;
 	
 	/*****************end parameters***********/

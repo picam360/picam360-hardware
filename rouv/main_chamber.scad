@@ -7,6 +7,7 @@ aisle_outer=6;
 aisle_len=13.4;
 module main_chamber()
 {
+    taper=0;
     difference(){
         union(){
             for(i=[0:1])
@@ -22,7 +23,7 @@ module main_chamber()
         {            
             mirror([0,0,i])
             translate([0, 0, 5/2+(11-SHELL_THICK*2)/2])
-            cylinder(r1=DOME_DIA/2+ORING_DIA+SHELL_THICK-0.8,r2=DOME_DIA/2+ORING_DIA+SHELL_THICK,h=5.01,center=true);
+            cylinder(r1=DOME_DIA/2+ORING_DIA+SHELL_THICK-taper,r2=DOME_DIA/2+ORING_DIA+SHELL_THICK,h=5.01,center=true);
         }
         
         nut_len=7;
