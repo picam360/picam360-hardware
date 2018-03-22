@@ -21,7 +21,7 @@ $fn = resolution;
     
 ratio=14;
 stepz = 30;
-step = 100;
+step = 102;
 w1 = 0.9;
 w2 = 0.7;
     

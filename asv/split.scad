@@ -2,7 +2,7 @@
 target="bezier_hull_mold_x14.stl";
 grid_size=100;
 x=0;
-y=0;
+y=8;
 w=800;
 h=1500;
 
@@ -26,13 +26,11 @@ module block(grid_size=100,t=1){
 module grid(w=800,h=1500,x=0,y=0,grid_size=100){
     offset_x = -w/2+grid_size/2+x*grid_size;
     offset_y = h/2-grid_size/2-y*grid_size;
-    translate([-offset_x,-offset_y,0])
     intersection(){
-        import(target);
-        translate([offset_x,offset_y,0])
         block(grid_size=grid_size);
+        translate([-offset_x,-offset_y,0])
+        import(target);
     }
 }
-
 echo("w:",w,"h:",h,"x:",x,"y:",y);
 grid(grid_size=grid_size,w=w,h=h,x=x,y=y);
