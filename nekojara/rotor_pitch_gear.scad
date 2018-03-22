@@ -2,7 +2,7 @@ include <../lib/Getriebe.scad>;
 
 $fn=100;
 
-module rotor2() {
+module rotor_pitch_gear() {
     margin = 0.4;
     inner_thread_diameter = 15+margin;
     thread_diameter = 18;
@@ -10,6 +10,8 @@ module rotor2() {
     height = 6;
     gear_num = 23;
     gear_act = 2.23995;
+    r=46;
+    num=46;
     difference() {
         union() {
             translate([0, 0, -12-height/2+3])
@@ -18,10 +20,10 @@ module rotor2() {
             kegelrad(modul=2*(12-(3-gear_act))/gear_num, zahnzahl=gear_num,  teilkegelwinkel=45, zahnbreite=3, bohrung=4, eingriffswinkel=20, schraegungswinkel=0);
             
             translate([0, 0, -12-gear_height])
-            stirnrad (modul=1, zahnzahl=46, hoehe=gear_height, bohrung=0, eingriffswinkel=20, schraegungswinkel=0);
+            stirnrad (modul=r/num, zahnzahl=num, hoehe=gear_height, bohrung=0, eingriffswinkel=20, schraegungswinkel=0);
 
             difference() {
-                radius=16.15;
+                radius=15.9;
                 sphere(r=radius+3/2);
                 sphere(r=radius+margin/2);
                 translate([0, 0, 100/2-7])
@@ -35,4 +37,4 @@ module rotor2() {
         cylinder(r=inner_thread_diameter/2+5,h=100);
     }
 }
-rotor2();
+rotor_pitch_gear();

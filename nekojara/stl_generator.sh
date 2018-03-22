@@ -7,6 +7,7 @@ targets=(
 		arm_shaft
 		dome_bottom
 		dome_upper
+		lock_spacer
 		motor_gear
 		motor_mount
 		nut
@@ -14,7 +15,8 @@ targets=(
 		rotor_pitch
 		rotor_spacer
 		rotor_yaw_gear
-		rotor_yaw		
+		rotor_yaw
+		slipring_filling
 	)
 
 for target in "${targets[@]}"; do

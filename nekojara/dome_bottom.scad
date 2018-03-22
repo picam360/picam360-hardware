@@ -15,7 +15,10 @@ module dome_bottom() {
             iso_thread(m=camera+6, l=10, p=3);
             translate([0,0,-4/2+rod_height])
             rotate([0,0,-45])
-            cylinder(r = 20/2, h = 4, center=true, $fn=6);
+            intersection(){
+            cylinder(r = 18/2, h = 4, center=true, $fn=6);
+            cylinder(r = 16.5/2, h = 4, center=true);
+            }
             translate([0,0,rod_height/2])
             cylinder(r = thread_diameter/2, h = rod_height, center=true);
             translate([0,0,-thread_height])
@@ -31,8 +34,7 @@ module dome_bottom() {
         cylinder(r1 = hole_radius/2, r2 = thread_diameter/2-2, h = 10, center=true);
         
         translate([0,0,-5.5/2+rod_height+2.51])
-        rotate([0,0,-45])
-        cylinder(r1=thread_diameter/2-2, r2 = 16/2, h = 5.5, center=true, $fn=6);
+            cylinder(r1=thread_diameter/2-2, r2 = 16/2, h = 5.5, center=true);
         
         for(i=[0:1])
         {
@@ -65,5 +67,11 @@ module dome_bottom() {
         }
     }
 }
-
+if(false){
+    difference(){
+        dome_bottom();
+        cube([100,100,100]);
+    }
+}else{    
 dome_bottom();
+}

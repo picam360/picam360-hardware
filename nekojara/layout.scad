@@ -6,15 +6,14 @@ use <motor.scad>;
 use <nut.scad>;
 use <pcb.scad>;
 
-use <rotor1_1.scad>;
-use <rotor1_2.scad>;
-use <rotor1_3.scad>;
-use <rotor2.scad>;
-use <rotor3_1.scad>;
-use <rotor3_2.scad>;
+use <rotor_yaw.scad>;
+use <rotor_yaw_gear.scad>;
+use <rotor_pitch.scad>;
+use <rotor_pitch_gear.scad>;
+use <arm.scad>;
+use <arm_shaft.scad>;
 
 use <slipring_electrode.scad>;
-use <slipring.scad>;
 
 metal_color=[0.8,0.8,0.8];
 pcb_color=[0,0.8,0];
@@ -37,10 +36,13 @@ translate([0,0,20])
 rotate([0,0,gear1_angle*360])
 color(gear1_color)
 union(){
-rotor1_1();
+rotate([0,0,90])
+rotor_yaw();
 translate([0,0,-19])
-rotor1_2();
-rotor1_3();
+rotor_yaw_gear();
+arm_shaft();
+rotate([0,0,180])
+arm_shaft();
 }
 
 //difference(){
@@ -48,15 +50,17 @@ union(){
     rotate([0,0,(gear2_angle+gear1_angle)*360])
     translate([0,0,20])
     color(gear2_color)
-    rotor2();
+    rotor_pitch_gear();
 
     translate([0,0,20])
     color(gear2_color)
     rotate([gear2_angle*360,0,gear1_angle*360])
     union(){
-    rotor3_1();
+    rotor_pitch();
+    rotate([0,0,180])
+    rotor_pitch();
     translate([0,6,0])
-    rotor3_2();
+    arm();
     }
 }
 //    cube([100,100,100]);
@@ -70,9 +74,6 @@ union(){
 slipring_electrode(r=17, attach_margin=0);
 slipring_electrode(r=23.5, attach_margin=0);
 }
-translate([0,0,20])
-rotate([0,0,90])
-slipring();
     
 //motor
     

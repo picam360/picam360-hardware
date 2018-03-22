@@ -2,7 +2,7 @@ include <../lib/Getriebe.scad>;
 
 $fn=100;
 
-module rotor1_3() {
+module arm_shaft() {
     margin = 0.4;
     inner_thread_diameter = 12+margin;
     gear_act = 2.23995;
@@ -23,4 +23,4 @@ module rotor1_3() {
             cylinder(r=3/2,h=100,center=true);
     }
 }
-rotor1_3();
+arm_shaft();
