@@ -97,9 +97,9 @@ module inner_thread_2(aisle=true, angle=0, angle2=60, tapping=false)
         {
             inner_thread(aisle=aisle,angle=angle,angle2=angle2);
             for(i=[-1,1])
-            rotate(45+i*(15+10.5/2))
+            rotate(45+i*(15+10.5/2-0.1))
             linear_extrude(height=6,center=true)
-            arc(CHAMBER_DIA/2-6+SHELL_MARGIN,4-SHELL_MARGIN,10.5);
+            arc(CHAMBER_DIA/2-6+SHELL_MARGIN,4-SHELL_MARGIN,12.5+0.1);
         }
         for(i=[-1,1])
         rotate(-45+i*(15+15/2))

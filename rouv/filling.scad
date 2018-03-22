@@ -12,7 +12,7 @@ module filling(aisle=1)
     aisle_outer=6;
     aisle_len=13.4;
     h1=0;
-    h2=aisle_len-3;
+    h2=aisle_len-6;
     difference()
     {
         cylinder(r1=(aisle_enter+(aisle_outer-aisle_enter)/aisle_len*h2)/2,r2=(aisle_enter+(aisle_outer-aisle_enter)/aisle_len*h1)/2,h=h2-h1);

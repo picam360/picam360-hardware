@@ -20,7 +20,7 @@ module prop_shroud_flange_2D(margin=0, atachement=[2,4,6], minkowski_fn=100)
     {
         radius=r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK+0.01;
         union(){
-            circle(r = radius);
+            circle(r = radius+0.01);
             //translate([0,-radius/2])
             //square([radius*2,radius],center=true);
         }
@@ -28,7 +28,7 @@ module prop_shroud_flange_2D(margin=0, atachement=[2,4,6], minkowski_fn=100)
         minkowski()
         {
     	    $fn=minkowski_fn;
-            prop_shroud_flange_inner_2D(margin=roundess, atachement=atachement);
+            prop_shroud_flange_inner_2D(margin=roundess-0.03, atachement=atachement);
             circle(r = roundess, center=true);
         }
         for(i=[0,1,2,3])
@@ -81,27 +81,33 @@ module skrew_mount(angle=0)
         radius2=r_from_dia(PROP_SHROUD_DIA)-PROP_SHROUD_THICK;
         cylinder(r=radius2,h=21.02+3*2,center=true);
         
-        for(i=[-1:1])
-        translate([0,0,-(21+3*2)/2+PROP_SHROUD_THICK+6/2])
-        rotate([90,0,i*12.25])
-        cylinder(r=3.5/2,h=100);
+        translate([0,-PROP_SHROUD_DIA/2,-(21+3*2)/2+PROP_SHROUD_THICK+4/2])
+        minkowski()
+        {
+            cube([10-4,10,0.01],center=true);
+            sphere(r=4/2);
+        }
     }
     translate([0,dist,-(21+3*2)/2])
     union()
     {
         prop_shroud_flange(h=PROP_SHROUD_THICK);
-        translate([0,0,4/2+PROP_SHROUD_THICK])
+        translate([0,0,(6-overlap+PROP_SHROUD_THICK)/2])
         difference(){
             cylinder(r=SKREW_OUTER_DIA/2,h=6-overlap+PROP_SHROUD_THICK,center=true);
             cylinder(r=SKREW_INNER_DIA/2,h=100,center=true);
-            translate([0,-100/2,0])
-            cube([8,100,100],center=true);
+            translate([0,-SKREW_OUTER_DIA/2,1+PROP_SHROUD_THICK])
+            minkowski()
+            {
+                cube([8-4,10,10-4],center=true);
+                sphere(r=4/2);
+            }
         }
     }
     difference()
     {
         union(){
-        rotate(45)
+            rotate(45)
             inner_thread_3(aisle=false,angle=angle,bolt_base=false);
             joint(h=h);
         }
@@ -122,7 +128,7 @@ module skrew_mount(angle=0)
         
         for(i=[-1:1])
         rotate([0,0,i*360/32])
-        translate([0,60,-7])
+        translate([0,59.8,-7])
         rotate([0,-90,0])
         rotate_extrude(angle=90)
         translate([7,0])
@@ -138,7 +144,7 @@ module joint(h=7){
         difference()
         {
             translate([0,dist])
-            square([70,80],center=true);
+            square([60,80],center=true);
             radius=r_from_dia(PROP_SHROUD_DIA);
             translate([0,dist])
             minkowski()
@@ -155,13 +161,14 @@ module joint(h=7){
                 }
                 circle(r = roundess, center=true);
             }
-            circle(r=CHAMBER_DIA/2,center=true);
+            circle(r=CHAMBER_DIA/2-0.01,center=true);
             translate([0,dist])
-            circle(r=PROP_SHROUD_DIA/2,center=true);
+            circle(r=PROP_SHROUD_DIA/2-0.1,center=true);
 //            square([radius*2-PROP_SHROUD_THICK*2+0.01,radius+10],center=true);
         }
     }
 }
+
 $fn=180;
 if(false)
 {
