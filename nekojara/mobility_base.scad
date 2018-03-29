@@ -1,9 +1,11 @@
 
 $fn=100;
+wall_thick=2;
+base_thick=2;
 motor_dim=[22.5,18.7]+[0.5,0.5];
 raspi_hole_dim=[56-7,65-7];
 raspi_dim=[56,85];
-battery_case_dim=[72,96,19]+[0.5,0.5,0];
+battery_case_dim=[72,96,19.5]+[0.5,0.5,0.5];
 module  minkowski_square(dimension, r=2,center=false)
 {   
     minkowski()
@@ -18,13 +20,22 @@ module  minkowski_square(dimension, r=2,center=false)
     }
 }
 module mobility_base(){
+    raspi_offset=raspi_dim.y/2-(raspi_hole_dim.y+3.5)/2;
     difference()
     {
         union()
         {
-            outer_dim=battery_case_dim+[4,4];
-            linear_extrude(height=battery_case_dim.z+2){
+            outer_dim=battery_case_dim+[2*wall_thick,2*wall_thick];
+            linear_extrude(height=battery_case_dim.z+base_thick){
                 minkowski_square(outer_dim,r=3,center=true);
+            }
+            //raspi hole
+            for(y=[-raspi_hole_dim.y/2+raspi_offset,raspi_hole_dim.y/2+raspi_offset])
+            for(x=[-raspi_hole_dim.x/2,raspi_hole_dim.x/2])
+            translate([x,y,battery_case_dim.z+base_thick])
+            {
+                translate([0,0,5/2])
+                cylinder(r=8.5/2,h=5,center=true);
             }
             //motor
             for(i=[0:3])
@@ -32,13 +43,13 @@ module mobility_base(){
                 rotate(i*90+45)
                 translate([0,150/2,0])
                 {
-                    linear_extrude(height=4){
+                    linear_extrude(height=5){
                         translate([0,-30/2-0.01])
-                        minkowski_square(motor_dim+[3,30],r=1,center=true);
+                        minkowski_square(motor_dim+[2*wall_thick,30],r=1,center=true);
                     }
                     linear_extrude(height=38){
-                        translate([0,-1.5/2-0.01])
-                        minkowski_square(motor_dim+[3,1.5],r=1,center=true);
+                        translate([0,-wall_thick/2-0.01])
+                        minkowski_square(motor_dim+[2*wall_thick,wall_thick],r=1,center=true);
                     }
                 }
             }
@@ -54,7 +65,7 @@ module mobility_base(){
         for(i=[0:3])
         {
             rotate(i*90+45)
-            translate([0,150/2,2])
+            translate([0,150/2,base_thick])
             {
                 linear_extrude(height=100){
                     minkowski_square(motor_dim,r=0.1,center=true);
@@ -72,7 +83,7 @@ module mobility_base(){
                 }
                 
                 for(i=[-1,1])
-                translate([i*7.5,-motor_dim.y/2-1.5/2,31.5])
+                translate([i*8.5,-motor_dim.y/2-1.5/2,31.5])
                 rotate([90,0,0])
                 cylinder(r1=3.5/2,r2=5.5/2,h=1.6,center=true);
             }
@@ -80,9 +91,17 @@ module mobility_base(){
         
         //battery holder
         for(i=[-1,1])
-        translate([i*20/2,0,-100/2+10])
+        translate([i*20/2,0,-100/2+15])
         cube([2,200,100],center=true);
         
+        //hold slit
+        translate([-battery_case_dim.x/2,0,-100/2])
+        minkowski()
+        {
+            cube([0.01,0.01,100],center=true);
+            rotate([90,0,90])
+            cylinder(r=15/2,h=10,center=true);
+        }
         //cable slit
         translate([battery_case_dim.x/2,9,-100/2+15])
         minkowski()
@@ -101,15 +120,12 @@ module mobility_base(){
         }
         
         //raspi hole
-        offset=raspi_dim.y/2-(raspi_hole_dim.y+3.5)/2;
-        for(y=[-raspi_hole_dim.y/2+offset,raspi_hole_dim.y/2+offset])
+        for(y=[-raspi_hole_dim.y/2+raspi_offset,raspi_hole_dim.y/2+raspi_offset])
         for(x=[-raspi_hole_dim.x/2,raspi_hole_dim.x/2])
-        translate([x,y,battery_case_dim.z+1.5])
+        translate([x,y,battery_case_dim.z+base_thick])
         {
-            translate([0,0,100/2-0.01])
-            cylinder(r=2.8/2,h=100,center=true);
-            translate([0,0,-100/2])
-            cylinder(r=5/2,h=100,center=true);
+            translate([0,0,100/2])
+            cylinder(r=6/2,h=100,center=true,$fn=6);
         }
     }
         
@@ -126,5 +142,8 @@ if(false){
             minkowski_square(raspi_dim,center=true);
 mobility_base();
 }else{
-mobility_base();
+    intersection(){
+        cube([120,120,140],center=true);
+        mobility_base();
+    }
 }
