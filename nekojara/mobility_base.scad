@@ -35,7 +35,7 @@ module mobility_base(){
             translate([x,y,battery_case_dim.z+base_thick])
             {
                 translate([0,0,5/2])
-                cylinder(r=8.5/2,h=5,center=true);
+                cylinder(r=8.5/2,h=5+0.02,center=true);
             }
             //motor
             for(i=[0:3])
@@ -83,9 +83,9 @@ module mobility_base(){
                 }
                 
                 for(i=[-1,1])
-                translate([i*8.5,-motor_dim.y/2-1.5/2,31.5])
+                translate([i*8.5,-motor_dim.y/2-wall_thick/2,31.5])
                 rotate([90,0,0])
-                cylinder(r1=3.5/2,r2=5.5/2,h=1.6,center=true);
+                cylinder(r1=3.5/2,r2=5.5/2,h=wall_thick+0.04,center=true);
             }
         }
         

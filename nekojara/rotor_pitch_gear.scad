@@ -1,4 +1,5 @@
 include <../lib/Getriebe.scad>;
+include <params.scad>
 
 $fn=100;
 
@@ -10,8 +11,9 @@ module rotor_pitch_gear() {
     height = 6;
     gear_num = 23;
     gear_act = 2.23995;
-    r=46;
-    num=46;
+    num=YAW_GEAR_RATIO*YAW_PINION_NUM;
+    r=YAW_GEAR_RATIO*YAW_GEAR_DISTANCE/(YAW_GEAR_RATIO+1);
+    echo(r=r);
     difference() {
         union() {
             translate([0, 0, -12-height/2+3])
