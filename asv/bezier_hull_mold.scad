@@ -1,12 +1,12 @@
 use <bezier_hull.scad>;
 
-module bezier_hull_mold(refpoints, ratio=14, grid_size=100){
+module bezier_hull_mold(refpoints, ratio=15, grid_size=100){
     margin=4/2;
     space=25-margin;
     
     width=ceil((ratio*50+1)/grid_size)*grid_size;
     height=ceil((ratio*100+1)/grid_size)*grid_size;
-    depth=ratio*10;
+    depth=100;
     echo(width=width,height=height,depth=depth);
     difference(){
         translate([0,0,(depth-0.2)/2])
@@ -18,34 +18,40 @@ module bezier_hull_mold(refpoints, ratio=14, grid_size=100){
 
 resolution = 100;    
 $fn = resolution;
-    
-ratio=14;
-stepz = 30;
-step = 102;
-w1 = 0.9;
-w2 = 0.7;
-    
-refpoints = [
-    [
-        [0,50,10],
-        [0,50*w1,2],
-        [0,50*w2,0]
-    ],
-    [
-        [-35,30,10],
-        [-35*w1,30*w1,2],
-        [-35*w2,30*w2,0]
-    ],
-    [
-        [-25,-25,10],
-        [-25*w1,-25*0.95,2],
-        [-25*w2,-25*0.90,0]
-    ],
-    [
-        [-20,-50,10],
-        [-20*w1,-50*0.95,2],
-        [-20*w2,-50*0.90,0]
-    ],
-];
 
-bezier_hull_mold(refpoints, ratio=ratio);
+stepz = 17;
+step = 30;
+view_refpoints = false;
+
+module bezier_hull_mold_x15(){
+    height=100;
+    ratio=15;
+    w1 = 0.9;
+    w2 = 0.8;
+        
+        
+    refpoints = [
+        [
+            [0,50,height/ratio],
+            [0,50*w1,0.2*height/ratio],
+            [0,50*w2,0]
+        ],
+        [
+            [-36,36,height/ratio],
+            [-36*w1,36*w1,0.2*height/ratio],
+            [-36*w2,36*w2,0]
+        ],
+        [
+            [-22,-25,height/ratio],
+            [-22*w1,-25*w1,0.2*height/ratio],
+            [-22*w2,-25*w2,0]
+        ],
+        [
+            [-19,-50,height/ratio],
+            [-19*w1,-50*0.98,0.2*height/ratio],
+            [-19*w2,-50*0.95,0]
+        ],
+    ];
+    bezier_hull_mold(refpoints, ratio=ratio);
+}
+bezier_hull_mold_x15();

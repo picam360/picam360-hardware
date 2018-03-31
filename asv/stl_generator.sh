@@ -1,4 +1,6 @@
 #!/bin/bash
+#bash -x stl_generator.sh bezier_hull_mold_x15.stl 8 15 100
+
 x_max=$2
 y_max=$3
 grid_size=$4
