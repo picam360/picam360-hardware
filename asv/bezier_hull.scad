@@ -60,8 +60,8 @@ $fn = resolution;
 
 height=100;
 ratio=15;
-stepz = 17;
-step = 30;
+stepz = 44;
+step = 102;
 w1 = 0.9;
 w2 = 0.8;
     

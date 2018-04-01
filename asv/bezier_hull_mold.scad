@@ -19,8 +19,8 @@ module bezier_hull_mold(refpoints, ratio=15, grid_size=100){
 resolution = 100;    
 $fn = resolution;
 
-stepz = 17;
-step = 30;
+stepz = 44;
+step = 102;
 view_refpoints = false;
 
 module bezier_hull_mold_x15(){
