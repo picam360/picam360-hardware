@@ -51,8 +51,8 @@ module dome_bottom() {
         }
         rotate([0,0,-45])
         translate([0,0,rod_height-0.01]){
-            translate([25.77,0,0])
-            cube([2.543,2.54*2,100], center=true);
+            translate([24.9,0,0])
+            cube([4.8,6.1,100], center=true);
             linear_extrude(height=1)
             slipring_electrode(r=24.5, width=9, margin=0.1);
         }
@@ -73,5 +73,5 @@ if(false){
         cube([100,100,100]);
     }
 }else{    
-dome_bottom();
+    dome_bottom();
 }
