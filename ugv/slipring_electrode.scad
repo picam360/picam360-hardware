@@ -21,5 +21,5 @@ module slipring_electrode_1(r=22.5, width=5)
     }
 }
 
-slipring_electrode();
-//slipring_electrode_1();
+//slipring_electrode();
+slipring_electrode_1();

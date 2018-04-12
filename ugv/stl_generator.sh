@@ -17,7 +17,8 @@ targets=(
 		rotor_yaw_gear
 		rotor_yaw
 		slipring_filling
-		mobility_base
+		mobility_base_upper
+		mobility_base_bottom
 	)
 
 for target in "${targets[@]}"; do

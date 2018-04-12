@@ -2,12 +2,16 @@
 $fn=100;
 wall_thick=2;
 base_thick=2;
+motor_pos=122;
 motor_dim=[22.5,18.7]+[0.5,0.5];
 raspi_hole_dim=[56-7,65-7];
 raspi_dim=[56,85];
-battery_case_dim=[72,96,19.5]+[0.5,0.5,0.5];
+battery_space_dim=[66,66,29.5+1.04];
+upper_h=13.52;
+bottom_h=battery_space_dim.z-upper_h;
+battery_case_dim=[57.5,63.5,29]+[0.5,0.5,0.5];
 module  minkowski_square(dimension, r=2,center=false)
-{   
+{
     minkowski()
     {
         if(center){
@@ -19,131 +23,234 @@ module  minkowski_square(dimension, r=2,center=false)
         circle(r=r);
     }
 }
-module mobility_base(){
-    raspi_offset=raspi_dim.y/2-(raspi_hole_dim.y+3.5)/2;
+module mobility_base_bottom(){
     difference()
     {
         union()
         {
-            outer_dim=battery_case_dim+[2*wall_thick,2*wall_thick];
-            linear_extrude(height=battery_case_dim.z+base_thick){
-                minkowski_square(outer_dim,r=3,center=true);
+            difference()
+            {
+                union()
+                {
+                    outer_dim=battery_space_dim+[2*wall_thick,2*wall_thick];
+                    linear_extrude(height=bottom_h+base_thick){
+                        minkowski_square(outer_dim,r=3,center=true);
+                    }
+                    //motor
+                    for(i=[0:3])
+                    {
+                        rotate(i*90+45)
+                        translate([0,motor_pos/2,0])
+                        {
+                            linear_extrude(height=5){
+                                translate([0,-30/2-0.01])
+                                minkowski_square(motor_dim+[2*wall_thick,30],r=1,center=true);
+                            }
+                            linear_extrude(height=38){
+                                translate([0,-wall_thick/2-0.01])
+                                minkowski_square(motor_dim+[2*wall_thick,wall_thick],r=1,center=true);
+                            }
+                        }
+                    }
+                }
+                
+                //battery
+                translate([0,0,base_thick+0.01])
+                linear_extrude(height=battery_space_dim.z){
+                    minkowski_square(battery_space_dim,r=0.1,center=true);
+                }
+                
+                //motor
+                translate([0,0,-0.01])
+                for(i=[0:3])
+                {
+                    rotate(i*90+45)
+                    translate([0,motor_pos/2,base_thick])
+                    {
+                        linear_extrude(height=100){
+                            minkowski_square(motor_dim,r=0.1,center=true);
+                        }
+                        translate([0,1.5/2,0])
+                        linear_extrude(height=100,center=true){
+                            minkowski_square([5,2.5]+[1,1],r=1,center=true);
+                        }
+                        translate([0,0,16])
+                        minkowski()
+                        {
+                            cube([0.01,0.01,18-7.5],center=true);
+                            rotate([90,0,0])
+                            cylinder(r=7.5/2,h=25,center=true);
+                        }
+                        
+                        for(i=[-1,1])
+                        translate([i*8.5,-motor_dim.y/2-wall_thick/2,31.5])
+                        rotate([90,0,0])
+                        cylinder(r1=3.5/2,r2=5.5/2,h=wall_thick+0.04,center=true);
+                    }
+                }
+            }
+            //hold
+            for(i=[-1,1])
+                translate([i*battery_space_dim.x/3,0,(bottom_h+base_thick)/2])
+                cube([2,battery_space_dim.y+wall_thick*2,bottom_h+base_thick],center=true);
+            
+            for(i=[-1,1])
+                translate([0,i*battery_space_dim.y/6,(bottom_h+base_thick)/2])
+                cube([battery_space_dim.x+wall_thick*2,2,bottom_h+base_thick],center=true);
+        }
+        
+        //battery case
+        translate([0,0,battery_case_dim.z/2+base_thick+0.02])
+        battery_case();
+        
+        //latch
+        translate([-5.5,battery_case_dim.y/2,5/2-0.01])
+        cube([18.8,9,5],center=true);
+        translate([0,-battery_case_dim.y/2,5/2-0.01])
+        cube([29.8,9,5],center=true);
+    }
+        
+}
+module mobility_base_upper(){
+    raspi_offset=raspi_dim.y/2-(raspi_hole_dim.y+7)/2;
+    difference()
+    {
+        union()
+        {
+            //raspi base
+            translate([0,0,base_thick/2+battery_space_dim.z+base_thick])
+            linear_extrude(height=base_thick,center=true){
+                minkowski_square(raspi_dim,center=true);
             }
             //raspi hole
             for(y=[-raspi_hole_dim.y/2+raspi_offset,raspi_hole_dim.y/2+raspi_offset])
             for(x=[-raspi_hole_dim.x/2,raspi_hole_dim.x/2])
-            translate([x,y,battery_case_dim.z+base_thick])
+            translate([x,y,battery_space_dim.z+base_thick+base_thick])
             {
-                translate([0,0,5/2])
-                cylinder(r=8.5/2,h=5+0.02,center=true);
+                translate([0,0,-3/2])
+                cylinder(r=8.5/2,h=3+0.02,center=true);
             }
-            //motor
-            for(i=[0:3])
+            difference()
             {
-                rotate(i*90+45)
-                translate([0,150/2,0])
+                union()
                 {
-                    linear_extrude(height=5){
-                        translate([0,-30/2-0.01])
-                        minkowski_square(motor_dim+[2*wall_thick,30],r=1,center=true);
+                    outer_dim=battery_space_dim+[2*wall_thick,2*wall_thick];
+                    translate([0,0,bottom_h+base_thick])
+                    linear_extrude(height=upper_h+base_thick){
+                        minkowski_square(outer_dim,r=3,center=true);
                     }
-                    linear_extrude(height=38){
-                        translate([0,-wall_thick/2-0.01])
-                        minkowski_square(motor_dim+[2*wall_thick,wall_thick],r=1,center=true);
-                    }
-                }
-            }
-        }
-        //battery
-        translate([0,0,-0.01])
-        linear_extrude(height=battery_case_dim.z){
-            minkowski_square(battery_case_dim,r=0.1,center=true);
-        }
-        
-        //motor
-        translate([0,0,-0.01])
-        for(i=[0:3])
-        {
-            rotate(i*90+45)
-            translate([0,150/2,base_thick])
-            {
-                linear_extrude(height=100){
-                    minkowski_square(motor_dim,r=0.1,center=true);
-                }
-                translate([0,1.5/2,0])
-                linear_extrude(height=100,center=true){
-                    minkowski_square([5,2.5]+[1,1],r=1,center=true);
-                }
-                translate([0,0,16])
-                minkowski()
-                {
-                    cube([0.01,0.01,18-7.5],center=true);
-                    rotate([90,0,0])
-                    cylinder(r=7.5/2,h=25,center=true);
                 }
                 
-                for(i=[-1,1])
-                translate([i*8.5,-motor_dim.y/2-wall_thick/2,31.5])
-                rotate([90,0,0])
-                cylinder(r1=3.5/2,r2=5.5/2,h=wall_thick+0.04,center=true);
+                //battery
+                translate([0,0,base_thick+0.01])
+                linear_extrude(height=battery_space_dim.z){
+                    minkowski_square(battery_space_dim,r=0.1,center=true);
+                }
+            }
+            //hold
+            for(i=[-1,1])
+                translate([i*battery_space_dim.x/6,0,battery_space_dim.z+base_thick*2-(upper_h+base_thick)/2])
+                cube([2,battery_space_dim.y+wall_thick*2,upper_h+base_thick],center=true);
+            for(i=[-1,1])
+                translate([0,i*battery_space_dim.y/6,battery_space_dim.z+base_thick*2-(upper_h+base_thick)/2])
+                cube([battery_space_dim.x+wall_thick*2,2,upper_h+base_thick],center=true);
+        
+            //latch
+            translate([-5.5,battery_space_dim.y/2,(5-0.2)/2-0.01])
+            {
+                intersection(){
+                cube([18.8-0.5,4,5-0.2],center=true);
+//                translate([0,-1.2,0.5])
+//    rotate([90,-30,90])
+//                cylinder(r=4,h=100,center=true,$fn=3);
+                translate([0,-1,0])
+    rotate([90,-30,90])
+                cylinder(r=5/2,h=100,center=true);
+                }
+                translate([0,-wall_thick/2,battery_space_dim.z/2])
+                cube([18.8-0.5,wall_thick,battery_space_dim.z],center=true);
+            }
+            translate([0,-battery_space_dim.y/2,(5-0.2)/2-0.01])
+            {
+                intersection(){
+                cube([29.8-0.5,4,5-0.2],center=true);
+//                translate([0,1.2,0.5])
+//    rotate([90,-30,90])
+//                cylinder(r=4,h=100,center=true,$fn=3);
+                translate([0,1,0])
+    rotate([90,-30,90])
+                cylinder(r=5/2,h=100,center=true);
+                }
+                translate([0,wall_thick/2,battery_space_dim.z/2])
+                cube([29.8-0.5,wall_thick,battery_space_dim.z],center=true);
             }
         }
         
-        //battery holder
-        for(i=[-1,1])
-        translate([i*20/2,0,-100/2+15])
-        cube([2,200,100],center=true);
-        
-        //hold slit
-        translate([-battery_case_dim.x/2,0,-100/2])
-        minkowski()
-        {
-            cube([0.01,0.01,100],center=true);
-            rotate([90,0,90])
-            cylinder(r=15/2,h=10,center=true);
-        }
-        //cable slit
-        translate([battery_case_dim.x/2,9,-100/2+15])
-        minkowski()
-        {
-            cube([0.01,0.01,100],center=true);
-            rotate([90,0,90])
-            cylinder(r=4/2,h=10,center=true);
-        }
-        //switch slit
-        translate([battery_case_dim.x/2,35,-100/2+11])
-        minkowski()
-        {
-            cube([0.01,7,100],center=true);
-            rotate([90,0,90])
-            cylinder(r=1/2,h=6,center=true);
-        }
+        //battery case
+        translate([0,0,battery_case_dim.z/2+base_thick+0.02])
+        battery_case(offset=10);
         
         //raspi hole
+//        for(y=[-raspi_hole_dim.y/2+raspi_offset,raspi_hole_dim.y/2+raspi_offset])
+//        for(x=[-raspi_hole_dim.x/2,raspi_hole_dim.x/2])
+//        translate([x,y,battery_case_dim.z+base_thick])
+//        {
+//            translate([0,0,100/2])
+//            cylinder(r=6/2,h=100,center=true,$fn=6);
+//        }
         for(y=[-raspi_hole_dim.y/2+raspi_offset,raspi_hole_dim.y/2+raspi_offset])
         for(x=[-raspi_hole_dim.x/2,raspi_hole_dim.x/2])
-        translate([x,y,battery_case_dim.z+base_thick])
+        translate([x,y,battery_space_dim.z+base_thick-1+1.5])
         {
+            translate([0,0,-100/2])
+            cylinder(r=5/2,h=100,center=true);
             translate([0,0,100/2])
-            cylinder(r=6/2,h=100,center=true,$fn=6);
+            cylinder(r=3/2,h=100.02,center=true);
         }
     }
-        
-    //battery holder
-    for(i=[-1,1])
-    mirror([0,i+1,0])
-    translate([0,battery_case_dim.y/2,2/2])
-    rotate([90,30,90])
-    cylinder(r=2,h=20-2,$fn=3,center=true);
 }
 
-if(false){
-        translate([0,0,50])
-            minkowski_square(raspi_dim,center=true);
-mobility_base();
+module battery_case(offset=0)
+{
+    rotate([90,0,0])
+    linear_extrude(height=battery_case_dim.x,center=true){
+        minkowski_square([battery_case_dim.y,battery_case_dim.z],r=5,center=true);
+    }
+    
+    //connector slit
+    translate([battery_case_dim.y/4,battery_case_dim.x/2+6/2,battery_case_dim.z/2-13/2+0.5-offset/2])
+    rotate([90,0,0])
+    linear_extrude(height=6.02,center=true){
+        minkowski_square([24.7,13-0.02+offset],r=2,center=true);
+    }
+}
+
+type=0;
+if(type==0){
+    //battery case
+    color([0.2,0.2,0.2])
+    translate([0,0,battery_case_dim.z/2+base_thick])
+    battery_case();
+    
+    color([0,1,0])
+    translate([0,0,40])
+        minkowski_square(raspi_dim,center=true);
+    
+    
+    intersection(){
+        //translate([100/2,0,0])
+        cube([100,100,140],center=true);
+        union(){
+            color([1,0,0])
+            mobility_base_bottom();
+            mobility_base_upper();
+        }
+    }
+}else if(type==1){    
+    mobility_base_upper();
 }else{
     intersection(){
-        cube([120,120,140],center=true);
-        mobility_base();
+        cube([100,100,140],center=true);
+        mobility_base_bottom();
     }
 }
