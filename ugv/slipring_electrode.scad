@@ -12,7 +12,7 @@ module slipring_electrode(r=24.5, width=9, margin=0)
     square([(2.54+1+margin)*2,(2.54+1+margin)*2],center=true);
 }
 
-module slipring_electrode_1(r=22.5, width=5)
+module slipring_electrode_1(r=22, width=4)
 {
     difference()
     {

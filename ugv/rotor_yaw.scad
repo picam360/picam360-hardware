@@ -28,7 +28,7 @@ module rotor_yaw() {
             }
             
             offset=0.5;
-            l=[17.5,22.5];
+            l=[18,22];
             for(i=[0:1])
             {
                 rotate(180*i)

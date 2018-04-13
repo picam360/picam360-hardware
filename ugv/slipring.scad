@@ -1,7 +1,7 @@
 use <../lib/ISOThread.scad>;
 $fn=100;
 
-module slipring(attach=false, r=22.5) {
+module slipring(attach=false, r=22) {
     margin = 0.4;
     inner_thread_diameter = 12+margin;
     gear_act = 2.23995;
@@ -22,7 +22,7 @@ module slipring(attach=false, r=22.5) {
             translate([gear_edge+6/2,0,0])
             rotate([0,90,0])
             cylinder(r=6/2,h=6,center=true);
-            translate([gear_edge+4.5,0,0])
+            translate([gear_edge+4.7,0,0])
             translate([10.5/2,0,18/2-6.5])
             minkowski(){
                 mr = 2.5;
@@ -34,7 +34,7 @@ module slipring(attach=false, r=22.5) {
             translate([r, 0, 0])
             minkowski(){
                 cube([10,0.01,0.01]);
-                cylinder(r=1.7/2,h=100,center=true);
+                cylinder(r=1.6/2,h=100,center=true);
             }
         
             translate([r, 0, 100/2-5])

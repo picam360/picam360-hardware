@@ -19,6 +19,7 @@ targets=(
 		slipring_filling
 		mobility_base_upper
 		mobility_base_bottom
+		mobility_base_attachment
 	)
 
 for target in "${targets[@]}"; do
