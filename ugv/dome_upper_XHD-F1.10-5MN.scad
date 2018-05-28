@@ -2,13 +2,13 @@ use <../lib/ISOThread.scad>;
 
 $fn=100;
 module dome_upper(){
-    margin = 2.0;
+    margin = 1.0;
     dome = 27 + margin;
     camera = 55;
     outer_r1 = camera/2+4;
-    outer_r2 = dome/2+4;
-    height = 10+15;
-    height1 = height-(outer_r1-outer_r2)/tan(180-250/2);
+    outer_r2 = dome/2+3*tan(180-240/2);
+    height = 10+15-3;
+    height1 = height-(outer_r1-outer_r2)/tan(180-240/2);
     difference(){
         union(){
             translate([0,0,height1/2])
