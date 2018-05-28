@@ -6,7 +6,7 @@ module motor_gear(gear_height=3) {
     r=YAW_GEAR_DISTANCE/(YAW_GEAR_RATIO+1);
     echo(r=r);
     difference() {
-        stirnrad (modul=r/num, zahnzahl=num, hoehe=gear_height, bohrung=0, eingriffswinkel=20, schraegungswinkel=0);
+        stirnrad (modul=r/num, zahnzahl=num, hoehe=gear_height, bohrung=0, eingriffswinkel=20, schraegungswinkel=10);
         cylinder(r=6/2,h=100,center=true);
     }
     intersection(){

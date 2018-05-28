@@ -1,15 +1,17 @@
 
 $fn=100;
+battery_type = 0;
 wall_thick=2;
 base_thick=2;
-motor_pos=122;
+motor_pos=124;
 motor_dim=[22.5,18.7]+[0.5,0.5];
 raspi_hole_dim=[56-7,65-7];
 raspi_dim=[56,85];
-battery_space_dim=[64,64,29.5+1.04];
+
+battery_space_dim=(battery_type==0)?[64,64,29.5+1.04]:[61.5,75.5,23.5];
 upper_h=13.52;
 bottom_h=battery_space_dim.z-upper_h;
-battery_case_dim=[57.5,63.5,29]+[0.5,0.5,0.5];
+battery_case_dim=(battery_type==0)?[57.5,63.5,29]+[0.5,0.5,0.5]:[75,61,23]+[0.5,0.5,0.5];
 module  minkowski_square(dimension, r=2,center=false)
 {
     minkowski()
@@ -230,15 +232,47 @@ module battery_case(offset=0)
     }
     
     //connector slit
-    translate([battery_case_dim.y/4,battery_case_dim.x/2+6/2,battery_case_dim.z/2-13/2+0.5-offset/2])
-    rotate([90,0,0])
-    linear_extrude(height=6.02,center=true){
-        minkowski_square([24.7,13-0.02+offset],r=2,center=true);
+    if(battery_type == 0){
+        translate([battery_case_dim.y/4,battery_case_dim.x/2+6/2,battery_case_dim.z/2-13/2+0.5-offset/2])
+        rotate([90,0,0])
+        linear_extrude(height=6.02,center=true){
+            minkowski_square([24.7,13-0.02+offset],r=2,center=true);
+        }
+    }else{
+        translate([0,battery_case_dim.x/2+6/2,battery_case_dim.z/2-13/2-offset/2])
+        rotate([90,0,0])
+        linear_extrude(height=6.02,center=true){
+            minkowski_square([54,13-0.02+offset],r=2,center=true);
+        }
     }
 }
 
-type=0;
+type=1;
 if(type==0){
+    //battery case
+    color([0.2,0.2,0.2])
+    translate([0,0,battery_case_dim.z/2+base_thick])
+    battery_case();
+    
+    color([0,1,0])
+    translate([0,0,40])
+        minkowski_square(raspi_dim,center=true);
+    
+    for(i=[-1,1])
+    translate([i*(battery_space_dim.x/2+wall_thick),0,bottom_h+base_thick])
+    rotate([90,90,i*90])
+    mobility_base_attachment();
+    
+    intersection(){
+        //translate([100/2,0,0])
+        cube([100,100,140],center=true);
+        union(){
+            color([1,0,0])
+            mobility_base_bottom();
+            //mobility_base_upper();
+        }
+    }
+}else if(type==1){
     //battery case
     color([0.2,0.2,0.2])
     translate([0,0,battery_case_dim.z/2+base_thick])
@@ -262,7 +296,7 @@ if(type==0){
             mobility_base_upper();
         }
     }
-}else if(type==1){    
+}else if(type==2){
     mobility_base_upper();
 }else{
     mobility_base_bottom();

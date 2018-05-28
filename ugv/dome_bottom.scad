@@ -60,10 +60,10 @@ module dome_bottom() {
     for(i=[0:3])
     {
         r = sqrt(2)*34/2;
-        translate([r*cos(i*90),r*sin(i*90),7/2+rod_height+1])
+        translate([r*cos(i*90),r*sin(i*90),5.5/2+rod_height+2.5])
         difference(){
-            cylinder(r = 8/2, h = 7, center=true);
-            cylinder(r = 1.5/2, h = 7, center=true);
+            cylinder(r = 8/2, h = 5.5, center=true);
+            cylinder(r = 1.5/2, h = 5.5, center=true);
         }
     }
 }
