@@ -9,9 +9,9 @@ module arm_shaft() {
     gear_edge = 12-gear_act;
     difference() {
         union() {
-            translate([30/2+gear_edge, 0, 0])
+            translate([27/2+gear_edge, 0, 0])
             rotate([0, 90, 0])
-            cylinder(r=8/2,h=30,center=true);
+            cylinder(r=8/2,h=27,center=true);
             translate([gear_edge/2, 0, 0])
             rotate([0, 90, 0])
             cylinder(r2=6/2,r1=5/2,h=gear_edge,center=true);
@@ -23,4 +23,5 @@ module arm_shaft() {
             cylinder(r=3/2,h=100,center=true);
     }
 }
+rotate([90,90])
 arm_shaft();

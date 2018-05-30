@@ -111,7 +111,7 @@ module mobility_base_bottom(){
                     {
                         union(){
                             cylinder(r=10/2,h=6);
-                            scale([1,1.5,1])
+                            scale([1.5,1,1])
                             translate([0,0,3])
                             cylinder(r=8/2,h=3);
                         }
@@ -181,7 +181,7 @@ module mobility_base_upper(){
                 {
                     union(){
                         cylinder(r=10/2,h=6);
-                        scale([1,1.5,1])
+                        scale([1.5,1,1])
                         translate([0,0,3])
                         cylinder(r=8/2,h=3);
                     }
@@ -247,7 +247,7 @@ module battery_case(offset=0)
     }
 }
 
-type=1;
+type=0;
 if(type==0){
     //battery case
     color([0.2,0.2,0.2])
@@ -269,7 +269,7 @@ if(type==0){
         union(){
             color([1,0,0])
             mobility_base_bottom();
-            //mobility_base_upper();
+            mobility_base_upper();
         }
     }
 }else if(type==1){
@@ -284,7 +284,7 @@ if(type==0){
     
     for(i=[-1,1])
     translate([i*(battery_space_dim.x/2+wall_thick),0,bottom_h+base_thick])
-    rotate([90,90,i*90])
+    rotate([90,0,i*90])
     mobility_base_attachment();
     
     intersection(){

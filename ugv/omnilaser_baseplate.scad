@@ -1,7 +1,8 @@
 $fn=100;
-module pcb(){
+motor_distance = 32;
+attach_hole_dimention = 41.8;
+module omnilaser_baseplate(){
     r_rad=3;
-    attach_hole_dimention = 41.8;
     difference(){
         intersection(){
             translate([-10, 0])
@@ -16,8 +17,8 @@ module pcb(){
             square([2,16],center=true);
         }
         
-        translate([85/2-28, 56/2])
-        rotate([0,0,55])
+        translate([85/2-motor_distance, 56/2])
+        rotate([0,0,0])
         union(){
             circle(r=10.4/2);
             translate([0,attach_hole_dimention/2])
@@ -30,8 +31,8 @@ module pcb(){
 //            circle(r=2.2/2);
         }
         
-        translate([85/2+28, 56/2])
-        rotate([0,0,55])
+        translate([85/2+motor_distance, 56/2])
+        rotate([0,0,0])
         union(){
             circle(r=10.4/2);
             translate([0,attach_hole_dimention/2])
@@ -80,5 +81,16 @@ module raspi(){
     }
 }
 
+if(0){
 translate([15/2, -56])
-pcb();
+{
+    omnilaser_baseplate();
+    for(i=[-1,1])
+        color("grey")
+        translate([85/2-motor_distance*i, 56/2,-16-2])
+        cylinder(r=35/2,h=16);
+}
+}else{
+    translate([15/2, -56])
+    omnilaser_baseplate();
+}

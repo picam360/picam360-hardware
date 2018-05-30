@@ -54,7 +54,7 @@ module dome_bottom() {
             translate([24.9,0,0])
             cube([4.8,6.1,100], center=true);
             linear_extrude(height=1)
-            slipring_electrode(r=24.5, width=9, margin=0.1);
+            slipring_electrode(r=24.5, width=9, margin=0.2);
         }
     }
     for(i=[0:3])

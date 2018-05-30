@@ -12,8 +12,8 @@ module rotor_pitch_gear() {
     gear_num = 23;
     gear_act = 2.23995;
     num=YAW_GEAR_RATIO*YAW_PINION_NUM;
-    r=YAW_GEAR_RATIO*YAW_GEAR_DISTANCE/(YAW_GEAR_RATIO+1);
-    echo(r=r);
+    dia=YAW_GEAR_RATIO*YAW_GEAR_DISTANCE/(YAW_GEAR_RATIO+1);
+    echo(dia=dia);
     difference() {
         union() {
             translate([0, 0, -12-height/2+3])
@@ -22,7 +22,7 @@ module rotor_pitch_gear() {
             kegelrad(modul=2*(12-(3-gear_act))/gear_num, zahnzahl=gear_num,  teilkegelwinkel=45, zahnbreite=3, bohrung=4, eingriffswinkel=20, schraegungswinkel=0);
             
             translate([0, 0, -12-gear_height])
-            stirnrad (modul=r/num, zahnzahl=num, hoehe=gear_height, bohrung=0, eingriffswinkel=20, schraegungswinkel=0);
+            stirnrad (modul=dia/num, zahnzahl=num, hoehe=gear_height, bohrung=0, eingriffswinkel=20, schraegungswinkel=0);
 
             difference() {
                 radius=15.9;
