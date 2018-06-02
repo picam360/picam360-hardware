@@ -13,11 +13,14 @@ function scale_points(points, size)=[
         for (t2 =[0:len(points[t])-1]) [points[t][t2].x*size.x,points[t][t2].y*size.y,points[t][t2].z*size.z]
         ]
     ];
+function project2d(points)=[
+    for (t =[0:len(points)-1]) [points[t].x,points[t].y]
+    ];
 function get_refpoints_bezierz(points, step)=[
     for (t =[0:len(points)-1]) bezier(points[t], step)
     ];
     
-module bezier_hull(refpoints,stepz=17,step=30){
+module bezier_hull(refpoints,stepz=17,step=30,slice_z=-1){
     refpoints_mirror = reverse(scale_points(refpoints,[-1,1,1]));
 
     if(view_refpoints){
@@ -43,16 +46,20 @@ module bezier_hull(refpoints,stepz=17,step=30){
     ]);
     num = len(points)/numz;
     echo("num:", num);
-    faces = concat(
-        [reverse([for(i=[0:num-1]) i])],
-        join([for(z=[0:numz-2])[for(i=[0:num-1]) [z*num+i,z*num+(i+1)%num, (z+1)*num+(i+1)%num,(z+1)*num+i]]]),
-        [[for(i=[num*(numz-1):num*numz-1]) i]]
-            );
+    if(slice_z<0){
+        faces = concat(
+            [reverse([for(i=[0:num-1]) i])],
+            join([for(z=[0:numz-2])[for(i=[0:num-1]) [z*num+i,z*num+(i+1)%num, (z+1)*num+(i+1)%num,(z+1)*num+i]]]),
+            [[for(i=[num*(numz-1):num*numz-1]) i]]
+                );
+        polyhedron(points, faces);
+    }else{
+        faces = [[for(i=[num*slice_z:num*(slice_z+1)-1]) i]];
+        polygon(project2d(points), faces);
+    }
         
     //echo("points:", len(points), points);
     //echo("faces:", len(faces), faces);
-     
-    polyhedron(points, faces);
 }
 
 resolution = 100;    

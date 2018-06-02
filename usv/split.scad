@@ -1,7 +1,7 @@
  //-D param=param
 use <bezier_hull_mold.scad>
 
-target="bezier_hull_mold_x15/bezier_hull_mold_x15.stl";
+//target="bezier_hull_mold_x15/bezier_hull_mold_x15.stl";
 grid_size=100;
 x=0;
 y=0;
@@ -36,8 +36,12 @@ module grid(w=800,h=1500,x=0,y=0,grid_size=100){
     intersection(){
         block(grid_size=grid_size,left=(x!=0),top=(y!=0),right=(x!=w/grid_size-1),bottom=(y!=h/grid_size-1));
         translate([-offset_x,-offset_y,0])
-        import(target);
-        //bezier_hull_mold_x15();
+        if(target){
+            echo(target);
+            import(target);
+        }else{
+            bezier_hull_mold_x15();
+        }
     }
 }
 echo("w:",w,"h:",h,"x:",x,"y:",y);
