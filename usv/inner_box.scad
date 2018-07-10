@@ -14,6 +14,8 @@ thick=30;
 
 fingerW=35;
 
+$fn=360;
+
 module  minkowski_square(dimension, r=2)
 {
     minkowski()
@@ -139,24 +141,25 @@ module hull_floor(){
             [-19*w2,-50*0.95,0]
         ],
     ];
-    difference(){
+    //difference()
+    {
         bezier_hull(scale_points(refpoints,ratio*[1,1,1]),stepz=stepz,step=step,slice_z=stepz);
         
-        //stater
-        translate([0,-680+810])
-        minkowski_square([10.01,70], r=10/2);
-        
-        //shaft holder
-        translate([0,-680+560])
-        minkowski_square([10.01,150], r=0.01);
-        
-        //arduino base
-        translate([0,-680+220])
-        minkowski_square([8.01,68], r=8/2);
-        
-        //ladder
-        translate([0,-680+25])
-        circle(r=9/2+0.2);
+//        //stater
+//        translate([0,-680+810])
+//        minkowski_square([10.01,70], r=10/2);
+//        
+//        //shaft holder
+//        translate([0,-680+560])
+//        minkowski_square([10.01,150], r=0.01);
+//        
+//        //arduino base
+//        translate([0,-680+220])
+//        minkowski_square([8.01,68], r=8/2);
+//        
+//        //ladder
+//        translate([0,-680+25])
+//        circle(r=9/2+0.2);
     }
 }
 
@@ -231,7 +234,9 @@ if(type==3){
     box_ceil();
 }
 if(type==4){
-    type2=0;
+    lmargin=2;
+    margin=3;
+    type2=10;
     if(type2==0){
         intersection(){
             hull_floor();
@@ -251,6 +256,73 @@ if(type==4){
             translate([0,-550+150-450/2])
             rotate(90)
             square([450,550],center=true);
+        }
+    }else if(type2==3){
+        translate([550/2,-600])
+        intersection(){
+            difference(){
+                hull_floor();
+                translate([0,-150])
+                square([380,940],center=true);
+            }
+            translate([0,-300/2+600])
+            square([550,300],center=true);
+        }
+        translate([550/2,295])
+        intersection(){
+            difference(){
+                hull_floor();
+                translate([0,-150])
+                square([380,940],center=true);
+            }
+            translate([0,-720+120/2])
+            square([550,120],center=true);
+        }
+    }else if(type2==4){
+        for(i=[0:1]){
+            translate([(520+lmargin)/2,-(100+lmargin)/2-i*(100+lmargin+margin)])
+            square([520+lmargin,100+lmargin],center=true);
+        }
+        for(i=[0:1]){
+            translate([(520+lmargin)/2,-2*(100+lmargin+margin)-(50+lmargin)/2-i*(50+lmargin+margin)])
+            square([520+lmargin,50+lmargin],center=true);
+        }
+    }else if(type2==5){
+        color("red")
+        for(i=[0:1]){
+            translate([480/2+lmargin/2+20,-50/2-lmargin/2-i*(100+lmargin+margin)-20])
+            square([480,50],center=true);
+        }
+    }else if(type2==6){
+        for(i=[0:1]){
+            translate([(380+lmargin)/2,-(100+lmargin)/2-i*(100+lmargin+margin)])
+            square([380+lmargin,100+lmargin],center=true);
+        }
+        for(i=[0:1]){
+            translate([(340+lmargin)/2,-2*(100+lmargin+margin)-(50+lmargin)/2-i*(50+lmargin+margin)])
+            square([340+lmargin,50+lmargin],center=true);
+        }
+    }else if(type2==7){
+        color("red")
+        for(i=[0:1]){
+            translate([340/2+lmargin/2+20,-50/2-lmargin/2-i*(100+margin)-20])
+            square([340,50],center=true);
+        }
+    }else if(type2==8){
+        translate([260/2,-260/2])
+        square([260,260],center=true);
+    }else if(type2==9){
+        difference(){
+        translate([260/2,-260/2])
+        square([260,260],center=true);
+        translate([260/2,-260/2])
+        circle(r=100/2,center=true);
+        }
+    }else if(type2==10){
+        translate([(260+lmargin)/2,-(260+lmargin)/2])
+        difference(){
+            square([260+lmargin,260+lmargin],center=true);
+            minkowski_square([260-lmargin-30*2,260-lmargin-30*2],r=10);
         }
     }else{
         hull_floor();

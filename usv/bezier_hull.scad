@@ -96,22 +96,15 @@ refpoints = [
         [-19*w2,-50*0.95,0]
     ],
 ];
-solar_panel_view=true;
-difference(){
-    bezier_hull(scale_points(refpoints,ratio*[1,1,1]),stepz=stepz,step=step);
-    translate([0,-160-(1060-600)/6-150,height/2])
-    cube([300,300,height+.2],center=true);
-    translate([0,-160+(1060-600)/6+150,height/2])
-    cube([300,300,height+.2],center=true);
-}
-    translate([0,-1000,140/2])
-    cube([140,140,140.2],center=true);
-translate([0,-670,20])
-rotate([-75,0,0])
-prop();
+solar_panel_view=false;
+bezier_hull(scale_points(refpoints,ratio*[1,1,1]),stepz=stepz,step=step);
 if(solar_panel_view){
     translate([0,-145,height])
     color([0.2,0.2,0.2])
     //cube([540,1060,3],center=true);
     cube([560,1200,3],center=true);
+}
+if(size_view){
+    color([0.2,0.2,0.2])
+    cube([725,1500,3],center=true);
 }
