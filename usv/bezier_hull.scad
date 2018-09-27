@@ -20,16 +20,16 @@ function get_refpoints_bezierz(points, step)=[
     for (t =[0:len(points)-1]) bezier(points[t], step)
     ];
     
-module bezier_hull(refpoints,stepz=17,step=30,slice_z=-1){
+module bezier_hull(refpoints,stepz=17,step=30,slice_z=-1,view_refpoints_r=0){
     refpoints_mirror = reverse(scale_points(refpoints,[-1,1,1]));
 
-    if(view_refpoints){
+    if(view_refpoints_r){
         _view_refpoints = concat(refpoints, refpoints_mirror);
         color([1,0,0])
         for (t =[0:len(_view_refpoints)-1])
             for (t2 =[0:len(_view_refpoints[t])-1])
                 translate(_view_refpoints[t][t2])
-                    sphere(r=1);
+                    sphere(r=view_refpoints_r);
     }
 
     refpoints_bezierz = get_refpoints_bezierz(refpoints, stepz);
@@ -72,8 +72,6 @@ step = 102;
 w1 = 0.9;
 w2 = 0.8;
     
-view_refpoints = false;
-    
 refpoints = [
     [
         [0,50,height/ratio],
@@ -97,7 +95,8 @@ refpoints = [
     ],
 ];
 solar_panel_view=false;
-bezier_hull(scale_points(refpoints,ratio*[1,1,1]),stepz=stepz,step=step);
+size_view=false;
+bezier_hull(scale_points(refpoints,ratio*[1,1,1]),stepz=stepz,step=step,view_refpoints_r=15);
 if(solar_panel_view){
     translate([0,-145,height])
     color([0.2,0.2,0.2])

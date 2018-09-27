@@ -30,19 +30,19 @@ module block(grid_size=100,t=1.0,left=true,right=true,top=true,top=true,bottom=t
         cylinder(r=grid_size/5+t,h=100.2,$fn=3,center=true);
     }
 }
-module grid(w=800,h=1500,x=0,y=0,grid_size=100){
+module grid(w=800,h=1500,x=0,y=0,grid_size=100,t=1){
     offset_x = -w/2+grid_size/2+x*grid_size;
     offset_y = h/2-grid_size/2-y*grid_size;
     intersection(){
-        block(grid_size=grid_size,left=(x!=0),top=(y!=0),right=(x!=w/grid_size-1),bottom=(y!=h/grid_size-1));
+        block(grid_size=grid_size,left=(x!=0),top=(y!=0),right=(x!=w/grid_size-1),bottom=(y!=h/grid_size-1),t=t);
         translate([-offset_x,-offset_y,0])
-        if(target){
-            echo(target);
-            import(target);
-        }else{
+//        if(target){
+//            echo(target);
+//            import(target);
+//        }else{
             bezier_hull_mold_x15();
-        }
+//        }
     }
 }
 echo("w:",w,"h:",h,"x:",x,"y:",y);
-grid(grid_size=grid_size,w=w,h=h,x=x,y=y);
+grid(grid_size=grid_size,w=w,h=h,x=x,y=y,t=4);
