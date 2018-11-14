@@ -1,5 +1,4 @@
 use <../lib/bezier.scad>;
-use <prop.scad>;
 
 function reverse(array)=[for(i=[0:len(array)-1]) array[len(array)-1-i]];
 function join(points)=[
@@ -20,7 +19,7 @@ function get_refpoints_bezierz(points, step)=[
     for (t =[0:len(points)-1]) bezier(points[t], step)
     ];
     
-module bezier_hull_50w(refpoints,stepz=17,step=30,slice_z=-1,view_refpoints_r=0){
+module _bezier_hull_50w(refpoints,stepz=17,step=30,slice_z=-1,view_refpoints_r=0){
 
     if(view_refpoints_r){
         color([1,0,0])
@@ -58,32 +57,52 @@ module bezier_hull_50w(refpoints,stepz=17,step=30,slice_z=-1,view_refpoints_r=0)
 resolution = 100;    
 $fn = resolution;
 
-height=100;
-ratio=5.6*sqrt(2)/2;
-stepz = 44;
-step = 102;
-w1 = 0.9;
-w2 = 0.8;
-    
-refpoints = [
-    [
-        //[r,0,h]
-        [100,0,height/ratio],
-        [100,0,0.8*height/ratio],
-        [90,0,0.2*height/ratio],
-        [50,0,0]
-    ]
-];
+module bezier_hull_50w(view_refpoints_r=0){
+    height=100;
+    ratio=5.5*sqrt(2)/2;
+    stepz = 44;
+    step = 102;
+        
+    refpoints = [
+        [
+            //[r,0,h]
+            [100,0,height/ratio],
+            [100,0,0.8*height/ratio],
+            [90,0,0.2*height/ratio],
+            [50,0,0]
+        ]
+    ];
+    _bezier_hull_50w(scale_points(refpoints,ratio*[1,1,1]),stepz=stepz,step=step,view_refpoints_r=view_refpoints_r);
+}
 solar_panel_view=true;
 size_view=false;
-bezier_hull_50w(scale_points(refpoints,ratio*[1,1,1]),stepz=stepz,step=step,view_refpoints_r=15);
+pod_view=true;
+bezier_hull_50w(view_refpoints_r=0);
 if(solar_panel_view){
-    translate([0,0,height])
+    translate([0,0,100])
     color([0.2,0.2,0.2])
     //cube([540,1060,3],center=true);
-    cube([560,560,3],center=true);
+    cube([550,540,3],center=true);
 }
 if(size_view){
     color([0.2,0.2,0.2])
     cylinder(r=560*sqrt(2)/2, h=3,center=true);
+}
+if(pod_view){
+    color([0.8,0.8,0.8])
+    {
+        translate([0,0,100+120])
+        sphere(r=50/2,center=true);
+        translate([0,0,100+120/2])
+        cylinder(r=60/2, h=120,center=true);
+        translate([0,0,-160/2])
+        cylinder(r=100/2, h=160,center=true);
+        translate([0,0,-160])
+        sphere(r=50/2,center=true);
+    }
+    for(i=[0:3])
+        rotate([0,0,i*360/4])
+        translate([100,0,-160/2])
+            rotate([90,0,0])
+            cylinder(r=100/2, h=50,center=true);
 }
