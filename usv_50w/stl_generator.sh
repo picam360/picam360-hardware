@@ -1,5 +1,5 @@
 #!/bin/bash
-#bash -x stl_generator.sh bezier_hull_mold_50w.stl 8 15 100
+#bash -x stl_generator.sh bezier_hull_mold_50w.stl 8 8 100
 
 x_max=$2
 y_max=$3
