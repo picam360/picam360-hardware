@@ -10,7 +10,7 @@ module  minkowski_square(dimension, r=2)
 }
 module cable_pod_100mm(dome_dia=50.8, inner_dia=108, tube_thick=2, margin=0.25)
 {
-    pod_space_h = 100;
+    pod_space_h = 100-3;
     flange_h = 3;
     joint_h = 10;
     thread_h = 10;

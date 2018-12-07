@@ -58,8 +58,10 @@ resolution = 100;
 $fn = resolution;
 
 module bezier_hull_50w(view_refpoints_r=0){
+    hull_r=750;
     height=100;
-    ratio=5.5*sqrt(2)/2;
+    ratio=hull_r/100/2;
+    echo(hull_r=ratio*100*2);
     stepz = 44;
     step = 102;
         
@@ -82,7 +84,11 @@ if(solar_panel_view){
     translate([0,0,100])
     color([0.2,0.2,0.2])
     //cube([540,1060,3],center=true);
-    cube([550,540,3],center=true);
+    intersection(){
+        cube([550,540,3],center=true);
+        rotate(45)
+        cube([740,740,3],center=true);
+    }
 }
 if(size_view){
     color([0.2,0.2,0.2])
@@ -95,14 +101,14 @@ if(pod_view){
         sphere(r=50/2,center=true);
         translate([0,0,100+120/2])
         cylinder(r=60/2, h=120,center=true);
-        translate([0,0,-160/2])
-        cylinder(r=100/2, h=160,center=true);
-        translate([0,0,-160])
+        translate([0,0,-140/2])
+        cylinder(r=100/2, h=140,center=true);
+        translate([0,0,-140])
         sphere(r=50/2,center=true);
     }
     for(i=[0:3])
         rotate([0,0,i*360/4])
-        translate([100,0,-160/2])
+        translate([100,0,-130/2])
             rotate([90,0,0])
             cylinder(r=100/2, h=50,center=true);
 }
