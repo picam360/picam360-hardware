@@ -25,7 +25,7 @@ module pod_inner(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, seal_m
             }
         }
         translate([0,-14,0])
-        cylinder(r=6/2, h=100, center=true);
+        cylinder(r=10/2, h=100, center=true);
     }
     translate([0, 12, 100/2])
     rotate([90,0,0])

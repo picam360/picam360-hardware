@@ -11,10 +11,10 @@ module  minkowski_square(dimension, r=2)
 
 module camera_pod_cover(dome_dia=50.8, outer_dia=72, inner_dia=64, tube_thick=2, margin=0.25)
 {
-    pod_space_h = 27;
-    thread_u_h = 10;
-    thread_b_h = 15;
     base_h = 3;
+    thread_u_h = 10;
+    pod_space_h = 25-thread_u_h-base_h;
+    thread_b_h = 0;
     bolt_dia = 10;
     
     translate([0,0,pod_space_h+base_h])
