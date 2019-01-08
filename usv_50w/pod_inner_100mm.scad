@@ -15,7 +15,7 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
     m3t_r = 3.2/2;
     bolt_r = 1.7/2;
     h=15;//need to be ajust for lens height
-    outer_w = 74;
+    outer_w = 74+2*2+3*2;
     esc_h=10;
     outer_h = 116+esc_h;
     heat_sink_plate_h = 1.5;
@@ -23,7 +23,7 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
         linear_extrude(height=thick)
         {
             circle(r=outer_dia/2-tube_thick-seal_margin);
-            circle(r=96/2);
+            //circle(r=96/2);
         }
         for(i=[0,5,6,11]){
             r=34*sqrt(2)/2;
@@ -44,10 +44,7 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
     {
         union(){
             linear_extrude(height=thick, center=true)
-            intersection(){
-                minkowski_square(dimension=[outer_w,outer_h], r=10, $fn=100);
-                circle(r=145/2);
-            }
+                minkowski_square(dimension=[outer_w,outer_h], r=20, $fn=100);
             translate([0,esc_h/2,1.5])
             for(i=[0:1]){
                 mirror([i,0])
@@ -58,13 +55,20 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
                                 cylinder(r1=4.5,r2=3,h=2);
                             translate([65.5/2-5, 100/2-4.5])
                                 cylinder(r1=4.5,r2=3,h=2);
-                            translate([65/2, 70/2])
-                                cylinder(r1=4.5,r2=3,h=2);
+                            translate([78/2, 50/2])
+                            rotate([90,0,90])
+                            difference(){
+                                cylinder(r=25/2,h=3);
+                                translate([-100/2,0,-0.01])
+                                cube([100,100,3.02]);
+                                translate([0,-3-9/2])
+                                cylinder(r=m3t_r,h=100,center=true);
+                            }
                         }
                     }
             }
         }
-        translate([0,-120/2,0])
+        translate([0,-outer_h/2+thick,0])
         cylinder(r=16/2, h=100, center=true);
         translate([0,esc_h/2,0])
         linear_extrude(height=100, center=true)
@@ -81,8 +85,6 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
                         translate([68.5/2-9, 112.5/2-3])
                             cylinder(r=m3t_r,h=100,center=true);
                         translate([65.5/2-5, 100/2-4.5])
-                            cylinder(r=m3_r,h=100,center=true);
-                        translate([65/2, 70/2])
                             cylinder(r=m3_r,h=100,center=true);
                     }
                 }
