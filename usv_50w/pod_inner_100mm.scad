@@ -1,4 +1,4 @@
-
+use<pod_inner_100mm.scad>;
 module  minkowski_square(dimension, r=2)
 {
     minkowski()
@@ -15,7 +15,9 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
     m3t_r = 3.2/2;
     bolt_r = 1.7/2;
     h=15;//need to be ajust for lens height
-    outer_w = 74+2*2+3*2;
+    battery_cell_r = 19;
+    battery_box_w = 73+2*2;
+    outer_w = battery_box_w+3*2;
     esc_h=10;
     outer_h = 116+esc_h;
     heat_sink_plate_h = 1.5;
@@ -38,7 +40,7 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
         cylinder(r=10/2, h=100, center=true);
     }
     
-    translate([0, -18.5-heat_sink_plate_h-thick/2, outer_h/2])
+    translate([0, -battery_cell_r-heat_sink_plate_h-thick/2, outer_h/2])
     rotate([90,0,0])
     difference()
     {
@@ -55,13 +57,13 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
                                 cylinder(r1=4.5,r2=3,h=2);
                             translate([65.5/2-5, 100/2-4.5])
                                 cylinder(r1=4.5,r2=3,h=2);
-                            translate([78/2, 50/2])
+                            translate([(battery_box_w)/2, 50/2])
                             rotate([90,0,90])
                             difference(){
                                 cylinder(r=25/2,h=3);
                                 translate([-100/2,0,-0.01])
                                 cube([100,100,3.02]);
-                                translate([0,-3-9/2])
+                                translate([0,-3-9/2-0.3])
                                 cylinder(r=m3t_r,h=100,center=true);
                             }
                         }
@@ -83,7 +85,7 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
                     mirror([0,j])
                     {
                         translate([68.5/2-9, 112.5/2-3])
-                            cylinder(r=m3t_r,h=100,center=true);
+                            cylinder(r=m3_r,h=100,center=true);
                         translate([65.5/2-5, 100/2-4.5])
                             cylinder(r=m3_r,h=100,center=true);
                     }
@@ -93,4 +95,11 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
 }
 $fn=360;
 pod_inner_100mm();
+if(false){
+    color(GREEN)
+    translate([0,-26.5,68])
+    rotate([90,0,0])
+    linear_extrude(height=2, center=true)
+    minkowski_square(dimension=[65.5,100], r=3, $fn=100);
+}
  

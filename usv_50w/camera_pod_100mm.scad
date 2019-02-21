@@ -50,19 +50,22 @@ module camera_pod_100mm(dome_dia=50.8, outer_dia=100, inner_dia=44, tube_thick=2
         if(b_cable)
         {
             for(i=[0:3])
-                rotate([0, 0, i*90])
+                rotate([0, 0, i*90+45])
                 for(j=[-1,0,1])
                 rotate([0, 0, j*10])
                 {
-                    translate([40, 0, 0])
+                    translate([32+3/2+0.01, 0, 6.5])
                     cylinder(r=3/2, h=100);
-                    translate([100/2+40, 0, 9-3/2])
+                    translate([100/2+34+3/2, 0, 8-3/2+0.01])
                     rotate([0, 90, 0])
                     {
-                        cylinder(r=3/2, h=100,center=true);
-                        translate([-3/2, 0, 8/2-100/2])
-                        cube([3,3,8],center=true);
+                        translate([-3/2, 0, 2/2-100/2])
+                        cylinder(r=3/2, h=6,center=true);
+                        translate([-3/2-0.5, 0, 7/2-100/2])
+                        cube([4,3,5],center=true);
                     }
+                    translate([40+3/2-0.01, 0, 0])
+                    cylinder(r=3/2, h=100);
                 }
         }
     }
