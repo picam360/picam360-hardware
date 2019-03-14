@@ -7,6 +7,17 @@ module  minkowski_square(dimension, r=2)
         circle(r=r);
     }
 }
+module line_taper(r=5,l=5)
+{
+    //translate([-r/2,0,r])
+    rotate([0,90,180])
+    translate([-r,-r,-l/2])
+    difference(){
+        cube([r,r,l]);
+        translate([0,0,-0.01])
+        cylinder(r=r,h=l+0.02);
+    }
+}
 
 module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, seal_margin=0.4)
 {
@@ -27,6 +38,8 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
             circle(r=outer_dia/2-tube_thick-seal_margin);
             //circle(r=96/2);
         }
+        translate([0,-100/2-23.5,0])
+        cube([100,100,100],center=true);
         for(i=[0,5,6,11]){
             r=34*sqrt(2)/2;
             translate([r*cos((i+0.5)*360/12), r*sin((i+0.5)*360/12)])
@@ -92,8 +105,18 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
                 }
         }
     }
+    difference(){
+        intersection(){
+            translate([0,-battery_cell_r-heat_sink_plate_h,thick])
+            line_taper(r=8,l=50);
+            cylinder(r=outer_dia/2-tube_thick-seal_margin,h=50);
+        }
+        translate([0,0,thick])
+        rotate([90,0,0])
+            cylinder(r=16/2, h=100, center=true);
+    }
 }
-$fn=360;
+$fn=120;
 pod_inner_100mm();
 if(false){
     color(GREEN)
