@@ -1,3 +1,4 @@
+use<pod_cover_60mm.scad>
 
 module  minkowski_square(dimension, r=2)
 {
@@ -8,37 +9,30 @@ module  minkowski_square(dimension, r=2)
     }
 }
 
-module pod_seal(dome_dia=50.8, outer_dia=60, inner_dia=60, tube_thick=2, seal_margin=0.4)
+module pod_seal(outer_dia=60, tube_thick=2, seal_margin=0.4)
 {
     hole_dia = 18;
-    h=5;
+    h=2;
     pin=15;
+    step=7;
+    ary=4;
     difference(){
         union(){
-            translate([0, 0, 1])
-            cylinder(r=outer_dia/2, h=h);
-            cylinder(r=dome_dia/2, h=1);
-        }
-        for(i=[0:pin-1])
-        {
-            
-            rotate(i*360/pin)
-            {
-                translate([hole_dia+4, 0, 0])
-                cylinder(r=3/2, h=100, center=true);
-                translate([(hole_dia+4)/2, 0, h-3/2+0.01])
-                rotate([0, 90, 0])
-                {
-                    cylinder(r=3/2, h=20,center=true);
-                    translate([-3/2, 0, (hole_dia+4)/4])
-                    cube([3,3,(hole_dia+4)/2],center=true);
-                }
+            translate([0, 0, 3-0.01])
+            difference(){
+                cylinder(r1=outer_dia/2-tube_thick,r2=outer_dia/2-tube_thick-0.4, h=5);
+                cylinder(r=34*sqrt(2)/2-3, h=100, center=true);
             }
         }
-        translate([0, 0, h+1-4+0.01])
-        cylinder(r=hole_dia/2, h=4);
+        camera_bolt_r = 1.7/2;
+        for(i=[0:11]){
+            r=34*sqrt(2)/2;
+            translate([r*cos((i+0.5)*360/12), r*sin((i+0.5)*360/12), 2])
+                cylinder(r=camera_bolt_r, h=100);
+        }
     }
+    pod_cover_60(outer_dia=outer_dia-seal_margin, cable_r=2.5, bent_r=4);
 }
-$fn=360;
+$fn=120;
 pod_seal();
  

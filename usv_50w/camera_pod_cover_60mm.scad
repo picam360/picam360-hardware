@@ -9,12 +9,12 @@ module  minkowski_square(dimension, r=2)
     }
 }
 
-module camera_pod_cover(dome_dia=50.8, outer_dia=64, inner_dia=60, tube_thick=2, seal_margin=1.0)
+module camera_pod_cover(dome_dia=50.8, outer_dia=64, inner_dia=60, tube_thick=2, seal_margin=0.8)
 {
     dome_base_cover();
-    translate([0,0,-5])
+    rotate([180,0,0])
     difference(){
-        cylinder(r=outer_dia/2, h=5);
+        cylinder(r=outer_dia/2, h=12);
         cylinder(r=inner_dia/2+seal_margin, h=100, center=true);
     }
 }

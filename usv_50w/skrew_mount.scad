@@ -37,14 +37,14 @@ module skrew_mount(dome_dia=50.8, outer_dia=108, inner_dia=100, tube_thick=2, ma
         difference(){
             iso_thread(m=outer_dia, p=3, l=thread_h);
             translate([0,0,-0.01])
-            cylinder(r=inner_dia/2, h=thread_h+0.02);
+            cylinder(r=inner_dia/2+margin, h=thread_h+0.02);
         }
         
         translate([0,0,thread_h+pod_space_h-taper2_h])
         difference(){
             cylinder(r2=outer_dia/2-1.5, r1=outer_dia/2, h=taper2_h);
             translate([0,0,-0.01])
-            cylinder(r=inner_dia/2, h=taper_h+0.02);
+            cylinder(r=inner_dia/2+margin, h=taper_h+0.02);
         }
         
         difference(){
@@ -107,8 +107,30 @@ module skrew_mount(dome_dia=50.8, outer_dia=108, inner_dia=100, tube_thick=2, ma
         }
     }
 }
+module skrew_mount_mask(dome_dia=50.8, outer_dia=108, inner_dia=100, tube_thick=2, margin=0.4)
+{
+    pod_space_h = 50;
+    thread_h = 10;
+    taper_h = 2;
+    taper2_h = 2;
+    m3th_r = 3.1;
+    m3bo_r = 7.7;
+    
+    difference(){
+        translate([0,200/2,200/2-0.01])
+            cube([200,200,200], center=true);
+        translate([0,0,thread_h+(pod_space_h-taper_h-taper2_h)/2+taper2_h])
+        rotate([0,-90,0])
+        scale([1,0.125,1])
+        cylinder(r=(pod_space_h-taper_h-taper2_h)/2, h=150);
+    }
+    translate([0,0,thread_h+(pod_space_h-taper_h-taper2_h)/2+taper2_h])
+    rotate([0,90,0])
+    scale([1,0.125,1])
+    cylinder(r=(pod_space_h-taper_h-taper2_h)/2, h=150);
+}
 
-$fn=180;
+$fn=120;
 if(false)
 {
 }else{
@@ -123,13 +145,11 @@ if(false)
     translate([0,1])
     intersection(){
         skrew_mount();
-        translate([0,200/2,200/2])
-            cube([200,200,200], center=true);
+        skrew_mount_mask();
     }
     translate([0,-1])
-    intersection(){
+    difference(){
         skrew_mount();
-        translate([0,-200/2,200/2])
-            cube([200,200,200], center=true);
+        skrew_mount_mask();
     }
 }
