@@ -14,7 +14,7 @@ module  minkowski_square(dimension, r=2)
 module pod_cover_100mm(dome_dia=50.8, outer_dia=104, inner_dia=100, tube_thick=2)
 {
     cable_r=6.5;
-    overlap_h=12;
+    overlap_h=3+3+6;
     thread_h=10;
     space_h=cable_r+thread_h+2-1;
     difference(){
@@ -52,7 +52,7 @@ module pod_cover_100mm(dome_dia=50.8, outer_dia=104, inner_dia=100, tube_thick=2
         for(i=[0:3])
             rotate([0, 0, i*90])
                 rotate([90, 0, 0])
-                    linear_extrude(l=10)
+                    linear_extrude(height=100)
                     hull(){
                         circle(r=cable_r/2);
                         translate([0,100])

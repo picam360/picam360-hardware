@@ -13,13 +13,13 @@ module  minkowski_square(dimension, r=2)
 
 module pod_cover_100mm(dome_dia=50.8, outer_dia=64, inner_dia=60, tube_thick=2)
 {
-    overlap_h=12;
+    overlap_h=3+3+6;
     space_h=5;
     difference(){
         union(){
             translate([0,0,overlap_h])
             difference(){
-                cylinder(r=outer_dia/2, h=space_h);
+                cylinder(r=outer_dia/2+2, h=space_h);
                 cylinder(r=inner_dia/2-tube_thick, h=100, center=true);
             }
             cylinder(r=outer_dia/2, h=overlap_h);

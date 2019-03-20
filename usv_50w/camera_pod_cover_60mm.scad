@@ -11,10 +11,11 @@ module  minkowski_square(dimension, r=2)
 
 module camera_pod_cover(dome_dia=50.8, outer_dia=64, inner_dia=60, tube_thick=2, seal_margin=0.8)
 {
+    overlap_h=3+6;
     dome_base_cover();
     rotate([180,0,0])
     difference(){
-        cylinder(r=outer_dia/2, h=12);
+        cylinder(r=outer_dia/2, h=overlap_h);
         cylinder(r=inner_dia/2+seal_margin, h=100, center=true);
     }
 }

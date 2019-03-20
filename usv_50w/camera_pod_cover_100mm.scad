@@ -13,6 +13,7 @@ module  minkowski_square(dimension, r=2)
 
 module camera_pod_base_cover_100mm(dome_base_dia=64, outer_dia=104, inner_dia=100, tube_thick=2)
 {
+    overlap_h=3+6;
     h=3;
     translate([0, 0, SEAL_MARGIN])
     difference(){
@@ -30,7 +31,6 @@ module camera_pod_base_cover_100mm(dome_base_dia=64, outer_dia=104, inner_dia=10
                 }
         }
     }
-    overlap_h=10+3;
     translate([0, 0, -overlap_h+0.01])
     difference(){
         cylinder(r=outer_dia/2, h=overlap_h+SEAL_MARGIN);

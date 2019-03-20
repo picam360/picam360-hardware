@@ -10,7 +10,7 @@ module  minkowski_square(dimension, r=2)
     }
 }
 
-module camera_pod_cover(dome_dia=50.8, outer_dia=72, inner_dia=64, tube_thick=2, margin=0.25)
+module camera_pod_cover(dome_dia=50.8, outer_dia=76, inner_dia=68, tube_thick=2, margin=0.25)
 {
     base_h = 3;
     thread_u_h = 10;

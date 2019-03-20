@@ -12,14 +12,13 @@ module  minkowski_square(dimension, r=2)
     }
 }
 
-module pod_cover_60(outer_dia=60, cable_r=4.5, bent_r=4.5, seal_margin=0.8, fix_bolt=false)
+module pod_cover_60(outer_dia=60, cable_r=4.5, bent_r=4.5, seal_margin=0.8, tube_h=6, fix_bolt=false)
 {
     hole_dia = 18;
     h=3;
     pin=15;
     step=7;
     ary=4;
-    tube_h=h+5;
     difference(){
         union(){
             cylinder(r=outer_dia/2, h=h);
