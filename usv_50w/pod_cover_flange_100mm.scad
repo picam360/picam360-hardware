@@ -23,7 +23,9 @@ module pod_cover_100mm(dome_dia=50.8, outer_dia=104, inner_dia=100, tube_thick=2
             difference(){
                 iso_thread(m=inner_dia+4, p=3, l=thread_h);
                 translate([0,0,-0.01])
-                cylinder(r=inner_dia/2-tube_thick, h=thread_h+0.02);
+                cylinder(r=inner_dia/2-tube_thick, h=thread_h-1+0.02);
+                translate([0,0,thread_h-2.01])
+                cylinder(r=inner_dia/2-tube_thick-2, h=2+0.02);
             }
             translate([0,0,overlap_h])
             difference(){

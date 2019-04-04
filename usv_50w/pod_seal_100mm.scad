@@ -36,7 +36,7 @@ module pod_seal(outer_dia=100, tube_thick=2, seal_margin=0.4)
                 cylinder(r=camera_bolt_r, h=100);
         }
     }
-    pod_cover_100(outer_dia=outer_dia-seal_margin, cable_r=2.5, bent_r=4);
+    pod_cover_100(outer_dia=outer_dia-seal_margin, cable_r=2.5, cable2_r=4.5, cable3_r=4.5, bent_r=4);
 }
 $fn=120;
 pod_seal();

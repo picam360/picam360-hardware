@@ -33,9 +33,10 @@ module pod_inner_100mm_2(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2
     {
         difference(){
             union(){
+                translate([0, thick/2])
                 linear_extrude(height=outer_h, center=true)
                 intersection(){
-                    square([outer_d,outer_w],center=true);
+                    square([outer_d,outer_w+thick],center=true);
                     circle(r=135/2);
                 }
                 translate([0, 40])

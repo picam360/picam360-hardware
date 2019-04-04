@@ -24,8 +24,12 @@ module pod_inner(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, seal_m
                 cylinder(r=2.1/2, h=100, center=true);
             }
         }
-        translate([0,-14,0])
         cylinder(r=10/2, h=100, center=true);
+        for(i=[0,1]){
+            rotate(90+i*180)
+            translate([16, 0, 0])
+            cylinder(r=4/2, h=100, center=true);
+        }
     }
     translate([0, 12, 100/2])
     rotate([90,0,0])
@@ -66,5 +70,6 @@ module pod_inner(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, seal_m
 //        minkowski_square(dimension=[24,100], r=3, $fn=100);
 }
 $fn=360;
+mirror([1,0,0])
 pod_inner();
  

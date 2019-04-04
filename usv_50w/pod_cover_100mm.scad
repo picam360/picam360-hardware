@@ -12,7 +12,7 @@ module  minkowski_square(dimension, r=2)
     }
 }
 
-module pod_cover_100(outer_dia=100, cable_r=4.5, bent_r=4.5, tube_h=5, fix_bolt=false)
+module pod_cover_100(outer_dia=100, cable_r=4.5, cable2_r=4.5, cable3_r=4.5, bent_r=4.5, tube_h=5, fix_bolt=false)
 {
     hole_dia = 18;
     h=3;
@@ -27,7 +27,7 @@ module pod_cover_100(outer_dia=100, cable_r=4.5, bent_r=4.5, tube_h=5, fix_bolt=
                 for(j=[0:ary-1])
                 {
                     translate([(j-(ary/2-0.5))*step, (i-(ary/2-0.5))*step, 0])
-                    cylinder(r1=9/2, r2=(cable_r+3)/2, h=tube_h);
+                    cylinder(r1=9/2, r2=(((0<i&&i<ary-1&&0<j&&j<ary-1)?cable2_r:cable_r)+3)/2, h=tube_h);
                 }
             }
             for(i=[0:3])
@@ -36,7 +36,7 @@ module pod_cover_100(outer_dia=100, cable_r=4.5, bent_r=4.5, tube_h=5, fix_bolt=
                 {
                     rotate(j*10+90*i)
                     translate([39, 0, 0])
-                    cylinder(r1=9/2, r2=(cable_r+3)/2, h=tube_h);
+                    cylinder(r1=9/2, r2=(cable3_r+3)/2, h=tube_h);
                 }
             }
             for(i=[0,1]){
@@ -50,7 +50,7 @@ module pod_cover_100(outer_dia=100, cable_r=4.5, bent_r=4.5, tube_h=5, fix_bolt=
             for(j=[0:ary-1])
             {
                 translate([(j-(ary/2-0.5))*step, (i-(ary/2-0.5))*step, -0.01])
-                cylinder(r1=6/2, r2=cable_r/2, h=tube_h+.02);
+                cylinder(r1=6/2, r2=((0<i&&i<ary-1&&0<j&&j<ary-1)?cable2_r:cable_r)/2, h=tube_h+.02);
             }
         }
         for(i=[0:3])
@@ -59,7 +59,7 @@ module pod_cover_100(outer_dia=100, cable_r=4.5, bent_r=4.5, tube_h=5, fix_bolt=
             {
                 rotate(j*10+90*i)
                 translate([39, 0, -0.01])
-                cylinder(r1=6/2, r2=cable_r/2, h=tube_h+.02);
+                cylinder(r1=6/2, r2=cable3_r/2, h=tube_h+.02);
             }
         }
         for(i=[0,1]){
