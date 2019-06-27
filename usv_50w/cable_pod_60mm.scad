@@ -14,7 +14,7 @@ module camera_pod_cover(dome_dia=50.8, outer_dia=76, inner_dia=68, tube_thick=2,
 {
     base_h = 3;
     thread_u_h = 10;
-    pod_space_h = 75-thread_u_h-base_h;
+    pod_space_h = 60-thread_u_h-base_h;
     thread_b_h = 10;
     connector_r = 45;
     cable_r = 5.5;
@@ -53,14 +53,14 @@ module camera_pod_cover(dome_dia=50.8, outer_dia=76, inner_dia=68, tube_thick=2,
     difference(){
         cylinder(r=outer_dia/2, h=base_h);
         translate([0,0,-0.01])
-        cylinder(r=(connector_r+8)/2, h=3+0.02);
+        cylinder(r=(inner_dia+4)/2, h=3+0.02);
     }
     difference(){
-        cylinder(r=(connector_r+8)/2+2, h=thread_b_h);
+        cylinder(r=outer_dia/2, h=thread_b_h);
         translate([0,0,-0.01])
-        iso_thread(m=connector_r+8, p=3, t=0.3, l=thread_b_h+0.02);
+        iso_thread(m=inner_dia+4, p=3, t=0.3, l=thread_b_h+0.02);
         translate([0,0,-0.01])
-        cylinder(r1=(connector_r+8)/2+0.5, r2=(connector_r)/2, h=4);
+        cylinder(r1=(inner_dia+4)/2, r2=(inner_dia+4)/2-2, h=4);
     }
 }
 

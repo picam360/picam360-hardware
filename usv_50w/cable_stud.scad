@@ -13,18 +13,17 @@ module  minkowski_square(dimension, r=2)
 
 module cable_stud()
 {
+    thread_dia=72;
     pod_space_h = 2;
     thread_h = 10;
-    connector_r = 45;
     thick = 2;
     difference(){
         union(){
-            echo(connector_r=connector_r);
-            iso_thread(m=connector_r+8, p=3, l=thread_h*2+pod_space_h);
+            iso_thread(m=thread_dia, p=3, l=thread_h*2+pod_space_h);
             translate([0,0,thread_h+pod_space_h/2])
-            cylinder(r=(connector_r+8)/2, h=pod_space_h, center=true);
+            cylinder(r=thread_dia/2, h=pod_space_h, center=true);
         }
-        cylinder(r=connector_r/2, h=100, center=true);
+        cylinder(r=thread_dia/2-2-thick, h=100, center=true);
     }
 }
 

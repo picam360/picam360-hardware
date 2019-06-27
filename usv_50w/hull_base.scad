@@ -13,6 +13,7 @@ module  minkowski_square(dimension, r=2)
 
 module hull_base(dome_dia=50.8, outer_dia=112, inner_dia=108, tube_thick=2, margin=0.25)
 {
+    outer_square = 125;
     pod_space_h = 0;
     thread_h = 10;
     connector_r = 45;
@@ -23,7 +24,7 @@ module hull_base(dome_dia=50.8, outer_dia=112, inner_dia=108, tube_thick=2, marg
     translate([0,0,pod_space_h+thread_h])
     difference(){
         linear_extrude(height=thick)
-        minkowski_square([outer_dia,outer_dia], r=10);
+        minkowski_square([outer_square,outer_square], r=10);
         cylinder(r=(connector_r+8)/2+margin, h=100, center=true);
     }
     translate([0,0,thread_h])

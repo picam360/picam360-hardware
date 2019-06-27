@@ -1,5 +1,5 @@
 use<../lib/ISOThread.scad>
-use<pod_cover_100mm_2.scad>
+use<pod_cover_100mm.scad>
 use<cable_stud.scad>
 
 module  minkowski_square(dimension, r=2)
@@ -15,14 +15,14 @@ module cable_pod_100mm(dome_dia=50.8, outer_dia=108, inner_dia=100, tube_thick=2
 {
     pod_space_h = 20;
     thread_h = 10;
-    connector_r = 45;
+    thread_dia = 72;
     thick = 2;
     key_r=10;
     
     translate([0,0,pod_space_h+thread_h])
     difference(){
         cylinder(r=outer_dia/2, h=thick);
-        cylinder(r=(connector_r+8)/2, h=100, center=true);
+        cylinder(r=thread_dia/2, h=100, center=true);
     }
     translate([0,0,thread_h])
     difference(){
@@ -39,11 +39,11 @@ module cable_pod_100mm(dome_dia=50.8, outer_dia=108, inner_dia=100, tube_thick=2
     translate([0,0,thread_h+pod_space_h+thick])
     rotate([180,0,0])
     difference(){
-        cylinder(r=(connector_r+8)/2+2, h=thread_h);
+        cylinder(r=thread_dia/2+2, h=thread_h);
         translate([0,0,-0.01])
-        iso_thread(m=connector_r+8, p=3, t=0.5, l=thread_h+0.02);
+        iso_thread(m=thread_dia, p=3, t=0.5, l=thread_h+0.02);
         translate([0,0,-0.01])
-        cylinder(r1=(connector_r+8)/2+0.3, r2=(connector_r)/2, h=4);
+        cylinder(r1=thread_dia/2+0.3, r2=thread_dia/2-2, h=4);
     }
     intersection()
     {
