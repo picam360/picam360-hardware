@@ -28,16 +28,17 @@ module pod_inner(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, seal_m
         for(i=[0,1]){
             rotate(90+i*180)
             translate([16, 0, 0])
-            cylinder(r=4/2, h=100, center=true);
+            cylinder(r=6/2, h=100, center=true);
         }
     }
-    translate([0, 12, 100/2])
+    translate([0, 11.5, 100/2])
     rotate([90,0,0])
     difference()
     {
         union(){
+            translate([4.5,0,0])
             linear_extrude(height=3, center=true)
-            minkowski_square(dimension=[45,100], r=3, $fn=100);
+            minkowski_square(dimension=[36,100], r=3, $fn=100);
             translate([6,0,3/2])
             for(i=[0:1]){
                 mirror([i,0])
@@ -58,11 +59,11 @@ module pod_inner(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, seal_m
                 }
         }
     }
-    translate([-12, 1, 100/2])
+    translate([-12, 1, 85/2])
     rotate([90,0,90])
     {
         linear_extrude(height=3, center=true)
-        minkowski_square(dimension=[24,100], r=2, $fn=100);
+        minkowski_square(dimension=[24,85], r=2, $fn=100);
     }
 //    translate([-19, -1, 100/2])
 //    rotate([90,0,90])
