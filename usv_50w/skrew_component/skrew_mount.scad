@@ -1,6 +1,6 @@
-include<params.scad>
+//include<params.scad>
 
-use <../lib/ISOThread.scad>;
+use <../../lib/ISOThread.scad>;
 
 module thruster()
 {
