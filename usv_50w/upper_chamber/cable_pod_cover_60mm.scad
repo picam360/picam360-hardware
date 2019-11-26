@@ -1,4 +1,4 @@
-use <../lib/ISOThread.scad>;
+use <../../lib/ISOThread.scad>;
 
 module  minkowski_square(dimension, r=2)
 {

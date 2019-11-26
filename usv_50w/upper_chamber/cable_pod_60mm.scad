@@ -1,5 +1,5 @@
-use <../lib/ISOThread.scad>
-use<cable_stud.scad>
+use <../../lib/ISOThread.scad>
+use<../bottom_chamber/cable_stud.scad>
 
 module  minkowski_square(dimension, r=2)
 {
@@ -10,14 +10,15 @@ module  minkowski_square(dimension, r=2)
     }
 }
 
-module camera_pod_cover(dome_dia=50.8, outer_dia=76, inner_dia=68, tube_thick=2, margin=0.25)
+module cable_pod_60mm(dome_dia=50.8, outer_dia=76, inner_dia=68, tube_thick=2, margin=0.25)
 {
     base_h = 3;
     thread_u_h = 10;
-    pod_space_h = 60-thread_u_h-base_h;
+    pod_space_h = 70-thread_u_h-base_h;
     thread_b_h = 10;
     connector_r = 45;
     cable_r = 5.5;
+    bottom_r = 108;
     
     translate([0,0,pod_space_h+base_h])
     difference(){
@@ -44,14 +45,20 @@ module camera_pod_cover(dome_dia=50.8, outer_dia=76, inner_dia=68, tube_thick=2,
                         circle(r=cable_r/2);
                     }
     }
+    translate([0,0,base_h+pod_space_h-20-5])
+    difference(){
+        cylinder(r2=outer_dia/2, r1=bottom_r/2, h=20);
+        translate([0,0,-0.01])
+        cylinder(r2=outer_dia/2-2, r1=bottom_r/2-2, h=20+0.02);
+    }
     translate([0,0,base_h])
     difference(){
-        cylinder(r=outer_dia/2, h=pod_space_h-5);
+        cylinder(r=bottom_r/2, h=pod_space_h-5-20);
         translate([0,0,-0.01])
-        cylinder(r=outer_dia/2-2, h=pod_space_h-5+0.02);
+        cylinder(r=bottom_r/2-2, h=pod_space_h-5+0.02);
     }
     difference(){
-        cylinder(r=outer_dia/2, h=base_h);
+        cylinder(r=bottom_r/2, h=base_h);
         translate([0,0,-0.01])
         cylinder(r=(inner_dia+4)/2, h=3+0.02);
     }
@@ -64,8 +71,8 @@ module camera_pod_cover(dome_dia=50.8, outer_dia=76, inner_dia=68, tube_thick=2,
     }
 }
 
-$fn=360;
-camera_pod_cover();
+$fn=120;
+cable_pod_60mm();
  
 //translate([0,0,-10])
 //cable_stud();

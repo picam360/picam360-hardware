@@ -1,4 +1,4 @@
-use<dome_base_cover.scad>
+use<../dome_base_cover.scad>
 
 module  minkowski_square(dimension, r=2)
 {

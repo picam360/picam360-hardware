@@ -1,5 +1,5 @@
-use<../lib/ISOThread.scad>
-use<pod_cover_100mm.scad>
+use<../../lib/ISOThread.scad>
+use<../upper_chamber/cable_pod_60mm.scad>
 use<cable_stud.scad>
 
 module  minkowski_square(dimension, r=2)
@@ -68,6 +68,9 @@ module cable_pod_100mm(dome_dia=50.8, outer_dia=108, inner_dia=100, tube_thick=2
 $fn=120;
 cable_pod_100mm();
 
-//translate([0,0,-30])
-//pod_cover_100mm();
-//cable_stud();
+if(false){
+    translate([0,0,30])
+    cable_pod_60mm();
+    translate([0,0,20])
+    cable_stud();
+}
