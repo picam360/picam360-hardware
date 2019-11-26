@@ -1,6 +1,6 @@
-include<params.scad>
+include<../params.scad>
 use<camera_pod_100mm.scad>
-use <../lib/ISOThread.scad>
+use <../../lib/ISOThread.scad>
 
 module  minkowski_square(dimension, r=2)
 {
