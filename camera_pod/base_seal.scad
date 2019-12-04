@@ -10,8 +10,13 @@ module base_seal(tube_dia=60, tube_thick=2, h=5, is_inner=true)
     difference()
     {
         cylinder(r=tube_dia/2-tube_thick-0.1, h=h);
-        translate([0,0,-2])
-        oring(outer_dia=96.0+0.8, inner_dia=84.6+0.8);
+        if(tube_dia==60){
+            translate([0,0,-0.75])
+            oring(outer_dia=56.7+0.3, inner_dia=49.7+0.3);
+        }else if(tube_dia==100){
+            translate([0,0,-0.75])
+            oring(outer_dia=96.0+0.8, inner_dia=84.6+0.8);
+        }
         for(i=[0:ary-1])
         {
             for(j=[0:ary-1])
@@ -40,7 +45,7 @@ module base_seal(tube_dia=60, tube_thick=2, h=5, is_inner=true)
         for(i=[0:3]){
             rotate(i*90)
             translate([0, tube_dia/2-tube_thick, h])
-             sphere(r=1);
+                sphere(r=1);
         }
         if(tube_dia==100){
             for(i=[0:3])
@@ -60,7 +65,7 @@ module base_seal(tube_dia=60, tube_thick=2, h=5, is_inner=true)
 }
 
 $fn=120;
-tube_dia=100;
+tube_dia=60;
 translate([tube_dia/2, 0, 0])
 base_seal(tube_dia=tube_dia, is_inner=true);
 translate([-tube_dia/2, 0, 0])
