@@ -1,7 +1,7 @@
-include<params.scad>
-use<camera_pod_100mm.scad>
-use<dome_base_cover.scad>
-use<dome_base.scad>
+include<../params.scad>
+use<../camera_pod_100mm.scad>
+use<../dome_base_cover.scad>
+use<../dome_base.scad>
 module  minkowski_square(dimension, r=2)
 {
     minkowski()

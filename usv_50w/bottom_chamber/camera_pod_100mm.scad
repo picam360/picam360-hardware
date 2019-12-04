@@ -1,4 +1,4 @@
-include<params.scad>
+include<../params.scad>
 use<camera_pod_60mm.scad>
 
 module  minkowski_square(dimension, r=2)
