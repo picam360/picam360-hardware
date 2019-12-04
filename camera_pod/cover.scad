@@ -1,7 +1,7 @@
-use <../../lib/ISOThread.scad>;
+use <../lib/ISOThread.scad>;
 use <base_seal_100mm.scad>;
 
-module camera_pod_cover(tube_dia=60, thread_h=10, margin=0.25)
+module cover(tube_dia=60, thread_h=10, margin=0.25)
 {
     pod_space_h = 5;
     
@@ -50,6 +50,6 @@ module camera_pod_cover(tube_dia=60, thread_h=10, margin=0.25)
 $fn=120;
 tube_dia=100;
 thread_h=15;
-camera_pod_cover(tube_dia=tube_dia, thread_h=thread_h);
+cover(tube_dia=tube_dia, thread_h=thread_h);
  
 //base_seal(is_inner=true);
