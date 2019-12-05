@@ -11,6 +11,9 @@ module sw_pod_60mm(){
     pod(tube_dia=60,h=160,margin=3.7);
 }
 
+translate([0,0,160+100+2+60+5])
+pod(tube_dia=60,h=40,camera=true,margin=1);
+
 translate([0,0,100+2+60])
 sw_pod_60mm();
 
@@ -19,10 +22,10 @@ import("adapter_60mm.stl");
 translate([0,0,100+2+60])
 import("adapter_60mm_holder.stl");
 
-translate([0,0,100-10])
-import("../hull_component/hull_base.stl");
-color([1.0,1.0,0.5])
-import("../hull_component/bezier_hull_50w.stl");
+//translate([0,0,100-10])
+//import("../hull_component/hull_base.stl");
+//color([1.0,1.0,0.5])
+//import("../hull_component/bezier_hull_50w.stl");
 
 translate([0,0,100-10])
 import("adapter_100mm.stl");
@@ -43,3 +46,15 @@ import("../skrew_component/skrew_mount_cover.stl");
 translate([0,0,-60-2-2-17.5])
 rotate([180,0,0])
 import("../../camera_pod/joint_single.stl");
+
+translate([0,0,-60-2-2-17.5])
+rotate([180,0,0])
+pod(tube_dia=60,h=40,camera=true,margin=1);
+
+for(i=[0,2]){
+    rotate([0,0,45+90*i])
+    translate([110,0,-50-50])
+    rotate([90,0,0])
+    translate([-48,-48,-40])
+    import("../skrew_component/T100-Thruster-R1-Public.STL");
+}

@@ -172,9 +172,9 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
         //cable
         translate([shift,0,0])
         union(){
-//            translate([0,0,2])
-//            rotate([90,0,0])
-//                cylinder(r=16/2, h=100, center=true);
+            translate([0,0,2])
+            rotate([90,0,0])
+                cylinder(r=16/2, h=100, center=false);
             translate([0,0,height])
             rotate([90,0,0])
                 cylinder(r=16/2, h=100, center=true);
