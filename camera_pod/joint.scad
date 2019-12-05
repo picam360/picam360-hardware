@@ -1,6 +1,6 @@
 use<../camera_pod/cover.scad>
 
-module stereo_adapter(stereo=false, distance=34.5)
+module stereo_adapter(stereo=false, distance=0)
 {
     difference(){
         union(){
@@ -27,7 +27,7 @@ module stereo_adapter(stereo=false, distance=34.5)
                     cylinder(r=60/2-7,h=100,center=true);
                 }
             }
-            cylinder(r=100/2-7,h=100,center=true);
+            cylinder(r=100/2-8,h=100,center=true);
         }
     }
 }
@@ -35,6 +35,7 @@ module stereo_adapter(stereo=false, distance=34.5)
 $fn=120;
 
 stereo_adapter(stereo=true,distance=34.5);
+//stereo_adapter();
 
 //if(true){
 //    translate([0,0,-(15+1.5)])

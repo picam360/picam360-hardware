@@ -2,18 +2,9 @@ include<../params.scad>
 use<camera_pod_100mm.scad>
 use <../../lib/ISOThread.scad>
 
-module  minkowski_square(dimension, r=2)
+module adapter_joint()
 {
-    minkowski()
-    {
-        square([dimension.x-r*2,dimension.y-r*2], center=true);
-        circle(r=r);
-    }
-}
-
-module cable_stud()
-{
-    thread_dia=72;
+    thread_dia=74;
     pod_space_h = 2;
     thread_h = 10;
     thick = 2;
@@ -29,5 +20,5 @@ module cable_stud()
 
 
 $fn=120;
-cable_stud();
+adapter_joint();
 //camera_pod_100mm();
