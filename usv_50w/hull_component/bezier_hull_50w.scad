@@ -1,4 +1,4 @@
-use <../lib/bezier.scad>;
+use <../../lib/bezier.scad>;
 
 function reverse(array)=[for(i=[0:len(array)-1]) array[len(array)-1-i]];
 function join(points)=[

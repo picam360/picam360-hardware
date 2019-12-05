@@ -1,4 +1,4 @@
-use<../camera_pod/cover.scad>
+use<cover.scad>
 
 module stereo_adapter(stereo=false, distance=0)
 {
@@ -34,9 +34,12 @@ module stereo_adapter(stereo=false, distance=0)
 
 $fn=120;
 
-stereo_adapter(stereo=true,distance=34.5);
-//stereo_adapter();
-
+stereo=false;
+if(stereo){
+    stereo_adapter(stereo=true,distance=34.5);
+}else{
+    stereo_adapter(stereo=false,distance=0);
+}
 //if(true){
 //    translate([0,0,-(15+1.5)])
 //    cover(tube_dia=100, thread_h=15);

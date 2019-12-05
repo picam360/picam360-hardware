@@ -65,9 +65,6 @@ module base_seal(tube_dia=60, tube_thick=2, h=5, is_inner=true)
 }
 
 $fn=120;
-tube_dia=60;
-translate([tube_dia/2, 0, 0])
-base_seal(tube_dia=tube_dia, is_inner=true);
-translate([-tube_dia/2, 0, 0])
-base_seal(tube_dia=tube_dia, is_inner=false);
- 
+tube_dia=100;
+is_inner=true;
+base_seal(tube_dia=tube_dia, is_inner=is_inner);
