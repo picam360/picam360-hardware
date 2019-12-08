@@ -30,10 +30,10 @@ import("../hull_component/bezier_hull_50w.stl");
 translate([0,0,100-10])
 import("adapter_100mm.stl");
 
-translate([0,0,100-10])
+translate([0,0,100-12])
 import("adapter_joint.stl");
 
-translate([0,0,-60-2-2-10])
+translate([0,0,-60-2-2-13])
 sw_pod_100mm();
 
 translate([0,0,10])
