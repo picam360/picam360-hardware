@@ -14,7 +14,9 @@ module adapter_joint()
             translate([0,0,thread_h+pod_space_h/2])
             cylinder(r=thread_dia/2, h=pod_space_h, center=true);
         }
+        translate([0,0,100/2+0.4])
         cylinder(r=thread_dia/2-2-thick, h=100, center=true);
+        cylinder(r=thread_dia/2-2-thick-10, h=100, center=true);
     }
 }
 

@@ -1,3 +1,5 @@
+use<../../camera_pod/base_seal.scad>
+
 module  minkowski_square(dimension, r=2)
 {
     minkowski()
@@ -18,7 +20,8 @@ module line_taper(r=5,l=5)
     }
 }
 
-module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, seal_margin=0.4)
+module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, 
+        tube_thick=2, shift_x=6, shift_y=0, seal_margin=0.4)
 {
     tube_h=160;
     height=tube_h-15*2;
@@ -40,13 +43,12 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
     battery_h = battery_cell_r*6;
     battery_d = battery_cell_r*2+battery_margin_h;
     
-    shift=8;
-    
     difference(){
+        translate([-shift_x,-shift_y,0])
         linear_extrude(height=2)
         minkowski_square(dimension=[battery_w+4,battery_d+4], r=3, $fn=100);
         
-        translate([shift,0,0])
+        rotate([0,0,45])
         union(){
             ary=4;
             step=8;
@@ -74,6 +76,7 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
     
     //translate([0, -battery_cell_r-heat_sink_plate_h-thick/2, outer_h/2])
     //rotate([90,0,0])
+    translate([-shift_x,-shift_y,0])
     difference()
     {
         union(){
@@ -170,7 +173,7 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
         }
         
         //cable
-        translate([shift,0,0])
+        translate([shift_x,0,0])
         union(){
             translate([0,0,2])
             rotate([90,0,0])
@@ -290,6 +293,25 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, 
 }
 $fn=120;
 pod_inner_100mm();
+
+if(false){
+    translate([0,0,-5])
+    rotate([0,0,45])
+    base_seal(tube_dia=100);
+
+    translate([12,32,40])
+    color([0,1,0])
+    cube([30,11+1.6*2,65],center=true);
+
+    translate([-24,26+6/2,40])
+    color([0,1,0])
+    cube([20,1.6+6,65],center=true);
+
+    translate([34+5,0,40])
+    color([0,1,0])
+    rotate([0,0,90])
+    cube([25,10+1.6,65],center=true);
+}
 if(false){
     color(GREEN)
     translate([0,-26.5,68])

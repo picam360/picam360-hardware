@@ -11,7 +11,7 @@ module  minkowski_square(dimension, r=2)
     }
 }
 
-module cable_pod_60mm(dome_dia=50.8, outer_dia=76, inner_dia=68, tube_thick=2, margin=0.25)
+module cable_pod_60mm(dome_dia=50.8, outer_dia=76, tube_thick=2, margin=0.25)
 {
     base_h = 3;
     thread_u_h = 10;
@@ -63,7 +63,7 @@ module cable_pod_60mm(dome_dia=50.8, outer_dia=76, inner_dia=68, tube_thick=2, m
     difference(){
         cylinder(r=bottom_r/2, h=base_h);
         translate([0,0,-0.01])
-        cylinder(r=(inner_dia+4)/2, h=3+0.02);
+        cylinder(r=holder_thread_dia/2+1.0-0.01, h=3+0.02);
     }
     difference(){
         cylinder(r=outer_dia/2, h=thread_b_h);

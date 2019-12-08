@@ -34,8 +34,25 @@ module stereo_adapter(stereo=false, distance=0)
 
 $fn=120;
 
-stereo=false;
+stereo=true;
 if(stereo){
+    color([1,0,0])
+    difference(){
+        linear_extrude(height=3){
+            hull(){
+                translate([0,40])
+                circle(r=8);
+                translate([0,-20])
+                circle(r=5);
+            }
+            translate([0,-40])
+            circle(r=8);
+        }
+        translate([34.5,0])
+            cylinder(r=67/2,h=100,center=true);
+        translate([-34.5,0])
+            cylinder(r=67/2,h=100,center=true);
+    }
     stereo_adapter(stereo=true,distance=34.5);
 }else{
     stereo_adapter(stereo=false,distance=0);
