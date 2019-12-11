@@ -28,10 +28,11 @@ module camera_seal(tube_dia=60, tube_thick=2, h=5)
         translate([0,0,0])
         oring(outer_dia=56.7+0.3, inner_dia=49.7+0.3);
         
+        //for depressure
         for(i=[0:4]){
-            r=34*sqrt(2)/2;
+            r=23;
             translate([r*cos((i+0.0)*360/4), r*sin((i+0.0)*360/4), 2])
-                cylinder(r=bolt_r, h=100);
+                cylinder(r=1.25, h=100,center=true);
         }
         cylinder(r=dome_inner/2-2, h=100, center=true);
         
