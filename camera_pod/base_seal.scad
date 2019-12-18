@@ -65,6 +65,8 @@ module base_seal(tube_dia=60, tube_thick=2, h=5, is_inner=true)
 }
 
 $fn=120;
-tube_dia=100;
+tube_dia=60;
 is_inner=true;
 base_seal(tube_dia=tube_dia, is_inner=is_inner);
+//rotate([180,0,0])
+//base_seal(tube_dia=tube_dia, is_inner=is_inner);

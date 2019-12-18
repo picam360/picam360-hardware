@@ -1,63 +1,39 @@
 use<cover.scad>
+use <../lib/ISOThread.scad>
 
-module stereo_adapter(stereo=false, distance=0)
+module joint(target_r=100, male=false)
 {
-    difference(){
-        union(){
-            translate([distance,0,10+1.5])
-                rotate([180,0,0])
-                    cover(tube_dia=60, thread_h=10);
-            translate([distance,0,0])
-                cylinder(r=60/2,h=1.48);
-            if(stereo){
-                translate([-distance,0,10+1.5])
-                rotate([180,0,0])
-                cover(tube_dia=60, thread_h=10);
-                translate([-distance,0,0])
-                    cylinder(r=60/2,h=1.48);
-            }
-            cylinder(r1=107/2,r2=102/2,h=1.48);
-        }
-        intersection(){
+    thread_r = 40;
+    thick=1.5;
+    if(male){
+        difference(){
             union(){
-                translate([distance,0,0])
-                cylinder(r=60/2-7,h=100,center=true);
-                if(stereo){
-                    translate([-distance,0,0])
-                    cylinder(r=60/2-7,h=100,center=true);
-                }
+                cylinder(r=target_r/2-2-0.5,h=thick);
+                iso_thread(m=thread_r, p=3, l=10+thick);
             }
-            cylinder(r=100/2-8,h=100,center=true);
+            cylinder(r=thread_r/2-3,h=100,center=true);
+        }
+    }else{
+        difference(){
+            union(){
+                cylinder(r=target_r/2-2-0.5,h=thick);
+                cylinder(r=thread_r/2+1.5,h=10+thick);
+            }
+            translate([0,0,-100/2])
+            iso_thread(m=thread_r, p=3, l=100, t=0.5, center=true);
+            translate([0,0,10+thick+0.01])
+            rotate([180,0,0])
+            cylinder(r1=thread_r/2,r2=thread_r/2-1.5,h=3);
         }
     }
 }
 
 $fn=120;
 
-stereo=true;
-if(stereo){
-    color([1,0,0])
-    difference(){
-        linear_extrude(height=3){
-            hull(){
-                translate([0,40])
-                circle(r=8);
-                translate([0,-20])
-                circle(r=5);
-            }
-            translate([0,-40])
-            circle(r=8);
-        }
-        translate([34.5,0])
-            cylinder(r=67/2,h=100,center=true);
-        translate([-34.5,0])
-            cylinder(r=67/2,h=100,center=true);
-    }
-    stereo_adapter(stereo=true,distance=34.5);
-}else{
-    stereo_adapter(stereo=false,distance=0);
-}
+target_r=100;
+male=true;
+joint(target_r=target_r, stereo=false,distance=0,male=male);
 //if(true){
-//    translate([0,0,-(15+1.5)])
-//    cover(tube_dia=100, thread_h=15);
+//    translate([0,0,-(15+1.5)+5])
+//    cover(tube_dia=target_r, thread_h=15);
 //}

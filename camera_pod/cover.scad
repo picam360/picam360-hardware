@@ -2,8 +2,6 @@ use <../lib/ISOThread.scad>;
 
 module cover(tube_dia=60, thread_h=10, margin=0.25)
 {
-    pod_space_h = 5;
-    
     dome_dia=46;
     tube_thick=2;
     outer_dia=tube_dia+10;

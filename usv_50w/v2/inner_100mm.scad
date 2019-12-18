@@ -313,6 +313,19 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44,
                 square(size=[55,100], center=true);
                 circle(r=97/2);
             }
+        //charger
+        translate([shift_x,0,height/2])
+        rotate([-90,0,0])
+        for(i=[0:1]){
+            mirror([i,0])
+                for(j=[0:1]){
+                    mirror([0,j])
+                    {
+                        translate([65.5/2-5, 100/2-4.5])
+                            cylinder(r1=10/2,r2=10/2,h=100,center=center);
+                    }
+                }
+        }
             
         charger_base_set(height=height, r1=2.7/2, r2=2.7/2, h=20, center=true, shift_x=shift_x);
         base_set1(height=height, r1=1.7/2, r2=1.7/2, h=20, center=true);
