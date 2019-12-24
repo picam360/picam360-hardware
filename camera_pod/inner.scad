@@ -1,5 +1,4 @@
 include<params.scad>
-use<../dome_base.scad>
 
 module  minkowski_square(dimension, r=2)
 {

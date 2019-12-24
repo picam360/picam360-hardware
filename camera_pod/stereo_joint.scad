@@ -120,16 +120,16 @@ module stereo_joint(distance=34.5)
 
 $fn=120;
 
-part="holder";
+part="stereo_joint";
 if(part=="stereo_joint"){
-    stereo_joint(distance=34.5);
+    stereo_joint(distance=36);
 }else if(part=="thread"){
     thread(tube_dia=100, thread_h=10, margin=0.25);
 }else if(part=="holder"){
     holder();
 }else{
     translate([0,0,12])
-    stereo_joint(distance=34.5);
+    stereo_joint(distance=36);
     thread(tube_dia=100, thread_h=10, margin=0.25);
     translate([0,0,-12])
     cover(tube_dia=100, thread_h=10, margin=0.25);

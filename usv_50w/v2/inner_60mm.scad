@@ -23,13 +23,9 @@ module pod_inner_60mm_fix(dome_dia=50.8, outer_dia=60, inner_dia=44,
     outer_w = battery_box_w+3*2;
     esc_h=10;
     outer_h = 116+esc_h;
-    heat_sink_plate_h = 1.5;
     
-    battery_cell_r = 19;
-    battery_margin_h = 4;//BMS or hold tape
-    battery_w = 70;
-    battery_h = battery_cell_r*6;
-    battery_d = battery_cell_r*2+battery_margin_h;
+    shift_raspi_h=10;
+    shift_raspi_x=10;
     
     difference(){
         linear_extrude(height=2)
@@ -37,16 +33,23 @@ module pod_inner_60mm_fix(dome_dia=50.8, outer_dia=60, inner_dia=44,
             union(){
                 difference(){
                     circle(r=outer_dia/2-tube_thick-seal_margin);
-                    circle(r=19+4.5/2, center=true);
+                    circle(r=19+4.5/2);
                 }
-                intersection(){
-                    translate([0, 8])
-                    minkowski_square(dimension=[46+6,2+6], r=0.8);
-                    circle(r=outer_dia/2-tube_thick-seal_margin);
-                }
+                translate([0, shift_raspi_h])
+                polygon([[(46)/2,(2+6)/2],[-(46)/2,(2+6)/2],[-(46+6)/2,-(2+6)/2],[(46+6)/2,-(2+6)/2]]);
+                translate([shift_raspi_x,0])
+                rotate(-90)
+                polygon([[(46)/2,(2+6)/2],[0,(2+6)/2],[0,-(2+6)/2],[(46+6)/2,-(2+6)/2]]);
             }
-            translate([0, 8])
-            minkowski_square(dimension=[46+0.5,2+0.5], r=0.8);
+            union(){
+                translate([0, shift_raspi_h])
+                minkowski_square(dimension=[46+0.5,2+0.5], r=0.8);
+            
+                translate([shift_raspi_x,0])
+                rotate(-90)
+                translate([(46+0.5)/4,0])
+                minkowski_square(dimension=[(46+0.5)/2,2+0.5], r=0.8);
+            }
             square([28,28], center=true);
         }
         
@@ -64,47 +67,65 @@ module pod_inner_60mm_fix(dome_dia=50.8, outer_dia=60, inner_dia=44,
 
 module pod_inner_60mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, seal_margin=0.4)
 {
+    thick=2;
     tube_h=160;
     height=tube_h-15*2;
     bolt_r = 1.7/2;
     h=15;//need to be ajust for lens height
     
+    shift_raspi_h=10;
+    shift_raspi_x=10;
+    
+    shift_usb_x=4;
+    shift_usb_y=0;
+    
     difference()
     {
         union(){
+            //raspi base
             difference()
             {
-                translate([0, 8, height/2])
+                translate([0, shift_raspi_h, height/2])
                 linear_extrude(height=height, center=true)
-                minkowski_square(dimension=[46,2], r=0.8);
-                translate([8, 0, height/2+40])
+                minkowski_square(dimension=[46,thick], r=0.8);
+                translate([shift_raspi_x-3, 0, height/2+40])
                 rotate([90,0,0])
                 linear_extrude(height=height, center=true)
                 minkowski_square(dimension=[10,20], r=5-0.01);
             }
             
+            //raspi side
             difference()
             {
-                translate([-8, 0, height/2]) 
+                translate([-shift_raspi_x, 0, height/2]) 
                 rotate([0,0,90])
                 linear_extrude(height=height, center=true)
-                minkowski_square(dimension=[46,2], r=0.8);
+                minkowski_square(dimension=[46,thick], r=0.8);
                 translate([0,100/2+8+2/2-0.01])
                 cube([100,100,1000], center=true);
             }
+            //usb hub
+            translate([-thick/2-shift_raspi_x,shift_usb_x,height/2+shift_usb_y])
+            //for(i=[0:1])
+                mirror([0,1])
+                for(j=[0:1])
+                    mirror([0,0,j])
+                        translate([0,34.0/2-2.0,79.5/2-2.5])
+                        rotate([0,-90,0])
+                        cylinder(r1=4.5,r2=3,h=1.5);
             
             intersection()
             {
                 union(){
                     //raspi
-                    translate([8, 8-2/2, height/2-25])
+                    translate([30/2+thick/2-shift_raspi_x, shift_raspi_h-2/2, height/2-25])
                     rotate([90,0,0])
                         for(i=[0:1]){
                             mirror([i,0])
                                 for(j=[0:1]){
                                     mirror([0,j])
                                         translate([30/2-3.5, 65/2-3.5])
-                                        cylinder(r1=4.5,r2=3,h=2);
+                                        cylinder(r1=4.5,r2=3,h=1.5);
                                 }
                         }
                 }
@@ -114,7 +135,7 @@ module pod_inner_60mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, s
         }
         union(){
             //raspi
-            translate([8, 8, height/2-25])
+            translate([30/2+thick/2-shift_raspi_x, 0, height/2-25])
             rotate([90,0,0])
                 for(i=[0:1]){
                     mirror([i,0])
@@ -124,26 +145,54 @@ module pod_inner_60mm(dome_dia=50.8, outer_dia=60, inner_dia=44, tube_thick=2, s
                             cylinder(r=bolt_r,h=100,center=true);
                         }
                 }
+            //usb hub
+            translate([-9,shift_usb_x,height/2+shift_usb_y])
+            //for(i=[0:1])
+                mirror([0,1])
+                for(j=[0:1])
+                    mirror([0,0,j])
+                        translate([0,34.0/2-2.0,79.5/2-2.5])
+                        rotate([0,-90,0])
+                        cylinder(r=1.7/2,h=100,center=true);
         }
-            translate([-100/2-8-2/2,0,height/2])
+            translate([-100/2-shift_raspi_x-thick/2,100/2,height/2])
             cube([100,100,100], center=true);
-            translate([0,-100/2+8-2/2-(11+2+1.6*2),height/2])
+            translate([0,-100/2+8-2/2-(11+2+1.6*2)-5,height/2])
             cube([100,100,100], center=true);
     }
 }
 $fn=360;
  
-is_fix=false;
+usb_hub=false;
+is_fix=true;
 if(is_fix){
     pod_inner_60mm_fix();
     //pod_inner_60mm();
 }else{
     pod_inner_60mm();
 }
+//    mirror([1,0])
+//    pod_inner_60mm_fix();
 if(false){
-    
     translate([0,0,-5])
     base_seal(tube_dia=60);
+}
+if(usb_hub){
+    translate([-16,3,80])
+    difference()
+    {
+        cube([10,34,79.5], center=true);
+        translate([0,0,40])
+        cube([10.02,34-11*2,10], center=true);
+        
+        for(i=[0:1])
+            mirror([0,i])
+            for(j=[0:1])
+                mirror([0,0,j])
+                    translate([0,34.0/2-2.0,79.5/2-2.5])
+                    rotate([0,90,0])
+                    cylinder(r=3.5/2, h=100, center=true);
+    }
 }
 //raspi
 if(false){

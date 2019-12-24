@@ -1,5 +1,13 @@
 use<../../camera_pod/base_seal.scad>
 
+thick=2;
+heat_sink_plate_h = 1.5;
+battery_cell_r = 19;
+battery_margin_h = 4;//BMS or hold tape
+battery_w = 66+0.5+0.5;
+battery_h = battery_cell_r*6;
+battery_d = battery_cell_r*2+0.5+heat_sink_plate_h+0.5+0.5+1.0-3.0;
+
 module  minkowski_square(dimension, r=2)
 {
     minkowski()
@@ -30,10 +38,6 @@ module pod_inner_100mm_fix(dome_dia=50.8, outer_dia=60, inner_dia=44,
     m3t_r = 3.2/2;
     bolt_r = 1.7/2;
     h=15;//need to be ajust for lens height
-    battery_box_w = 73+2*2;
-    outer_w = battery_box_w+3*2;
-    esc_h=10;
-    outer_h = 116+esc_h;
     heat_sink_plate_h = 1.5;
     
     battery_cell_r = 19;
@@ -76,7 +80,7 @@ module pod_inner_100mm_fix(dome_dia=50.8, outer_dia=60, inner_dia=44,
 module charger_base_set(height, r1=4.5, r2=3, h=2, center=false, shift_x=6)
 {
     //charger
-    translate([0,-23,height/2])
+    translate([0,-(battery_d/2+thick),height/2])
     rotate([90,0,0])
         for(i=[0:1]){
             mirror([i,0])
@@ -89,7 +93,7 @@ module charger_base_set(height, r1=4.5, r2=3, h=2, center=false, shift_x=6)
                 }
         }
     //charger
-    translate([shift_x,-23,height/2])
+    translate([shift_x,-(battery_d/2+thick),height/2])
     difference(){
         rotate([90,0,0])
         for(i=[0:1]){
@@ -97,8 +101,13 @@ module charger_base_set(height, r1=4.5, r2=3, h=2, center=false, shift_x=6)
                 for(j=[0:1]){
                     mirror([0,j])
                     {
-                        translate([65.5/2-5, 100/2-4.5])
-                            cylinder(r1=r1,r2=r2,h=h,center=center);
+                        if(center){
+                            translate([65.5/2-5, 100/2-4.5, h/2-thick-1])
+                            cylinder(r1=r1,r2=r2,h=h+1,center=center);
+                        }else{
+                            translate([65.5/2-5, 100/2-4.5, -2])
+                            cylinder(r1=r1+1,r2=r2,h=h+2,center=center);
+                        }
                     }
                 }
         }
@@ -108,52 +117,8 @@ module charger_base_set(height, r1=4.5, r2=3, h=2, center=false, shift_x=6)
 }
 module base_set1(height, r1=4.5, r2=3, h=2, center=false)
 {
-    //esc
-    translate([-37,0,height/2+40])
-    rotate([-90,0,90])
-        for(i=[0:1]){
-            mirror([i,0])
-                for(j=[0:1]){
-                    mirror([0,j])
-                        translate([27/2-3.5, 27/2-3.5, 0])
-                            cylinder(r1=r1,r2=r2,h=h,center=center);
-                }
-        }
-    //pmb
-    translate([-37,0,height/2-22])
-    rotate([-90,0,90])
-        for(i=[0:1]){
-            mirror([i,0])
-                for(j=[0:1]){
-                    mirror([0,j])
-                        translate([30/2-3.5, 65/2-3.5])
-                            cylinder(r1=r1,r2=r2,h=h,center=center);
-                }
-        }
-    //opt1
-    translate([37,0,height/2+40])
-    rotate([90,0,90])
-        for(i=[0:1]){
-            mirror([i,0])
-                for(j=[0:1]){
-                    mirror([0,j])
-                        translate([27/2-3.5, 27/2-3.5, 0])
-                            cylinder(r1=r1,r2=r2,h=h,center=center);
-                }
-        }
-    //opt2
-    translate([37,0,height/2-22])
-    rotate([90,0,90])
-        for(i=[0:1]){
-            mirror([i,0])
-                for(j=[0:1]){
-                    mirror([0,j])
-                        translate([30/2-3.5, 65/2-3.5])
-                            cylinder(r1=r1,r2=r2,h=h,center=center);
-                }
-        }
     //plc
-    translate([0,23,height/2+40])
+    translate([0,(battery_d/2+thick),height/2+40])
     rotate([-90,0,0])
         for(i=[0:1]){
             mirror([i,0])
@@ -164,7 +129,7 @@ module base_set1(height, r1=4.5, r2=3, h=2, center=false)
                 }
         }
     //raspi
-    translate([0,23,height/2-22])
+    translate([0,(battery_d/2+thick),height/2-22])
     rotate([-90,0,0])
         for(i=[0:1]){
             mirror([i,0])
@@ -178,20 +143,24 @@ module base_set1(height, r1=4.5, r2=3, h=2, center=false)
 module base_set2(height, r1=4.5, r2=3, h=2, center=false)
 {
     //esc
-    translate([-17,0,-7])
-    translate([0,23,height/2+40])
+    translate([-18,0,-10])
+    translate([0,(battery_d/2+thick),height/2+40])
     rotate([-90,0,0])
         for(i=[0:1]){
             mirror([i,0])
                 for(j=[0:1]){
                     mirror([0,j])
                         translate([27/2-3.5, 27/2-3.5, 0])
+                        if(center){
                             cylinder(r1=r1,r2=r2,h=h,center=center);
+                        }else{
+                            cylinder(r1=r1-1.5,r2=r2-1.5,h=h,center=center);
+                        }
                 }
         }
     //pmb
-    translate([-17,0,-7])
-    translate([0,23,height/2-22])
+    translate([-18,0,-2])
+    translate([0,(battery_d/2+thick),height/2-22])
     rotate([-90,0,0])
         for(i=[0:1]){
             mirror([i,0])
@@ -199,45 +168,11 @@ module base_set2(height, r1=4.5, r2=3, h=2, center=false)
                     mirror([0,j])
                         translate([30/2-3.5, 65/2-3.5])
                         cylinder(r1=r1,r2=r2,h=h,center=center);
-                }
-        }
-    //opt1
-    translate([37,0,height/2+40])
-    rotate([90,0,90])
-        for(i=[0:1]){
-            mirror([i,0])
-                for(j=[0:1]){
-                    mirror([0,j])
-                        translate([27/2-3.5, 27/2-3.5, 0])
-                            cylinder(r1=r1,r2=r2,h=h,center=center);
-                }
-        }
-    //opt2
-    translate([37,0,height/2-22])
-    rotate([90,0,90])
-        for(i=[0:1]){
-            mirror([i,0])
-                for(j=[0:1]){
-                    mirror([0,j])
-                        translate([30/2-3.5, 65/2-3.5])
-                        cylinder(r1=r1,r2=r2,h=h,center=center);
-                }
-        }
-    //plc
-    translate([17,0,-7])
-    translate([0,23,height/2+40])
-    rotate([-90,0,0])
-        for(i=[0:1]){
-            mirror([i,0])
-                for(j=[0:1]){
-                    mirror([0,j])
-                        translate([27/2-3.5, 27/2-3.5, 0])
-                            cylinder(r1=r1,r2=r2,h=h,center=center);
                 }
         }
     //raspi
-    translate([17,0,-7])
-    translate([0,23,height/2-22])
+    translate([18,0,-2])
+    translate([0,(battery_d/2+thick),height/2-22])
     rotate([-90,0,0])
         for(i=[0:1]){
             mirror([i,0])
@@ -247,6 +182,15 @@ module base_set2(height, r1=4.5, r2=3, h=2, center=false)
                         cylinder(r1=r1,r2=r2,h=h,center=center);
                 }
         }
+    //usb hub
+    translate([(battery_w/2+thick),0,height/2])
+    rotate([90,0,90])
+        for(i=[0:1])
+            mirror([i,0])
+            for(j=[0:1])
+                    mirror([0,j])
+                        translate([34.0/2-2.0,79.5/2-2.5,0])
+                            cylinder(r1=r1,r2=r2,h=h,center=center);
 }
 
 module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44, 
@@ -255,32 +199,17 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44,
     tube_h=160;
     height=tube_h-15*2;
     
-    thick=3;
     m3_r = 2.8/2;
     m3t_r = 3.2/2;
     bolt_r = 1.7/2;
     h=15;//need to be ajust for lens height
-    battery_box_w = 73+2*2;
-    outer_w = battery_box_w+3*2;
-    esc_h=10;
-    outer_h = 116+esc_h;
-    heat_sink_plate_h = 1.5;
-    
-    battery_cell_r = 19;
-    battery_margin_h = 4;//BMS or hold tape
-    battery_w = 70;
-    battery_h = battery_cell_r*6;
-    battery_d = battery_cell_r*2+battery_margin_h;
-    
     
     translate([-shift_x,-shift_y,0])
     linear_extrude(height=0.4)
     difference(){
-        minkowski_square(dimension=[battery_w+4,battery_d+4], r=2, $fn=100);
+        minkowski_square(dimension=[battery_w+thick*2,battery_d+thick*2], r=2, $fn=100);
         //minkowski_square(dimension=[battery_w,battery_d], r=2, $fn=100);
     }
-    //translate([0, -battery_cell_r-heat_sink_plate_h-thick/2, outer_h/2])
-    //rotate([90,0,0])
     translate([-shift_x,-shift_y,0])
     difference()
     {
@@ -291,7 +220,7 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44,
                 minkowski_square(dimension=[battery_w,battery_d], r=2, $fn=100);
             }
             charger_base_set(height=height, r1=4.5, r2=3, h=2, center=false, shift_x=shift_x);
-            base_set1(height=height, r1=4.5, r2=3, h=2, center=false);
+            base_set2(height=height, r1=4.5, r2=3, h=2, center=false);
         }
         
         //cable
@@ -299,7 +228,7 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44,
         union(){
             translate([0,0,0])
             rotate([90,0,0])
-                cylinder(r=16/2, h=100, center=false);
+                cylinder(r=16/2, h=100, center=true);
             translate([0,0,height])
             rotate([90,0,0])
                 cylinder(r=16/2, h=100, center=true);
@@ -314,7 +243,7 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44,
                 circle(r=97/2);
             }
         //charger
-        translate([shift_x,0,height/2])
+        translate([0,0,height/2])
         rotate([-90,0,0])
         for(i=[0:1]){
             mirror([i,0])
@@ -322,18 +251,19 @@ module pod_inner_100mm(dome_dia=50.8, outer_dia=60, inner_dia=44,
                     mirror([0,j])
                     {
                         translate([65.5/2-5, 100/2-4.5])
-                            cylinder(r1=10/2,r2=10/2,h=100,center=center);
+                            cylinder(r1=6/2,r2=6/2,h=100);
                     }
                 }
         }
             
         charger_base_set(height=height, r1=2.7/2, r2=2.7/2, h=20, center=true, shift_x=shift_x);
-        base_set1(height=height, r1=1.7/2, r2=1.7/2, h=20, center=true);
+        base_set2(height=height, r1=1.7/2, r2=1.7/2, h=20, center=true);
     }
 }
 $fn=120;
 is_fix=false;
-shift_x=0;
+//shift_x=0;
+shift_x=6;//uwv
 if(is_fix){
     pod_inner_100mm_fix(shift_x=shift_x);
     //pod_inner_100mm();
