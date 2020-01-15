@@ -1,4 +1,4 @@
-use <../lib/ISOThread.scad>;
+use <../../lib/ISOThread.scad>;
 
 module  minkowski_square(dimension, r=2)
 {
@@ -9,13 +9,10 @@ module  minkowski_square(dimension, r=2)
     }
 }
 
-module camera_pod_cover(dome_dia=50.8, outer_dia=108, inner_dia=104, tube_thick=2, margin=0.25)
+module camera_pod_cover(dome_dia=50.8, outer_dia=108, inner_dia=106, tube_thick=2, margin=0.25)
 {
-    pod_space_h = 5;
-    thread_h = 10;
-    
-    t=0.4;
-    thread_h=10;
+    t=0.5;
+    thread_h=7;
     upper_thick = 3;
     difference(){
         union(){
@@ -29,9 +26,10 @@ module camera_pod_cover(dome_dia=50.8, outer_dia=108, inner_dia=104, tube_thick=
             }
             cylinder(r=outer_dia/2+3.5,h=thread_h);
         }
-        cylinder(r=inner_dia/2+margin,h=100,center=true);
+        //cylinder(r=inner_dia/2+margin,h=100,center=true);
         translate([0,0,-0.01])
-        iso_thread(m=outer_dia, l=thread_h+0.02, p=3, t=t);
+        iso_thread(m=outer_dia, l=thread_h+upper_thick+0.02, p=3, t=t);
+        translate([0,0,-0.01])
         cylinder(r1=outer_dia/2+t, r2=outer_dia/2+t-2, h=4);
         for(i=[0:31])
         rotate(i*360/32)

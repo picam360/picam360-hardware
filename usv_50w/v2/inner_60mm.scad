@@ -28,7 +28,7 @@ module pod_inner_60mm_fix(dome_dia=50.8, outer_dia=60, inner_dia=44,
     shift_raspi_x=10;
     
     difference(){
-        linear_extrude(height=2)
+        linear_extrude(height=3)
         difference(){
             union(){
                 difference(){
@@ -41,17 +41,47 @@ module pod_inner_60mm_fix(dome_dia=50.8, outer_dia=60, inner_dia=44,
                 rotate(-90)
                 polygon([[(46)/2,(2+6)/2],[0,(2+6)/2],[0,-(2+6)/2],[(46+6)/2,-(2+6)/2]]);
             }
+            square([28,28], center=true);
+        }
             union(){
+                translate([0, 0, -0.01])
+                linear_extrude(height=1.02)
                 translate([0, shift_raspi_h])
                 minkowski_square(dimension=[46+0.5,2+0.5], r=0.8);
+                hull(){
+                    translate([0, 0, 3.0])
+                    linear_extrude(height=0.01)
+                    translate([0, shift_raspi_h])
+                    minkowski_square(dimension=[46+0.5+2.5,2+0.5+2.5], r=0.8);
+                        
+                    translate([0, 0, 1.0])
+                    linear_extrude(height=1)
+                    translate([0, shift_raspi_h])
+                    minkowski_square(dimension=[46+0.5,2+0.5], r=0.8);
+                }
             
+                translate([0, 0, -0.01])
+                linear_extrude(height=1.02)
                 translate([shift_raspi_x,0])
                 rotate(-90)
                 translate([(46+0.5)/4,0])
                 minkowski_square(dimension=[(46+0.5)/2,2+0.5], r=0.8);
+                hull(){
+                    translate([0, 0, 3])
+                    linear_extrude(height=0.01)
+                    translate([shift_raspi_x,0])
+                    rotate(-90)
+                    translate([(46+0.5)/4,0])
+                    minkowski_square(dimension=[(46+0.5)/2+2.5,2+0.5+2.5], r=0.8);
+                    
+                    translate([0, 0, 1.0])
+                    linear_extrude(height=0.01)
+                    translate([shift_raspi_x,0])
+                    rotate(-90)
+                    translate([(46+0.5)/4,0])
+                    minkowski_square(dimension=[(46+0.5)/2,2+0.5], r=0.8);
+                }
             }
-            square([28,28], center=true);
-        }
         
         rotate([0,0,0])
         union(){
@@ -166,6 +196,7 @@ $fn=360;
 usb_hub=false;
 is_fix=true;
 if(is_fix){
+    //mirror([1,0,0])
     pod_inner_60mm_fix();
     //pod_inner_60mm();
 }else{
