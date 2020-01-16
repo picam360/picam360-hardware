@@ -5,6 +5,11 @@ module sw_pod_100mm(){
     import("inner_100mm.stl");
     pod(tube_dia=100,h=160,margin=3.7);
 }
+module sw_pod_80mm(){
+    translate([0,0,11.5+3.5+10])
+    import("inner_80mm.stl");
+    pod(tube_dia=80,h=160,margin=3.7);
+}
 module sw_pod_60mm(){
     translate([0,0,11.5+3.5+10])
     import("inner_60mm.stl");
@@ -15,12 +20,12 @@ translate([0,0,160+100+2+60+5])
 pod(tube_dia=60,h=40,camera=true,margin=1);
 
 translate([0,0,100+2+60])
-sw_pod_60mm();
+sw_pod_80mm();
 
 translate([0,0,100+2])
-import("adapter_60mm.stl");
+import("adapter_80mm.stl");
 translate([0,0,100+2+60])
-import("adapter_60mm_holder.stl");
+import("adapter_80mm_holder.stl");
 
 translate([0,0,100-10])
 import("../hull_component/hull_base.stl");

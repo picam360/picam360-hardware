@@ -64,4 +64,6 @@ module pod(tube_dia=60, h=160, camera=false, margin=0){
         cylinder(r=tube_dia/2-2, h=h+.02);
     }
 }
-pod(tube_dia=60,h=40,camera=true,margin=1);
+//pod(tube_dia=60,h=40,camera=true,margin=1);
+pod(tube_dia=80,h=40,camera=false,margin=1);
+//pod(tube_dia=100,h=40,camera=false,margin=1);

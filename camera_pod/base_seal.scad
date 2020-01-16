@@ -13,6 +13,9 @@ module base_seal(tube_dia=60, tube_thick=2, h=5, is_inner=true)
         if(tube_dia==60){
             translate([0,0,-0.75])
             oring(outer_dia=56.7+0.3, inner_dia=49.7+0.3);
+        }else if(tube_dia==80){
+            translate([0,0,-0.75])
+            oring(outer_dia=76.0+0.8, inner_dia=64.6+0.8);
         }else if(tube_dia==100){
             translate([0,0,-0.75])
             oring(outer_dia=96.0+0.8, inner_dia=84.6+0.8);
@@ -65,8 +68,8 @@ module base_seal(tube_dia=60, tube_thick=2, h=5, is_inner=true)
 }
 
 $fn=120;
-tube_dia=60;
-is_inner=true;
+tube_dia=80;
+is_inner=false;
 base_seal(tube_dia=tube_dia, is_inner=is_inner);
 //rotate([180,0,0])
 //base_seal(tube_dia=tube_dia, is_inner=is_inner);

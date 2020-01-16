@@ -16,6 +16,6 @@ module cover_adapter(tube_dia=60, thread_h=10)
 
 
 $fn=120;
-tube_dia=100;
-thread_h=15;
+tube_dia=80;
+thread_h=10;
 cover_adapter(tube_dia=tube_dia, thread_h=thread_h);
