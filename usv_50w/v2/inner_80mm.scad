@@ -139,7 +139,7 @@ module pod_inner_80mm(dome_dia=50.8, outer_dia=80, inner_dia=44, tube_thick=2, s
             {
                 union(){
                     //raspi
-                    translate([30/2+thick/2-shift_raspi_x, shift_raspi_h-2/2, height/2-25])
+                    translate([30/2+thick/2-shift_raspi_x, shift_raspi_h-thick/2, height/2])
                     rotate([90,0,0])
                         for(i=[0:1]){
                             mirror([i,0])
@@ -156,7 +156,7 @@ module pod_inner_80mm(dome_dia=50.8, outer_dia=80, inner_dia=44, tube_thick=2, s
         }
         union(){
             //raspi
-            translate([30/2+thick/2-shift_raspi_x, 0, height/2-25])
+            translate([30/2+thick/2-shift_raspi_x, 0, height/2])
             rotate([90,0,0])
                 for(i=[0:1]){
                     mirror([i,0])
@@ -185,7 +185,7 @@ module pod_inner_80mm(dome_dia=50.8, outer_dia=80, inner_dia=44, tube_thick=2, s
 $fn=360;
  
 usb_hub=false;
-is_fix=true;
+is_fix=false;
 if(is_fix){
     mirror([1,0,0])
     pod_inner_80mm_fix();
