@@ -76,9 +76,9 @@ module bezier_hull_50w(view_refpoints_r=0){
     ];
     _bezier_hull_50w(scale_points(refpoints,ratio*[1,1,1]),stepz=stepz,step=step,view_refpoints_r=view_refpoints_r);
 }
-solar_panel_view=true;
+solar_panel_view=false;
 size_view=false;
-pod_view=true;
+pod_view=false;
 bezier_hull_50w(view_refpoints_r=0);
 if(solar_panel_view){
     translate([0,0,100])

@@ -70,7 +70,7 @@ for(i=[0,1,2,3]){
         import("../skrew_component/T100-Thruster-R1-Public.STL");
         translate([112/2,0,-10])
         rotate([180,0,0])
-        import("../skrew_component/skrew_extender_2.stl");
+        import("../skrew_component/skrew_extender.stl");
         translate([110,0,-50-66])
         rotate([180,0,0])
         import("../skrew_component/skrew_stand.stl");
