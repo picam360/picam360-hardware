@@ -18,6 +18,8 @@ module cover(tube_dia=60, thread_h=10, margin=0.25)
                 scale([1,1,0.25])
                 if(tube_dia==60)
                     sphere(r=outer_dia/1.77);
+                else if(tube_dia==80)
+                    sphere(r=outer_dia/1.88);
                 else if(tube_dia==100)
                     sphere(r=outer_dia/1.9);
             }
